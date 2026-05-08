@@ -1,5 +1,5 @@
 {
-  "configPath": "E:\\ghost-ai-main\\.trigger\\tmp\\build-GfFXk4\\trigger.config.mjs",
+  "configPath": "E:\\ghost-ai-main\\.trigger\\tmp\\build-EeNI3d\\trigger.config.mjs",
   "customConditions": [
   ],
   "prompts": [
@@ -10,7 +10,7 @@
   "runtimeVersion": "22.18.0",
   "tasks": [
     {
-      "entryPoint": "E:\\ghost-ai-main\\.trigger\\tmp\\build-GfFXk4\\design-agent.mjs",
+      "entryPoint": "E:\\ghost-ai-main\\.trigger\\tmp\\build-EeNI3d\\design-agent.mjs",
       "filePath": "trigger/design-agent.ts",
       "id": "design-agent",
       "maxDuration": 3600,
@@ -23,7 +23,7 @@
       }
     },
     {
-      "entryPoint": "E:\\ghost-ai-main\\.trigger\\tmp\\build-GfFXk4\\generate-spec.mjs",
+      "entryPoint": "E:\\ghost-ai-main\\.trigger\\tmp\\build-EeNI3d\\generate-spec.mjs",
       "filePath": "trigger/generate-spec.ts",
       "id": "generate-spec",
       "maxDuration": 3600,
@@ -161,8 +161,8 @@
     }
   ],
   "timings": {
-    "trigger/design-agent.ts": 97.46519999999998,
-    "trigger/generate-spec.ts": 100.3714
+    "trigger/design-agent.ts": 76.5652,
+    "trigger/generate-spec.ts": 82.26479999999998
   },
-  "workerEntryPoint": "E:\\ghost-ai-main\\.trigger\\tmp\\build-GfFXk4\\dev-run-worker.mjs"
+  "workerEntryPoint": "E:\\ghost-ai-main\\.trigger\\tmp\\build-EeNI3d\\dev-run-worker.mjs"
 }
