@@ -1,5 +1,5 @@
 import { task } from "@trigger.dev/sdk/v3";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createGroq } from "@ai-sdk/groq"
 import { generateText, tool } from "ai";
 import { z } from "zod";
 import { LiveObject } from "@liveblocks/client";
@@ -158,7 +158,7 @@ export const designAgent = task({
   retry: { maxAttempts: 2 },
   run: async (payload: { prompt: string; roomId: string; userId: string }) => {
     const lb = getLiveblocks();
-    const google = createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY });
+    const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
 
     await lb
       .setPresence(payload.roomId, {
@@ -193,7 +193,7 @@ export const designAgent = task({
       }
 
       const result = await generateText({
-        model: google(process.env.GEMINI_MODEL ?? "gemini-2.0-flash"),
+        model: groq("llama3-groq-70b-8192-tool-use-preview"),
         system: buildSystemPrompt(),
         prompt: `User request: ${payload.prompt}\n\n${canvasContext}`,
         tools: canvasTools,
