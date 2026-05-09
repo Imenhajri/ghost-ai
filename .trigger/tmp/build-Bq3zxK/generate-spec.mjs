@@ -1,7 +1,29 @@
 import {
-  createGoogleGenerativeAI,
-  generateText
-} from "./chunk-ZZLFI2SE.mjs";
+  AISDKError,
+  TooManyEmbeddingValuesForCallError,
+  UnsupportedFunctionalityError,
+  combineHeaders,
+  convertToBase64,
+  convertUint8ArrayToBase64,
+  createEventSourceResponseHandler,
+  createJsonErrorResponseHandler,
+  createJsonResponseHandler,
+  createProviderToolFactory,
+  createProviderToolFactoryWithOutputSchema,
+  delay,
+  external_exports as external_exports2,
+  generateId,
+  generateText,
+  getFromApi,
+  lazySchema,
+  loadApiKey,
+  parseProviderOptions,
+  postJsonToApi,
+  resolve,
+  withUserAgentSuffix,
+  withoutTrailingSlash,
+  zodSchema
+} from "./chunk-2RVLJDZO.mjs";
 import "./chunk-KSN6VZDK.mjs";
 import {
   external_exports,
@@ -266,7 +288,7 @@ var require_lib = __commonJS({
     init_esm();
     var retrier = require_retry2();
     function retry2(fn, opts) {
-      function run(resolve, reject) {
+      function run(resolve2, reject) {
         var options = opts || {};
         var op;
         if (!("randomize" in options)) {
@@ -297,7 +319,7 @@ var require_lib = __commonJS({
             onError(err, num);
             return;
           }
-          Promise.resolve(val).then(resolve).catch(/* @__PURE__ */ __name(function catchIt(err) {
+          Promise.resolve(val).then(resolve2).catch(/* @__PURE__ */ __name(function catchIt(err) {
             onError(err, num);
           }, "catchIt"));
         }
@@ -2271,9 +2293,9 @@ var require_dispatcher_base = __commonJS({
       }
       close(callback) {
         if (callback === void 0) {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve2, reject) => {
             this.close((err, data) => {
-              return err ? reject(err) : resolve(data);
+              return err ? reject(err) : resolve2(data);
             });
           });
         }
@@ -2311,12 +2333,12 @@ var require_dispatcher_base = __commonJS({
           err = null;
         }
         if (callback === void 0) {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve2, reject) => {
             this.destroy(err, (err2, data) => {
               return err2 ? (
                 /* istanbul ignore next: should never error */
                 reject(err2)
-              ) : resolve(data);
+              ) : resolve2(data);
             });
           });
         }
@@ -2497,9 +2519,9 @@ var require_timers = __commonJS({
        * before the specified function or code is executed.
        * @param {*} arg
        */
-      constructor(callback, delay, arg) {
+      constructor(callback, delay2, arg) {
         this._onTimeout = callback;
-        this._idleTimeout = delay;
+        this._idleTimeout = delay2;
         this._timerArg = arg;
         this.refresh();
       }
@@ -2544,8 +2566,8 @@ var require_timers = __commonJS({
        * when the timer expires.
        * @returns {NodeJS.Timeout|FastTimer}
        */
-      setTimeout(callback, delay, arg) {
-        return delay <= RESOLUTION_MS ? setTimeout(callback, delay, arg) : new FastTimer(callback, delay, arg);
+      setTimeout(callback, delay2, arg) {
+        return delay2 <= RESOLUTION_MS ? setTimeout(callback, delay2, arg) : new FastTimer(callback, delay2, arg);
       },
       /**
        * The clearTimeout method cancels an instantiated Timer previously created
@@ -2571,8 +2593,8 @@ var require_timers = __commonJS({
        * when the timer expires.
        * @returns {FastTimer}
        */
-      setFastTimeout(callback, delay, arg) {
-        return new FastTimer(callback, delay, arg);
+      setFastTimeout(callback, delay2, arg) {
+        return new FastTimer(callback, delay2, arg);
       },
       /**
        * The clearTimeout method cancels an instantiated FastTimer previously
@@ -2598,8 +2620,8 @@ var require_timers = __commonJS({
        * @deprecated
        * @param {number} [delay=0] The delay in milliseconds to add to the now value.
        */
-      tick(delay = 0) {
-        fastNow += delay - RESOLUTION_MS + 1;
+      tick(delay2 = 0) {
+        fastNow += delay2 - RESOLUTION_MS + 1;
         onTick();
         onTick();
       },
@@ -4662,8 +4684,8 @@ var require_util2 = __commonJS({
     function createDeferredPromise() {
       let res;
       let rej;
-      const promise = new Promise((resolve, reject) => {
-        res = resolve;
+      const promise = new Promise((resolve2, reject) => {
+        res = resolve2;
         rej = reject;
       });
       return { promise, resolve: res, reject: rej };
@@ -6138,21 +6160,21 @@ var require_client_h1 = __commonJS({
         this.connection = "";
         this.maxResponseSize = client[kMaxResponseSize];
       }
-      setTimeout(delay, type) {
-        if (delay !== this.timeoutValue || type & USE_FAST_TIMER ^ this.timeoutType & USE_FAST_TIMER) {
+      setTimeout(delay2, type) {
+        if (delay2 !== this.timeoutValue || type & USE_FAST_TIMER ^ this.timeoutType & USE_FAST_TIMER) {
           if (this.timeout) {
             timers.clearTimeout(this.timeout);
             this.timeout = null;
           }
-          if (delay) {
+          if (delay2) {
             if (type & USE_FAST_TIMER) {
-              this.timeout = timers.setFastTimeout(onParserTimeout, delay, new WeakRef(this));
+              this.timeout = timers.setFastTimeout(onParserTimeout, delay2, new WeakRef(this));
             } else {
-              this.timeout = setTimeout(onParserTimeout, delay, new WeakRef(this));
+              this.timeout = setTimeout(onParserTimeout, delay2, new WeakRef(this));
               this.timeout.unref();
             }
           }
-          this.timeoutValue = delay;
+          this.timeoutValue = delay2;
         } else if (this.timeout) {
           if (this.timeout.refresh) {
             this.timeout.refresh();
@@ -6884,12 +6906,12 @@ upgrade: ${upgrade}\r
         }
       }
       __name(onDrain, "onDrain");
-      const waitForDrain = /* @__PURE__ */ __name(() => new Promise((resolve, reject) => {
+      const waitForDrain = /* @__PURE__ */ __name(() => new Promise((resolve2, reject) => {
         assert(callback === null);
         if (socket[kError]) {
           reject(socket[kError]);
         } else {
-          callback = resolve;
+          callback = resolve2;
         }
       }), "waitForDrain");
       socket.on("close", onDrain).on("drain", onDrain);
@@ -7546,12 +7568,12 @@ var require_client_h2 = __commonJS({
         }
       }
       __name(onDrain, "onDrain");
-      const waitForDrain = /* @__PURE__ */ __name(() => new Promise((resolve, reject) => {
+      const waitForDrain = /* @__PURE__ */ __name(() => new Promise((resolve2, reject) => {
         assert(callback === null);
         if (socket[kError]) {
           reject(socket[kError]);
         } else {
-          callback = resolve;
+          callback = resolve2;
         }
       }), "waitForDrain");
       h2stream.on("close", onDrain).on("drain", onDrain);
@@ -8047,16 +8069,16 @@ var require_client = __commonJS({
         return this[kNeedDrain] < 2;
       }
       async [kClose]() {
-        return new Promise((resolve) => {
+        return new Promise((resolve2) => {
           if (this[kSize]) {
-            this[kClosedResolve] = resolve;
+            this[kClosedResolve] = resolve2;
           } else {
-            resolve(null);
+            resolve2(null);
           }
         });
       }
       async [kDestroy](err) {
-        return new Promise((resolve) => {
+        return new Promise((resolve2) => {
           const requests = this[kQueue].splice(this[kPendingIdx]);
           for (let i = 0; i < requests.length; i++) {
             const request = requests[i];
@@ -8067,7 +8089,7 @@ var require_client = __commonJS({
               this[kClosedResolve]();
               this[kClosedResolve] = null;
             }
-            resolve(null);
+            resolve2(null);
           }, "callback");
           if (this[kHTTPContext]) {
             this[kHTTPContext].destroy(err, callback);
@@ -8119,7 +8141,7 @@ var require_client = __commonJS({
         });
       }
       try {
-        const socket = await new Promise((resolve, reject) => {
+        const socket = await new Promise((resolve2, reject) => {
           client[kConnector]({
             host,
             hostname,
@@ -8131,7 +8153,7 @@ var require_client = __commonJS({
             if (err) {
               reject(err);
             } else {
-              resolve(socket2);
+              resolve2(socket2);
             }
           });
         });
@@ -8486,8 +8508,8 @@ var require_pool_base = __commonJS({
         if (this[kQueue].isEmpty()) {
           await Promise.all(this[kClients].map((c) => c.close()));
         } else {
-          await new Promise((resolve) => {
-            this[kClosedResolve] = resolve;
+          await new Promise((resolve2) => {
+            this[kClosedResolve] = resolve2;
           });
         }
       }
@@ -9748,7 +9770,7 @@ var require_readable = __commonJS({
         if (this._readableState.closeEmitted) {
           return null;
         }
-        return await new Promise((resolve, reject) => {
+        return await new Promise((resolve2, reject) => {
           if (this[kContentLength] > limit) {
             this.destroy(new AbortError());
           }
@@ -9761,7 +9783,7 @@ var require_readable = __commonJS({
             if (signal?.aborted) {
               reject(signal.reason ?? new AbortError());
             } else {
-              resolve(null);
+              resolve2(null);
             }
           }).on("error", noop).on("data", function(chunk) {
             limit -= chunk.length;
@@ -9782,7 +9804,7 @@ var require_readable = __commonJS({
     __name(isUnusable, "isUnusable");
     async function consume(stream, type) {
       assert(!stream[kConsume]);
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve2, reject) => {
         if (isUnusable(stream)) {
           const rState = stream._readableState;
           if (rState.destroyed && rState.closeEmitted === false) {
@@ -9799,7 +9821,7 @@ var require_readable = __commonJS({
             stream[kConsume] = {
               type,
               stream,
-              resolve,
+              resolve: resolve2,
               reject,
               length: 0,
               body: []
@@ -9873,18 +9895,18 @@ var require_readable = __commonJS({
     }
     __name(chunksConcat, "chunksConcat");
     function consumeEnd(consume2) {
-      const { type, body, resolve, stream, length } = consume2;
+      const { type, body, resolve: resolve2, stream, length } = consume2;
       try {
         if (type === "text") {
-          resolve(chunksDecode(body, length));
+          resolve2(chunksDecode(body, length));
         } else if (type === "json") {
-          resolve(JSON.parse(chunksDecode(body, length)));
+          resolve2(JSON.parse(chunksDecode(body, length)));
         } else if (type === "arrayBuffer") {
-          resolve(chunksConcat(body, length).buffer);
+          resolve2(chunksConcat(body, length).buffer);
         } else if (type === "blob") {
-          resolve(new Blob(body, { type: stream[kContentType] }));
+          resolve2(new Blob(body, { type: stream[kContentType] }));
         } else if (type === "bytes") {
-          resolve(chunksConcat(body, length));
+          resolve2(chunksConcat(body, length));
         }
         consumeFinish(consume2);
       } catch (err) {
@@ -10150,9 +10172,9 @@ var require_api_request = __commonJS({
     };
     function request(opts, callback) {
       if (callback === void 0) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve2, reject) => {
           request.call(this, opts, (err, data) => {
-            return err ? reject(err) : resolve(data);
+            return err ? reject(err) : resolve2(data);
           });
         });
       }
@@ -10384,9 +10406,9 @@ var require_api_stream = __commonJS({
     };
     function stream(opts, factory, callback) {
       if (callback === void 0) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve2, reject) => {
           stream.call(this, opts, factory, (err, data) => {
-            return err ? reject(err) : resolve(data);
+            return err ? reject(err) : resolve2(data);
           });
         });
       }
@@ -10687,9 +10709,9 @@ var require_api_upgrade = __commonJS({
     };
     function upgrade(opts, callback) {
       if (callback === void 0) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve2, reject) => {
           upgrade.call(this, opts, (err, data) => {
-            return err ? reject(err) : resolve(data);
+            return err ? reject(err) : resolve2(data);
           });
         });
       }
@@ -10786,9 +10808,9 @@ var require_api_connect = __commonJS({
     };
     function connect(opts, callback) {
       if (callback === void 0) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve2, reject) => {
           connect.call(this, opts, (err, data) => {
-            return err ? reject(err) : resolve(data);
+            return err ? reject(err) : resolve2(data);
           });
         });
       }
@@ -11092,7 +11114,7 @@ var require_mock_utils = __commonJS({
       if (mockDispatch2.data.callback) {
         mockDispatch2.data = { ...mockDispatch2.data, ...mockDispatch2.data.callback(opts) };
       }
-      const { data: { statusCode, data, headers, trailers, error }, delay, persist } = mockDispatch2;
+      const { data: { statusCode, data, headers, trailers, error }, delay: delay2, persist } = mockDispatch2;
       const { timesInvoked, times } = mockDispatch2;
       mockDispatch2.consumed = !persist && timesInvoked >= times;
       mockDispatch2.pending = timesInvoked < times;
@@ -11101,10 +11123,10 @@ var require_mock_utils = __commonJS({
         handler.onError(error);
         return true;
       }
-      if (typeof delay === "number" && delay > 0) {
+      if (typeof delay2 === "number" && delay2 > 0) {
         setTimeout(() => {
           handleReply(this[kDispatches]);
-        }, delay);
+        }, delay2);
       } else {
         handleReply(this[kDispatches]);
       }
@@ -14785,7 +14807,7 @@ var require_fetch = __commonJS({
       function dispatch({ body }) {
         const url = requestCurrentURL(request);
         const agent = fetchParams.controller.dispatcher;
-        return new Promise((resolve, reject) => agent.dispatch(
+        return new Promise((resolve2, reject) => agent.dispatch(
           {
             path: url.pathname + url.search,
             origin: url.origin,
@@ -14861,7 +14883,7 @@ var require_fetch = __commonJS({
                 }
               }
               const onError = this.onError.bind(this);
-              resolve({
+              resolve2({
                 status,
                 statusText,
                 headersList,
@@ -14907,7 +14929,7 @@ var require_fetch = __commonJS({
               for (let i = 0; i < rawHeaders.length; i += 2) {
                 headersList.append(bufferToLowerCasedHeaderName(rawHeaders[i]), rawHeaders[i + 1].toString("latin1"), true);
               }
-              resolve({
+              resolve2({
                 status,
                 statusText: STATUS_CODES[status],
                 headersList,
@@ -18695,16 +18717,16 @@ var require_util8 = __commonJS({
       return true;
     }
     __name(isASCIINumber, "isASCIINumber");
-    function delay(ms) {
-      return new Promise((resolve) => {
-        setTimeout(resolve, ms).unref();
+    function delay2(ms) {
+      return new Promise((resolve2) => {
+        setTimeout(resolve2, ms).unref();
       });
     }
-    __name(delay, "delay");
+    __name(delay2, "delay");
     module.exports = {
       isValidLastEventId,
       isASCIINumber,
-      delay
+      delay: delay2
     };
   }
 });
@@ -18956,7 +18978,7 @@ var require_eventsource = __commonJS({
     var { parseMIMEType } = require_data_url();
     var { createFastMessageEvent } = require_events();
     var { isNetworkError: isNetworkError2 } = require_response();
-    var { delay } = require_util8();
+    var { delay: delay2 } = require_util8();
     var { kEnumerableProperty } = require_util();
     var { environmentSettingsObject } = require_util2();
     var experimentalWarned = false;
@@ -19130,7 +19152,7 @@ var require_eventsource = __commonJS({
         if (this.#readyState === CLOSED) return;
         this.#readyState = CONNECTING;
         this.dispatchEvent(new Event("error"));
-        await delay(this.#state.reconnectionTime);
+        await delay2(this.#state.reconnectionTime);
         if (this.#readyState !== CONNECTING) return;
         if (this.#state.lastEventId.length) {
           this.#request.headersList.set("last-event-id", this.#state.lastEventId, true);
@@ -31859,7 +31881,7 @@ var require_dist2 = __commonJS({
     function parse(stream, callback) {
       const parser = new parser_1.Parser();
       stream.on("data", (buffer) => parser.parse(buffer, callback));
-      return new Promise((resolve) => stream.on("end", () => resolve()));
+      return new Promise((resolve2) => stream.on("end", () => resolve2()));
     }
     __name(parse, "parse");
     exports.parse = parse;
@@ -32620,12 +32642,12 @@ var require_client3 = __commonJS({
           this._connect(callback);
           return;
         }
-        return new this._Promise((resolve, reject) => {
+        return new this._Promise((resolve2, reject) => {
           this._connect((error) => {
             if (error) {
               reject(error);
             } else {
-              resolve(this);
+              resolve2(this);
             }
           });
         });
@@ -32971,8 +32993,8 @@ var require_client3 = __commonJS({
           readTimeout = config2.query_timeout || this.connectionParameters.query_timeout;
           query = new Query2(config2, values, callback);
           if (!query.callback) {
-            result = new this._Promise((resolve, reject) => {
-              query.callback = (err, res) => err ? reject(err) : resolve(res);
+            result = new this._Promise((resolve2, reject) => {
+              query.callback = (err, res) => err ? reject(err) : resolve2(res);
             }).catch((err) => {
               Error.captureStackTrace(err);
               throw err;
@@ -33049,8 +33071,8 @@ var require_client3 = __commonJS({
         if (cb) {
           this.connection.once("end", cb);
         } else {
-          return new this._Promise((resolve) => {
-            this.connection.once("end", resolve);
+          return new this._Promise((resolve2) => {
+            this.connection.once("end", resolve2);
           });
         }
       }
@@ -33107,8 +33129,8 @@ var require_pg_pool = __commonJS({
       const cb = /* @__PURE__ */ __name(function(err, client) {
         err ? rej(err) : res(client);
       }, "cb");
-      const result = new Promise2(function(resolve, reject) {
-        res = resolve;
+      const result = new Promise2(function(resolve2, reject) {
+        res = resolve2;
         rej = reject;
       }).catch((err) => {
         Error.captureStackTrace(err);
@@ -33174,7 +33196,7 @@ var require_pg_pool = __commonJS({
         if (typeof Promise2.try === "function") {
           return Promise2.try(f);
         }
-        return new Promise2((resolve) => resolve(f()));
+        return new Promise2((resolve2) => resolve2(f()));
       }
       _isFull() {
         return this._clients.length >= this.options.max;
@@ -33568,8 +33590,8 @@ var require_query2 = __commonJS({
     NativeQuery.prototype._getPromise = function() {
       if (this._promise) return this._promise;
       this._promise = new Promise(
-        function(resolve, reject) {
-          this._once("end", resolve);
+        function(resolve2, reject) {
+          this._once("end", resolve2);
           this._once("error", reject);
         }.bind(this)
       );
@@ -33747,12 +33769,12 @@ var require_client4 = __commonJS({
         this._connect(callback);
         return;
       }
-      return new this._Promise((resolve, reject) => {
+      return new this._Promise((resolve2, reject) => {
         this._connect((error) => {
           if (error) {
             reject(error);
           } else {
-            resolve(this);
+            resolve2(this);
           }
         });
       });
@@ -33776,8 +33798,8 @@ var require_client4 = __commonJS({
         query = new NativeQuery(config2, values, callback);
         if (!query.callback) {
           let resolveOut, rejectOut;
-          result = new this._Promise((resolve, reject) => {
-            resolveOut = resolve;
+          result = new this._Promise((resolve2, reject) => {
+            resolveOut = resolve2;
             rejectOut = reject;
           }).catch((err) => {
             Error.captureStackTrace(err);
@@ -33837,8 +33859,8 @@ var require_client4 = __commonJS({
       }
       let result;
       if (!cb) {
-        result = new this._Promise(function(resolve, reject) {
-          cb = /* @__PURE__ */ __name((err) => err ? reject(err) : resolve(), "cb");
+        result = new this._Promise(function(resolve2, reject) {
+          cb = /* @__PURE__ */ __name((err) => err ? reject(err) : resolve2(), "cb");
         });
       }
       this.native.end(function() {
@@ -34078,6 +34100,5333 @@ var require_postgres_array2 = __commonJS({
 // trigger/generate-spec.ts
 init_esm();
 
+// node_modules/@ai-sdk/google/dist/index.mjs
+init_esm();
+var VERSION = true ? "3.0.68" : "0.0.0-test";
+var googleErrorDataSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      error: external_exports2.object({
+        code: external_exports2.number().nullable(),
+        message: external_exports2.string(),
+        status: external_exports2.string()
+      })
+    })
+  )
+);
+var googleFailedResponseHandler = createJsonErrorResponseHandler({
+  errorSchema: googleErrorDataSchema,
+  errorToMessage: /* @__PURE__ */ __name((data) => data.error.message, "errorToMessage")
+});
+var googleEmbeddingContentPartSchema = external_exports2.union([
+  external_exports2.object({ text: external_exports2.string() }),
+  external_exports2.object({
+    inlineData: external_exports2.object({
+      mimeType: external_exports2.string(),
+      data: external_exports2.string()
+    })
+  })
+]);
+var googleEmbeddingModelOptions = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      /**
+       * Optional. Optional reduced dimension for the output embedding.
+       * If set, excessive values in the output embedding are truncated from the end.
+       */
+      outputDimensionality: external_exports2.number().optional(),
+      /**
+       * Optional. Specifies the task type for generating embeddings.
+       * Supported task types:
+       * - SEMANTIC_SIMILARITY: Optimized for text similarity.
+       * - CLASSIFICATION: Optimized for text classification.
+       * - CLUSTERING: Optimized for clustering texts based on similarity.
+       * - RETRIEVAL_DOCUMENT: Optimized for document retrieval.
+       * - RETRIEVAL_QUERY: Optimized for query-based retrieval.
+       * - QUESTION_ANSWERING: Optimized for answering questions.
+       * - FACT_VERIFICATION: Optimized for verifying factual information.
+       * - CODE_RETRIEVAL_QUERY: Optimized for retrieving code blocks based on natural language queries.
+       */
+      taskType: external_exports2.enum([
+        "SEMANTIC_SIMILARITY",
+        "CLASSIFICATION",
+        "CLUSTERING",
+        "RETRIEVAL_DOCUMENT",
+        "RETRIEVAL_QUERY",
+        "QUESTION_ANSWERING",
+        "FACT_VERIFICATION",
+        "CODE_RETRIEVAL_QUERY"
+      ]).optional(),
+      /**
+       * Optional. Per-value multimodal content parts for embedding non-text
+       * content (images, video, PDF, audio). Each entry corresponds to the
+       * embedding value at the same index and its parts are merged with the
+       * text value in the request. Use `null` for entries that are text-only.
+       *
+       * The array length must match the number of values being embedded. In
+       * the case of a single embedding, the array length must be 1.
+       */
+      content: external_exports2.array(external_exports2.array(googleEmbeddingContentPartSchema).min(1).nullable()).optional()
+    })
+  )
+);
+var GoogleGenerativeAIEmbeddingModel = class {
+  static {
+    __name(this, "GoogleGenerativeAIEmbeddingModel");
+  }
+  constructor(modelId, config2) {
+    this.specificationVersion = "v3";
+    this.maxEmbeddingsPerCall = 2048;
+    this.supportsParallelCalls = true;
+    this.modelId = modelId;
+    this.config = config2;
+  }
+  get provider() {
+    return this.config.provider;
+  }
+  async doEmbed({
+    values,
+    headers,
+    abortSignal,
+    providerOptions
+  }) {
+    const googleOptions = await parseProviderOptions({
+      provider: "google",
+      providerOptions,
+      schema: googleEmbeddingModelOptions
+    });
+    if (values.length > this.maxEmbeddingsPerCall) {
+      throw new TooManyEmbeddingValuesForCallError({
+        provider: this.provider,
+        modelId: this.modelId,
+        maxEmbeddingsPerCall: this.maxEmbeddingsPerCall,
+        values
+      });
+    }
+    const mergedHeaders = combineHeaders(
+      await resolve(this.config.headers),
+      headers
+    );
+    const multimodalContent = googleOptions == null ? void 0 : googleOptions.content;
+    if (multimodalContent != null && multimodalContent.length !== values.length) {
+      throw new Error(
+        `The number of multimodal content entries (${multimodalContent.length}) must match the number of values (${values.length}).`
+      );
+    }
+    if (values.length === 1) {
+      const valueParts = multimodalContent == null ? void 0 : multimodalContent[0];
+      const textPart = values[0] ? [{ text: values[0] }] : [];
+      const parts = valueParts != null ? [...textPart, ...valueParts] : [{ text: values[0] }];
+      const {
+        responseHeaders: responseHeaders2,
+        value: response2,
+        rawValue: rawValue2
+      } = await postJsonToApi({
+        url: `${this.config.baseURL}/models/${this.modelId}:embedContent`,
+        headers: mergedHeaders,
+        body: {
+          model: `models/${this.modelId}`,
+          content: {
+            parts
+          },
+          outputDimensionality: googleOptions == null ? void 0 : googleOptions.outputDimensionality,
+          taskType: googleOptions == null ? void 0 : googleOptions.taskType
+        },
+        failedResponseHandler: googleFailedResponseHandler,
+        successfulResponseHandler: createJsonResponseHandler(
+          googleGenerativeAISingleEmbeddingResponseSchema
+        ),
+        abortSignal,
+        fetch: this.config.fetch
+      });
+      return {
+        warnings: [],
+        embeddings: [response2.embedding.values],
+        usage: void 0,
+        response: { headers: responseHeaders2, body: rawValue2 }
+      };
+    }
+    const {
+      responseHeaders,
+      value: response,
+      rawValue
+    } = await postJsonToApi({
+      url: `${this.config.baseURL}/models/${this.modelId}:batchEmbedContents`,
+      headers: mergedHeaders,
+      body: {
+        requests: values.map((value, index) => {
+          const valueParts = multimodalContent == null ? void 0 : multimodalContent[index];
+          const textPart = value ? [{ text: value }] : [];
+          return {
+            model: `models/${this.modelId}`,
+            content: {
+              role: "user",
+              parts: valueParts != null ? [...textPart, ...valueParts] : [{ text: value }]
+            },
+            outputDimensionality: googleOptions == null ? void 0 : googleOptions.outputDimensionality,
+            taskType: googleOptions == null ? void 0 : googleOptions.taskType
+          };
+        })
+      },
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(
+        googleGenerativeAITextEmbeddingResponseSchema
+      ),
+      abortSignal,
+      fetch: this.config.fetch
+    });
+    return {
+      warnings: [],
+      embeddings: response.embeddings.map((item) => item.values),
+      usage: void 0,
+      response: { headers: responseHeaders, body: rawValue }
+    };
+  }
+};
+var googleGenerativeAITextEmbeddingResponseSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      embeddings: external_exports2.array(external_exports2.object({ values: external_exports2.array(external_exports2.number()) }))
+    })
+  )
+);
+var googleGenerativeAISingleEmbeddingResponseSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      embedding: external_exports2.object({ values: external_exports2.array(external_exports2.number()) })
+    })
+  )
+);
+function convertGoogleGenerativeAIUsage(usage) {
+  var _a3, _b2, _c, _d;
+  if (usage == null) {
+    return {
+      inputTokens: {
+        total: void 0,
+        noCache: void 0,
+        cacheRead: void 0,
+        cacheWrite: void 0
+      },
+      outputTokens: {
+        total: void 0,
+        text: void 0,
+        reasoning: void 0
+      },
+      raw: void 0
+    };
+  }
+  const promptTokens = (_a3 = usage.promptTokenCount) != null ? _a3 : 0;
+  const candidatesTokens = (_b2 = usage.candidatesTokenCount) != null ? _b2 : 0;
+  const cachedContentTokens = (_c = usage.cachedContentTokenCount) != null ? _c : 0;
+  const thoughtsTokens = (_d = usage.thoughtsTokenCount) != null ? _d : 0;
+  return {
+    inputTokens: {
+      total: promptTokens,
+      noCache: promptTokens - cachedContentTokens,
+      cacheRead: cachedContentTokens,
+      cacheWrite: void 0
+    },
+    outputTokens: {
+      total: candidatesTokens + thoughtsTokens,
+      text: candidatesTokens,
+      reasoning: thoughtsTokens
+    },
+    raw: usage
+  };
+}
+__name(convertGoogleGenerativeAIUsage, "convertGoogleGenerativeAIUsage");
+function convertJSONSchemaToOpenAPISchema(jsonSchema, isRoot = true) {
+  if (jsonSchema == null) {
+    return void 0;
+  }
+  if (isEmptyObjectSchema(jsonSchema)) {
+    if (isRoot) {
+      return void 0;
+    }
+    if (typeof jsonSchema === "object" && jsonSchema.description) {
+      return { type: "object", description: jsonSchema.description };
+    }
+    return { type: "object" };
+  }
+  if (typeof jsonSchema === "boolean") {
+    return { type: "boolean", properties: {} };
+  }
+  const {
+    type,
+    description,
+    required,
+    properties,
+    items,
+    allOf,
+    anyOf,
+    oneOf,
+    format,
+    const: constValue,
+    minLength,
+    enum: enumValues
+  } = jsonSchema;
+  const result = {};
+  if (description) result.description = description;
+  if (required) result.required = required;
+  if (format) result.format = format;
+  if (constValue !== void 0) {
+    result.enum = [constValue];
+  }
+  if (type) {
+    if (Array.isArray(type)) {
+      const hasNull = type.includes("null");
+      const nonNullTypes = type.filter((t) => t !== "null");
+      if (nonNullTypes.length === 0) {
+        result.type = "null";
+      } else {
+        result.anyOf = nonNullTypes.map((t) => ({ type: t }));
+        if (hasNull) {
+          result.nullable = true;
+        }
+      }
+    } else {
+      result.type = type;
+    }
+  }
+  if (enumValues !== void 0) {
+    result.enum = enumValues;
+  }
+  if (properties != null) {
+    result.properties = Object.entries(properties).reduce(
+      (acc, [key, value]) => {
+        acc[key] = convertJSONSchemaToOpenAPISchema(value, false);
+        return acc;
+      },
+      {}
+    );
+  }
+  if (items) {
+    result.items = Array.isArray(items) ? items.map((item) => convertJSONSchemaToOpenAPISchema(item, false)) : convertJSONSchemaToOpenAPISchema(items, false);
+  }
+  if (allOf) {
+    result.allOf = allOf.map(
+      (item) => convertJSONSchemaToOpenAPISchema(item, false)
+    );
+  }
+  if (anyOf) {
+    if (anyOf.some(
+      (schema) => typeof schema === "object" && (schema == null ? void 0 : schema.type) === "null"
+    )) {
+      const nonNullSchemas = anyOf.filter(
+        (schema) => !(typeof schema === "object" && (schema == null ? void 0 : schema.type) === "null")
+      );
+      if (nonNullSchemas.length === 1) {
+        const converted = convertJSONSchemaToOpenAPISchema(
+          nonNullSchemas[0],
+          false
+        );
+        if (typeof converted === "object") {
+          result.nullable = true;
+          Object.assign(result, converted);
+        }
+      } else {
+        result.anyOf = nonNullSchemas.map(
+          (item) => convertJSONSchemaToOpenAPISchema(item, false)
+        );
+        result.nullable = true;
+      }
+    } else {
+      result.anyOf = anyOf.map(
+        (item) => convertJSONSchemaToOpenAPISchema(item, false)
+      );
+    }
+  }
+  if (oneOf) {
+    result.oneOf = oneOf.map(
+      (item) => convertJSONSchemaToOpenAPISchema(item, false)
+    );
+  }
+  if (minLength !== void 0) {
+    result.minLength = minLength;
+  }
+  return result;
+}
+__name(convertJSONSchemaToOpenAPISchema, "convertJSONSchemaToOpenAPISchema");
+function isEmptyObjectSchema(jsonSchema) {
+  return jsonSchema != null && typeof jsonSchema === "object" && jsonSchema.type === "object" && (jsonSchema.properties == null || Object.keys(jsonSchema.properties).length === 0) && !jsonSchema.additionalProperties;
+}
+__name(isEmptyObjectSchema, "isEmptyObjectSchema");
+var dataUrlRegex = /^data:([^;,]+);base64,(.+)$/s;
+function parseBase64DataUrl(value) {
+  const match = dataUrlRegex.exec(value);
+  if (match == null) {
+    return void 0;
+  }
+  return {
+    mediaType: match[1],
+    data: match[2]
+  };
+}
+__name(parseBase64DataUrl, "parseBase64DataUrl");
+function convertUrlToolResultPart(url) {
+  const parsedDataUrl = parseBase64DataUrl(url);
+  if (parsedDataUrl == null) {
+    return void 0;
+  }
+  return {
+    inlineData: {
+      mimeType: parsedDataUrl.mediaType,
+      data: parsedDataUrl.data
+    }
+  };
+}
+__name(convertUrlToolResultPart, "convertUrlToolResultPart");
+function appendToolResultParts(parts, toolName, outputValue) {
+  const functionResponseParts = [];
+  const responseTextParts = [];
+  for (const contentPart of outputValue) {
+    switch (contentPart.type) {
+      case "text": {
+        responseTextParts.push(contentPart.text);
+        break;
+      }
+      case "image-data":
+      case "file-data": {
+        functionResponseParts.push({
+          inlineData: {
+            mimeType: contentPart.mediaType,
+            data: contentPart.data
+          }
+        });
+        break;
+      }
+      case "image-url":
+      case "file-url": {
+        const functionResponsePart = convertUrlToolResultPart(
+          contentPart.url
+        );
+        if (functionResponsePart != null) {
+          functionResponseParts.push(functionResponsePart);
+        } else {
+          responseTextParts.push(JSON.stringify(contentPart));
+        }
+        break;
+      }
+      default: {
+        responseTextParts.push(JSON.stringify(contentPart));
+        break;
+      }
+    }
+  }
+  parts.push({
+    functionResponse: {
+      name: toolName,
+      response: {
+        name: toolName,
+        content: responseTextParts.length > 0 ? responseTextParts.join("\n") : "Tool executed successfully."
+      },
+      ...functionResponseParts.length > 0 ? { parts: functionResponseParts } : {}
+    }
+  });
+}
+__name(appendToolResultParts, "appendToolResultParts");
+function appendLegacyToolResultParts(parts, toolName, outputValue) {
+  for (const contentPart of outputValue) {
+    switch (contentPart.type) {
+      case "text":
+        parts.push({
+          functionResponse: {
+            name: toolName,
+            response: {
+              name: toolName,
+              content: contentPart.text
+            }
+          }
+        });
+        break;
+      case "image-data":
+        parts.push(
+          {
+            inlineData: {
+              mimeType: String(contentPart.mediaType),
+              data: String(contentPart.data)
+            }
+          },
+          {
+            text: "Tool executed successfully and returned this image as a response"
+          }
+        );
+        break;
+      default:
+        parts.push({ text: JSON.stringify(contentPart) });
+        break;
+    }
+  }
+}
+__name(appendLegacyToolResultParts, "appendLegacyToolResultParts");
+function convertToGoogleGenerativeAIMessages(prompt, options) {
+  var _a3, _b2, _c, _d, _e, _f, _g, _h;
+  const systemInstructionParts = [];
+  const contents = [];
+  let systemMessagesAllowed = true;
+  const isGemmaModel = (_a3 = options == null ? void 0 : options.isGemmaModel) != null ? _a3 : false;
+  const providerOptionsName = (_b2 = options == null ? void 0 : options.providerOptionsName) != null ? _b2 : "google";
+  const supportsFunctionResponseParts = (_c = options == null ? void 0 : options.supportsFunctionResponseParts) != null ? _c : true;
+  for (const { role, content } of prompt) {
+    switch (role) {
+      case "system": {
+        if (!systemMessagesAllowed) {
+          throw new UnsupportedFunctionalityError({
+            functionality: "system messages are only supported at the beginning of the conversation"
+          });
+        }
+        systemInstructionParts.push({ text: content });
+        break;
+      }
+      case "user": {
+        systemMessagesAllowed = false;
+        const parts = [];
+        for (const part of content) {
+          switch (part.type) {
+            case "text": {
+              parts.push({ text: part.text });
+              break;
+            }
+            case "file": {
+              const mediaType = part.mediaType === "image/*" ? "image/jpeg" : part.mediaType;
+              parts.push(
+                part.data instanceof URL ? {
+                  fileData: {
+                    mimeType: mediaType,
+                    fileUri: part.data.toString()
+                  }
+                } : {
+                  inlineData: {
+                    mimeType: mediaType,
+                    data: convertToBase64(part.data)
+                  }
+                }
+              );
+              break;
+            }
+          }
+        }
+        contents.push({ role: "user", parts });
+        break;
+      }
+      case "assistant": {
+        systemMessagesAllowed = false;
+        contents.push({
+          role: "model",
+          parts: content.map((part) => {
+            var _a22, _b22, _c2, _d2;
+            const providerOpts = (_d2 = (_a22 = part.providerOptions) == null ? void 0 : _a22[providerOptionsName]) != null ? _d2 : providerOptionsName !== "google" ? (_b22 = part.providerOptions) == null ? void 0 : _b22.google : (_c2 = part.providerOptions) == null ? void 0 : _c2.vertex;
+            const thoughtSignature = (providerOpts == null ? void 0 : providerOpts.thoughtSignature) != null ? String(providerOpts.thoughtSignature) : void 0;
+            switch (part.type) {
+              case "text": {
+                return part.text.length === 0 ? void 0 : {
+                  text: part.text,
+                  thoughtSignature
+                };
+              }
+              case "reasoning": {
+                return part.text.length === 0 ? void 0 : {
+                  text: part.text,
+                  thought: true,
+                  thoughtSignature
+                };
+              }
+              case "file": {
+                if (part.data instanceof URL) {
+                  throw new UnsupportedFunctionalityError({
+                    functionality: "File data URLs in assistant messages are not supported"
+                  });
+                }
+                return {
+                  inlineData: {
+                    mimeType: part.mediaType,
+                    data: convertToBase64(part.data)
+                  },
+                  ...(providerOpts == null ? void 0 : providerOpts.thought) === true ? { thought: true } : {},
+                  thoughtSignature
+                };
+              }
+              case "tool-call": {
+                const serverToolCallId = (providerOpts == null ? void 0 : providerOpts.serverToolCallId) != null ? String(providerOpts.serverToolCallId) : void 0;
+                const serverToolType = (providerOpts == null ? void 0 : providerOpts.serverToolType) != null ? String(providerOpts.serverToolType) : void 0;
+                if (serverToolCallId && serverToolType) {
+                  return {
+                    toolCall: {
+                      toolType: serverToolType,
+                      args: typeof part.input === "string" ? JSON.parse(part.input) : part.input,
+                      id: serverToolCallId
+                    },
+                    thoughtSignature
+                  };
+                }
+                return {
+                  functionCall: {
+                    name: part.toolName,
+                    args: part.input
+                  },
+                  thoughtSignature
+                };
+              }
+              case "tool-result": {
+                const serverToolCallId = (providerOpts == null ? void 0 : providerOpts.serverToolCallId) != null ? String(providerOpts.serverToolCallId) : void 0;
+                const serverToolType = (providerOpts == null ? void 0 : providerOpts.serverToolType) != null ? String(providerOpts.serverToolType) : void 0;
+                if (serverToolCallId && serverToolType) {
+                  return {
+                    toolResponse: {
+                      toolType: serverToolType,
+                      response: part.output.type === "json" ? part.output.value : {},
+                      id: serverToolCallId
+                    },
+                    thoughtSignature
+                  };
+                }
+                return void 0;
+              }
+            }
+          }).filter((part) => part !== void 0)
+        });
+        break;
+      }
+      case "tool": {
+        systemMessagesAllowed = false;
+        const parts = [];
+        for (const part of content) {
+          if (part.type === "tool-approval-response") {
+            continue;
+          }
+          const partProviderOpts = (_g = (_d = part.providerOptions) == null ? void 0 : _d[providerOptionsName]) != null ? _g : providerOptionsName !== "google" ? (_e = part.providerOptions) == null ? void 0 : _e.google : (_f = part.providerOptions) == null ? void 0 : _f.vertex;
+          const serverToolCallId = (partProviderOpts == null ? void 0 : partProviderOpts.serverToolCallId) != null ? String(partProviderOpts.serverToolCallId) : void 0;
+          const serverToolType = (partProviderOpts == null ? void 0 : partProviderOpts.serverToolType) != null ? String(partProviderOpts.serverToolType) : void 0;
+          if (serverToolCallId && serverToolType) {
+            const serverThoughtSignature = (partProviderOpts == null ? void 0 : partProviderOpts.thoughtSignature) != null ? String(partProviderOpts.thoughtSignature) : void 0;
+            if (contents.length > 0) {
+              const lastContent = contents[contents.length - 1];
+              if (lastContent.role === "model") {
+                lastContent.parts.push({
+                  toolResponse: {
+                    toolType: serverToolType,
+                    response: part.output.type === "json" ? part.output.value : {},
+                    id: serverToolCallId
+                  },
+                  thoughtSignature: serverThoughtSignature
+                });
+                continue;
+              }
+            }
+          }
+          const output = part.output;
+          if (output.type === "content") {
+            if (supportsFunctionResponseParts) {
+              appendToolResultParts(parts, part.toolName, output.value);
+            } else {
+              appendLegacyToolResultParts(parts, part.toolName, output.value);
+            }
+          } else {
+            parts.push({
+              functionResponse: {
+                name: part.toolName,
+                response: {
+                  name: part.toolName,
+                  content: output.type === "execution-denied" ? (_h = output.reason) != null ? _h : "Tool execution denied." : output.value
+                }
+              }
+            });
+          }
+        }
+        contents.push({
+          role: "user",
+          parts
+        });
+        break;
+      }
+    }
+  }
+  if (isGemmaModel && systemInstructionParts.length > 0 && contents.length > 0 && contents[0].role === "user") {
+    const systemText = systemInstructionParts.map((part) => part.text).join("\n\n");
+    contents[0].parts.unshift({ text: systemText + "\n\n" });
+  }
+  return {
+    systemInstruction: systemInstructionParts.length > 0 && !isGemmaModel ? { parts: systemInstructionParts } : void 0,
+    contents
+  };
+}
+__name(convertToGoogleGenerativeAIMessages, "convertToGoogleGenerativeAIMessages");
+function getModelPath(modelId) {
+  return modelId.includes("/") ? modelId : `models/${modelId}`;
+}
+__name(getModelPath, "getModelPath");
+var googleLanguageModelOptions = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      responseModalities: external_exports2.array(external_exports2.enum(["TEXT", "IMAGE"])).optional(),
+      thinkingConfig: external_exports2.object({
+        thinkingBudget: external_exports2.number().optional(),
+        includeThoughts: external_exports2.boolean().optional(),
+        // https://ai.google.dev/gemini-api/docs/gemini-3?thinking=high#thinking_level
+        thinkingLevel: external_exports2.enum(["minimal", "low", "medium", "high"]).optional()
+      }).optional(),
+      /**
+       * Optional.
+       * The name of the cached content used as context to serve the prediction.
+       * Format: cachedContents/{cachedContent}
+       */
+      cachedContent: external_exports2.string().optional(),
+      /**
+       * Optional. Enable structured output. Default is true.
+       *
+       * This is useful when the JSON Schema contains elements that are
+       * not supported by the OpenAPI schema version that
+       * Google Generative AI uses. You can use this to disable
+       * structured outputs if you need to.
+       */
+      structuredOutputs: external_exports2.boolean().optional(),
+      /**
+       * Optional. A list of unique safety settings for blocking unsafe content.
+       */
+      safetySettings: external_exports2.array(
+        external_exports2.object({
+          category: external_exports2.enum([
+            "HARM_CATEGORY_UNSPECIFIED",
+            "HARM_CATEGORY_HATE_SPEECH",
+            "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "HARM_CATEGORY_HARASSMENT",
+            "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "HARM_CATEGORY_CIVIC_INTEGRITY"
+          ]),
+          threshold: external_exports2.enum([
+            "HARM_BLOCK_THRESHOLD_UNSPECIFIED",
+            "BLOCK_LOW_AND_ABOVE",
+            "BLOCK_MEDIUM_AND_ABOVE",
+            "BLOCK_ONLY_HIGH",
+            "BLOCK_NONE",
+            "OFF"
+          ])
+        })
+      ).optional(),
+      threshold: external_exports2.enum([
+        "HARM_BLOCK_THRESHOLD_UNSPECIFIED",
+        "BLOCK_LOW_AND_ABOVE",
+        "BLOCK_MEDIUM_AND_ABOVE",
+        "BLOCK_ONLY_HIGH",
+        "BLOCK_NONE",
+        "OFF"
+      ]).optional(),
+      /**
+       * Optional. Enables timestamp understanding for audio-only files.
+       *
+       * https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/audio-understanding
+       */
+      audioTimestamp: external_exports2.boolean().optional(),
+      /**
+       * Optional. Defines labels used in billing reports. Available on Vertex AI only.
+       *
+       * https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/add-labels-to-api-calls
+       */
+      labels: external_exports2.record(external_exports2.string(), external_exports2.string()).optional(),
+      /**
+       * Optional. If specified, the media resolution specified will be used.
+       *
+       * https://ai.google.dev/api/generate-content#MediaResolution
+       */
+      mediaResolution: external_exports2.enum([
+        "MEDIA_RESOLUTION_UNSPECIFIED",
+        "MEDIA_RESOLUTION_LOW",
+        "MEDIA_RESOLUTION_MEDIUM",
+        "MEDIA_RESOLUTION_HIGH"
+      ]).optional(),
+      /**
+       * Optional. Configures the image generation aspect ratio for Gemini models.
+       *
+       * https://ai.google.dev/gemini-api/docs/image-generation#aspect_ratios
+       */
+      imageConfig: external_exports2.object({
+        aspectRatio: external_exports2.enum([
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9",
+          "21:9",
+          "1:8",
+          "8:1",
+          "1:4",
+          "4:1"
+        ]).optional(),
+        imageSize: external_exports2.enum(["1K", "2K", "4K", "512"]).optional()
+      }).optional(),
+      /**
+       * Optional. Configuration for grounding retrieval.
+       * Used to provide location context for Google Maps and Google Search grounding.
+       *
+       * https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/grounding-with-google-maps
+       */
+      retrievalConfig: external_exports2.object({
+        latLng: external_exports2.object({
+          latitude: external_exports2.number(),
+          longitude: external_exports2.number()
+        }).optional()
+      }).optional(),
+      /**
+       * Optional. When set to true, function call arguments will be streamed
+       * incrementally via partialArgs in streaming responses. Only supported
+       * on the Vertex AI API (not the Gemini API) and only for Gemini 3+
+       * models.
+       *
+       * @default false
+       *
+       * https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/function-calling#streaming-fc
+       */
+      streamFunctionCallArguments: external_exports2.boolean().optional(),
+      /**
+       * Optional. The service tier to use for the request.
+       */
+      serviceTier: external_exports2.enum(["standard", "flex", "priority"]).optional()
+    })
+  )
+);
+var VertexServiceTierMap = {
+  standard: "SERVICE_TIER_STANDARD",
+  flex: "SERVICE_TIER_FLEX",
+  priority: "SERVICE_TIER_PRIORITY"
+};
+function prepareTools({
+  tools,
+  toolChoice,
+  modelId
+}) {
+  var _a3, _b2;
+  tools = (tools == null ? void 0 : tools.length) ? tools : void 0;
+  const toolWarnings = [];
+  const isLatest = [
+    "gemini-flash-latest",
+    "gemini-flash-lite-latest",
+    "gemini-pro-latest"
+  ].some((id) => id === modelId);
+  const isGemini2orNewer = modelId.includes("gemini-2") || modelId.includes("gemini-3") || modelId.includes("nano-banana") || isLatest;
+  const isGemini3orNewer = modelId.includes("gemini-3");
+  const supportsFileSearch = modelId.includes("gemini-2.5") || modelId.includes("gemini-3");
+  if (tools == null) {
+    return { tools: void 0, toolConfig: void 0, toolWarnings };
+  }
+  const hasFunctionTools = tools.some((tool) => tool.type === "function");
+  const hasProviderTools = tools.some((tool) => tool.type === "provider");
+  if (hasFunctionTools && hasProviderTools && !isGemini3orNewer) {
+    toolWarnings.push({
+      type: "unsupported",
+      feature: `combination of function and provider-defined tools`
+    });
+  }
+  if (hasProviderTools) {
+    const googleTools2 = [];
+    const ProviderTools = tools.filter((tool) => tool.type === "provider");
+    ProviderTools.forEach((tool) => {
+      switch (tool.id) {
+        case "google.google_search":
+          if (isGemini2orNewer) {
+            googleTools2.push({ googleSearch: { ...tool.args } });
+          } else {
+            toolWarnings.push({
+              type: "unsupported",
+              feature: `provider-defined tool ${tool.id}`,
+              details: "Google Search requires Gemini 2.0 or newer."
+            });
+          }
+          break;
+        case "google.enterprise_web_search":
+          if (isGemini2orNewer) {
+            googleTools2.push({ enterpriseWebSearch: {} });
+          } else {
+            toolWarnings.push({
+              type: "unsupported",
+              feature: `provider-defined tool ${tool.id}`,
+              details: "Enterprise Web Search requires Gemini 2.0 or newer."
+            });
+          }
+          break;
+        case "google.url_context":
+          if (isGemini2orNewer) {
+            googleTools2.push({ urlContext: {} });
+          } else {
+            toolWarnings.push({
+              type: "unsupported",
+              feature: `provider-defined tool ${tool.id}`,
+              details: "The URL context tool is not supported with other Gemini models than Gemini 2."
+            });
+          }
+          break;
+        case "google.code_execution":
+          if (isGemini2orNewer) {
+            googleTools2.push({ codeExecution: {} });
+          } else {
+            toolWarnings.push({
+              type: "unsupported",
+              feature: `provider-defined tool ${tool.id}`,
+              details: "The code execution tool is not supported with other Gemini models than Gemini 2."
+            });
+          }
+          break;
+        case "google.file_search":
+          if (supportsFileSearch) {
+            googleTools2.push({ fileSearch: { ...tool.args } });
+          } else {
+            toolWarnings.push({
+              type: "unsupported",
+              feature: `provider-defined tool ${tool.id}`,
+              details: "The file search tool is only supported with Gemini 2.5 models and Gemini 3 models."
+            });
+          }
+          break;
+        case "google.vertex_rag_store":
+          if (isGemini2orNewer) {
+            googleTools2.push({
+              retrieval: {
+                vertex_rag_store: {
+                  rag_resources: {
+                    rag_corpus: tool.args.ragCorpus
+                  },
+                  similarity_top_k: tool.args.topK
+                }
+              }
+            });
+          } else {
+            toolWarnings.push({
+              type: "unsupported",
+              feature: `provider-defined tool ${tool.id}`,
+              details: "The RAG store tool is not supported with other Gemini models than Gemini 2."
+            });
+          }
+          break;
+        case "google.google_maps":
+          if (isGemini2orNewer) {
+            googleTools2.push({ googleMaps: {} });
+          } else {
+            toolWarnings.push({
+              type: "unsupported",
+              feature: `provider-defined tool ${tool.id}`,
+              details: "The Google Maps grounding tool is not supported with Gemini models other than Gemini 2 or newer."
+            });
+          }
+          break;
+        default:
+          toolWarnings.push({
+            type: "unsupported",
+            feature: `provider-defined tool ${tool.id}`
+          });
+          break;
+      }
+    });
+    if (hasFunctionTools && isGemini3orNewer && googleTools2.length > 0) {
+      const functionDeclarations2 = [];
+      for (const tool of tools) {
+        if (tool.type === "function") {
+          functionDeclarations2.push({
+            name: tool.name,
+            description: (_a3 = tool.description) != null ? _a3 : "",
+            parameters: convertJSONSchemaToOpenAPISchema(tool.inputSchema)
+          });
+        }
+      }
+      const combinedToolConfig = {
+        functionCallingConfig: { mode: "VALIDATED" },
+        includeServerSideToolInvocations: true
+      };
+      if (toolChoice != null) {
+        switch (toolChoice.type) {
+          case "auto":
+            break;
+          case "none":
+            combinedToolConfig.functionCallingConfig = { mode: "NONE" };
+            break;
+          case "required":
+            combinedToolConfig.functionCallingConfig = { mode: "ANY" };
+            break;
+          case "tool":
+            combinedToolConfig.functionCallingConfig = {
+              mode: "ANY",
+              allowedFunctionNames: [toolChoice.toolName]
+            };
+            break;
+        }
+      }
+      return {
+        tools: [...googleTools2, { functionDeclarations: functionDeclarations2 }],
+        toolConfig: combinedToolConfig,
+        toolWarnings
+      };
+    }
+    return {
+      tools: googleTools2.length > 0 ? googleTools2 : void 0,
+      toolConfig: void 0,
+      toolWarnings
+    };
+  }
+  const functionDeclarations = [];
+  let hasStrictTools = false;
+  for (const tool of tools) {
+    switch (tool.type) {
+      case "function":
+        functionDeclarations.push({
+          name: tool.name,
+          description: (_b2 = tool.description) != null ? _b2 : "",
+          parameters: convertJSONSchemaToOpenAPISchema(tool.inputSchema)
+        });
+        if (tool.strict === true) {
+          hasStrictTools = true;
+        }
+        break;
+      default:
+        toolWarnings.push({
+          type: "unsupported",
+          feature: `function tool ${tool.name}`
+        });
+        break;
+    }
+  }
+  if (toolChoice == null) {
+    return {
+      tools: [{ functionDeclarations }],
+      toolConfig: hasStrictTools ? { functionCallingConfig: { mode: "VALIDATED" } } : void 0,
+      toolWarnings
+    };
+  }
+  const type = toolChoice.type;
+  switch (type) {
+    case "auto":
+      return {
+        tools: [{ functionDeclarations }],
+        toolConfig: {
+          functionCallingConfig: {
+            mode: hasStrictTools ? "VALIDATED" : "AUTO"
+          }
+        },
+        toolWarnings
+      };
+    case "none":
+      return {
+        tools: [{ functionDeclarations }],
+        toolConfig: { functionCallingConfig: { mode: "NONE" } },
+        toolWarnings
+      };
+    case "required":
+      return {
+        tools: [{ functionDeclarations }],
+        toolConfig: {
+          functionCallingConfig: {
+            mode: hasStrictTools ? "VALIDATED" : "ANY"
+          }
+        },
+        toolWarnings
+      };
+    case "tool":
+      return {
+        tools: [{ functionDeclarations }],
+        toolConfig: {
+          functionCallingConfig: {
+            mode: hasStrictTools ? "VALIDATED" : "ANY",
+            allowedFunctionNames: [toolChoice.toolName]
+          }
+        },
+        toolWarnings
+      };
+    default: {
+      const _exhaustiveCheck = type;
+      throw new UnsupportedFunctionalityError({
+        functionality: `tool choice type: ${_exhaustiveCheck}`
+      });
+    }
+  }
+}
+__name(prepareTools, "prepareTools");
+var GoogleJSONAccumulator = class {
+  static {
+    __name(this, "GoogleJSONAccumulator");
+  }
+  constructor() {
+    this.accumulatedArgs = {};
+    this.jsonText = "";
+    this.pathStack = [];
+    this.stringOpen = false;
+  }
+  /**
+   * Input: [{jsonPath:"$.brightness",numberValue:50}]
+   * Output: { currentJSON:{brightness:50}, textDelta:'{"brightness":50' }
+   */
+  processPartialArgs(partialArgs) {
+    let delta = "";
+    for (const arg of partialArgs) {
+      const rawPath = arg.jsonPath.replace(/^\$\./, "");
+      if (!rawPath) continue;
+      const segments = parsePath(rawPath);
+      const existingValue = getNestedValue(this.accumulatedArgs, segments);
+      const isStringContinuation = arg.stringValue != null && existingValue !== void 0;
+      if (isStringContinuation) {
+        const escaped = JSON.stringify(arg.stringValue).slice(1, -1);
+        setNestedValue(
+          this.accumulatedArgs,
+          segments,
+          existingValue + arg.stringValue
+        );
+        delta += escaped;
+        continue;
+      }
+      const resolved = resolvePartialArgValue(arg);
+      if (resolved == null) continue;
+      setNestedValue(this.accumulatedArgs, segments, resolved.value);
+      delta += this.emitNavigationTo(segments, arg, resolved.json);
+    }
+    this.jsonText += delta;
+    return {
+      currentJSON: this.accumulatedArgs,
+      textDelta: delta
+    };
+  }
+  /**
+   * Input: jsonText='{"brightness":50', accumulatedArgs={brightness:50}
+   * Output: { finalJSON:'{"brightness":50}', closingDelta:'}' }
+   */
+  finalize() {
+    const finalArgs = JSON.stringify(this.accumulatedArgs);
+    const closingDelta = finalArgs.slice(this.jsonText.length);
+    return { finalJSON: finalArgs, closingDelta };
+  }
+  /**
+   * Input: pathStack=[] (first call) or pathStack=[root,...] (subsequent calls)
+   * Output: '{' (first call) or '' (subsequent calls)
+   */
+  ensureRoot() {
+    if (this.pathStack.length === 0) {
+      this.pathStack.push({ segment: "", isArray: false, childCount: 0 });
+      return "{";
+    }
+    return "";
+  }
+  /**
+   * Emits the JSON text fragment needed to navigate from the current open
+   * path to the new leaf at `targetSegments`, then writes the value.
+   *
+   * Input: targetSegments=["recipe","name"], arg={jsonPath:"$.recipe.name",stringValue:"Lasagna"}, valueJson='"Lasagna"'
+   * Output: '{"recipe":{"name":"Lasagna"'
+   */
+  emitNavigationTo(targetSegments, arg, valueJson) {
+    let fragment = "";
+    if (this.stringOpen) {
+      fragment += '"';
+      this.stringOpen = false;
+    }
+    fragment += this.ensureRoot();
+    const targetContainerSegments = targetSegments.slice(0, -1);
+    const leafSegment = targetSegments[targetSegments.length - 1];
+    const commonDepth = this.findCommonStackDepth(targetContainerSegments);
+    fragment += this.closeDownTo(commonDepth);
+    fragment += this.openDownTo(targetContainerSegments, leafSegment);
+    fragment += this.emitLeaf(leafSegment, arg, valueJson);
+    return fragment;
+  }
+  /**
+   * Returns the stack depth to preserve when navigating to a new target
+   * container path. Always >= 1 (the root is never popped).
+   *
+   * Input: stack=[root,"recipe","ingredients",0], target=["recipe","ingredients",1]
+   * Output: 3 (keep root+"recipe"+"ingredients")
+   */
+  findCommonStackDepth(targetContainer) {
+    const maxDepth = Math.min(
+      this.pathStack.length - 1,
+      targetContainer.length
+    );
+    let common = 0;
+    for (let i = 0; i < maxDepth; i++) {
+      if (this.pathStack[i + 1].segment === targetContainer[i]) {
+        common++;
+      } else {
+        break;
+      }
+    }
+    return common + 1;
+  }
+  /**
+   * Closes containers from the current stack depth back down to `targetDepth`.
+   *
+   * Input: this.pathStack=[root,"recipe","ingredients",0], targetDepth=3
+   * Output: '}'
+   */
+  closeDownTo(targetDepth) {
+    let fragment = "";
+    while (this.pathStack.length > targetDepth) {
+      const entry = this.pathStack.pop();
+      fragment += entry.isArray ? "]" : "}";
+    }
+    return fragment;
+  }
+  /**
+   * Opens containers from the current stack depth down to the full target
+   * container path, emitting opening `{`, `[`, keys, and commas as needed.
+   * `leafSegment` is used to determine if the innermost container is an array.
+   *
+   * Input: this.pathStack=[root], targetContainer=["recipe","ingredients"], leafSegment=0
+   * Output: '"recipe":{"ingredients":['
+   */
+  openDownTo(targetContainer, leafSegment) {
+    let fragment = "";
+    const startIdx = this.pathStack.length - 1;
+    for (let i = startIdx; i < targetContainer.length; i++) {
+      const seg = targetContainer[i];
+      const parentEntry = this.pathStack[this.pathStack.length - 1];
+      if (parentEntry.childCount > 0) {
+        fragment += ",";
+      }
+      parentEntry.childCount++;
+      if (typeof seg === "string") {
+        fragment += `${JSON.stringify(seg)}:`;
+      }
+      const childSeg = i + 1 < targetContainer.length ? targetContainer[i + 1] : leafSegment;
+      const isArray = typeof childSeg === "number";
+      fragment += isArray ? "[" : "{";
+      this.pathStack.push({ segment: seg, isArray, childCount: 0 });
+    }
+    return fragment;
+  }
+  /**
+   * Emits the comma, key, and value for a leaf entry in the current container.
+   *
+   * Input: leafSegment="name", arg={stringValue:"Lasagna"}, valueJson='"Lasagna"'
+   * Output: '"name":"Lasagna"' (or ',"name":"Lasagna"' if container.childCount > 0)
+   */
+  emitLeaf(leafSegment, arg, valueJson) {
+    let fragment = "";
+    const container = this.pathStack[this.pathStack.length - 1];
+    if (container.childCount > 0) {
+      fragment += ",";
+    }
+    container.childCount++;
+    if (typeof leafSegment === "string") {
+      fragment += `${JSON.stringify(leafSegment)}:`;
+    }
+    if (arg.stringValue != null && arg.willContinue) {
+      fragment += valueJson.slice(0, -1);
+      this.stringOpen = true;
+    } else {
+      fragment += valueJson;
+    }
+    return fragment;
+  }
+};
+function parsePath(rawPath) {
+  const segments = [];
+  for (const part of rawPath.split(".")) {
+    const bracketIdx = part.indexOf("[");
+    if (bracketIdx === -1) {
+      segments.push(part);
+    } else {
+      if (bracketIdx > 0) segments.push(part.slice(0, bracketIdx));
+      for (const m of part.matchAll(/\[(\d+)\]/g)) {
+        segments.push(parseInt(m[1], 10));
+      }
+    }
+  }
+  return segments;
+}
+__name(parsePath, "parsePath");
+function getNestedValue(obj, segments) {
+  let current = obj;
+  for (const seg of segments) {
+    if (current == null || typeof current !== "object") return void 0;
+    current = current[seg];
+  }
+  return current;
+}
+__name(getNestedValue, "getNestedValue");
+function setNestedValue(obj, segments, value) {
+  let current = obj;
+  for (let i = 0; i < segments.length - 1; i++) {
+    const seg = segments[i];
+    const nextSeg = segments[i + 1];
+    if (current[seg] == null) {
+      current[seg] = typeof nextSeg === "number" ? [] : {};
+    }
+    current = current[seg];
+  }
+  current[segments[segments.length - 1]] = value;
+}
+__name(setNestedValue, "setNestedValue");
+function resolvePartialArgValue(arg) {
+  var _a3, _b2;
+  const value = (_b2 = (_a3 = arg.stringValue) != null ? _a3 : arg.numberValue) != null ? _b2 : arg.boolValue;
+  if (value != null) return { value, json: JSON.stringify(value) };
+  if ("nullValue" in arg) return { value: null, json: "null" };
+  return void 0;
+}
+__name(resolvePartialArgValue, "resolvePartialArgValue");
+function mapGoogleGenerativeAIFinishReason({
+  finishReason,
+  hasToolCalls
+}) {
+  switch (finishReason) {
+    case "STOP":
+      return hasToolCalls ? "tool-calls" : "stop";
+    case "MAX_TOKENS":
+      return "length";
+    case "IMAGE_SAFETY":
+    case "RECITATION":
+    case "SAFETY":
+    case "BLOCKLIST":
+    case "PROHIBITED_CONTENT":
+    case "SPII":
+      return "content-filter";
+    case "MALFORMED_FUNCTION_CALL":
+      return "error";
+    case "FINISH_REASON_UNSPECIFIED":
+    case "OTHER":
+    default:
+      return "other";
+  }
+}
+__name(mapGoogleGenerativeAIFinishReason, "mapGoogleGenerativeAIFinishReason");
+var GoogleGenerativeAILanguageModel = class {
+  static {
+    __name(this, "GoogleGenerativeAILanguageModel");
+  }
+  constructor(modelId, config2) {
+    this.specificationVersion = "v3";
+    var _a3;
+    this.modelId = modelId;
+    this.config = config2;
+    this.generateId = (_a3 = config2.generateId) != null ? _a3 : generateId;
+  }
+  get provider() {
+    return this.config.provider;
+  }
+  get supportedUrls() {
+    var _a3, _b2, _c;
+    return (_c = (_b2 = (_a3 = this.config).supportedUrls) == null ? void 0 : _b2.call(_a3)) != null ? _c : {};
+  }
+  async getArgs({
+    prompt,
+    maxOutputTokens,
+    temperature,
+    topP,
+    topK,
+    frequencyPenalty,
+    presencePenalty,
+    stopSequences,
+    responseFormat,
+    seed,
+    tools,
+    toolChoice,
+    providerOptions
+  }, { isStreaming = false } = {}) {
+    var _a3, _b2;
+    const warnings = [];
+    const providerOptionsName = this.config.provider.includes("vertex") ? "vertex" : "google";
+    let googleOptions = await parseProviderOptions({
+      provider: providerOptionsName,
+      providerOptions,
+      schema: googleLanguageModelOptions
+    });
+    if (googleOptions == null && providerOptionsName !== "google") {
+      googleOptions = await parseProviderOptions({
+        provider: "google",
+        providerOptions,
+        schema: googleLanguageModelOptions
+      });
+    }
+    const isVertexProvider = this.config.provider.startsWith("google.vertex.");
+    if ((tools == null ? void 0 : tools.some(
+      (tool) => tool.type === "provider" && tool.id === "google.vertex_rag_store"
+    )) && !isVertexProvider) {
+      warnings.push({
+        type: "other",
+        message: `The 'vertex_rag_store' tool is only supported with the Google Vertex provider and might not be supported or could behave unexpectedly with the current Google provider (${this.config.provider}).`
+      });
+    }
+    if ((googleOptions == null ? void 0 : googleOptions.streamFunctionCallArguments) && !isVertexProvider) {
+      warnings.push({
+        type: "other",
+        message: `'streamFunctionCallArguments' is only supported on the Vertex AI API and will be ignored with the current Google provider (${this.config.provider}). See https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/function-calling#streaming-fc`
+      });
+    }
+    let sanitizedServiceTier = googleOptions == null ? void 0 : googleOptions.serviceTier;
+    if ((googleOptions == null ? void 0 : googleOptions.serviceTier) && isVertexProvider) {
+      sanitizedServiceTier = VertexServiceTierMap[googleOptions.serviceTier];
+    }
+    const isGemmaModel = this.modelId.toLowerCase().startsWith("gemma-");
+    const supportsFunctionResponseParts = this.modelId.startsWith("gemini-3");
+    const { contents, systemInstruction } = convertToGoogleGenerativeAIMessages(
+      prompt,
+      {
+        isGemmaModel,
+        providerOptionsName,
+        supportsFunctionResponseParts
+      }
+    );
+    const {
+      tools: googleTools2,
+      toolConfig: googleToolConfig,
+      toolWarnings
+    } = prepareTools({
+      tools,
+      toolChoice,
+      modelId: this.modelId
+    });
+    const streamFunctionCallArguments = isStreaming && isVertexProvider ? (_a3 = googleOptions == null ? void 0 : googleOptions.streamFunctionCallArguments) != null ? _a3 : false : void 0;
+    const toolConfig = googleToolConfig || streamFunctionCallArguments || (googleOptions == null ? void 0 : googleOptions.retrievalConfig) ? {
+      ...googleToolConfig,
+      ...streamFunctionCallArguments && {
+        functionCallingConfig: {
+          ...googleToolConfig == null ? void 0 : googleToolConfig.functionCallingConfig,
+          streamFunctionCallArguments: true
+        }
+      },
+      ...(googleOptions == null ? void 0 : googleOptions.retrievalConfig) && {
+        retrievalConfig: googleOptions.retrievalConfig
+      }
+    } : void 0;
+    return {
+      args: {
+        generationConfig: {
+          // standardized settings:
+          maxOutputTokens,
+          temperature,
+          topK,
+          topP,
+          frequencyPenalty,
+          presencePenalty,
+          stopSequences,
+          seed,
+          // response format:
+          responseMimeType: (responseFormat == null ? void 0 : responseFormat.type) === "json" ? "application/json" : void 0,
+          responseSchema: (responseFormat == null ? void 0 : responseFormat.type) === "json" && responseFormat.schema != null && // Google GenAI does not support all OpenAPI Schema features,
+          // so this is needed as an escape hatch:
+          // TODO convert into provider option
+          ((_b2 = googleOptions == null ? void 0 : googleOptions.structuredOutputs) != null ? _b2 : true) ? convertJSONSchemaToOpenAPISchema(responseFormat.schema) : void 0,
+          ...(googleOptions == null ? void 0 : googleOptions.audioTimestamp) && {
+            audioTimestamp: googleOptions.audioTimestamp
+          },
+          // provider options:
+          responseModalities: googleOptions == null ? void 0 : googleOptions.responseModalities,
+          thinkingConfig: googleOptions == null ? void 0 : googleOptions.thinkingConfig,
+          ...(googleOptions == null ? void 0 : googleOptions.mediaResolution) && {
+            mediaResolution: googleOptions.mediaResolution
+          },
+          ...(googleOptions == null ? void 0 : googleOptions.imageConfig) && {
+            imageConfig: googleOptions.imageConfig
+          }
+        },
+        contents,
+        systemInstruction: isGemmaModel ? void 0 : systemInstruction,
+        safetySettings: googleOptions == null ? void 0 : googleOptions.safetySettings,
+        tools: googleTools2,
+        toolConfig,
+        cachedContent: googleOptions == null ? void 0 : googleOptions.cachedContent,
+        labels: googleOptions == null ? void 0 : googleOptions.labels,
+        serviceTier: sanitizedServiceTier
+      },
+      warnings: [...warnings, ...toolWarnings],
+      providerOptionsName
+    };
+  }
+  async doGenerate(options) {
+    var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
+    const { args, warnings, providerOptionsName } = await this.getArgs(options);
+    const mergedHeaders = combineHeaders(
+      await resolve(this.config.headers),
+      options.headers
+    );
+    const {
+      responseHeaders,
+      value: response,
+      rawValue: rawResponse
+    } = await postJsonToApi({
+      url: `${this.config.baseURL}/${getModelPath(
+        this.modelId
+      )}:generateContent`,
+      headers: mergedHeaders,
+      body: args,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(responseSchema),
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch
+    });
+    const candidate = response.candidates[0];
+    const content = [];
+    const parts = (_b2 = (_a3 = candidate.content) == null ? void 0 : _a3.parts) != null ? _b2 : [];
+    const usageMetadata = response.usageMetadata;
+    let lastCodeExecutionToolCallId;
+    let lastServerToolCallId;
+    for (const part of parts) {
+      if ("executableCode" in part && ((_c = part.executableCode) == null ? void 0 : _c.code)) {
+        const toolCallId = this.config.generateId();
+        lastCodeExecutionToolCallId = toolCallId;
+        content.push({
+          type: "tool-call",
+          toolCallId,
+          toolName: "code_execution",
+          input: JSON.stringify(part.executableCode),
+          providerExecuted: true
+        });
+      } else if ("codeExecutionResult" in part && part.codeExecutionResult) {
+        content.push({
+          type: "tool-result",
+          // Assumes a result directly follows its corresponding call part.
+          toolCallId: lastCodeExecutionToolCallId,
+          toolName: "code_execution",
+          result: {
+            outcome: part.codeExecutionResult.outcome,
+            output: (_d = part.codeExecutionResult.output) != null ? _d : ""
+          }
+        });
+        lastCodeExecutionToolCallId = void 0;
+      } else if ("text" in part && part.text != null) {
+        const thoughtSignatureMetadata = part.thoughtSignature ? {
+          [providerOptionsName]: {
+            thoughtSignature: part.thoughtSignature
+          }
+        } : void 0;
+        if (part.text.length === 0) {
+          if (thoughtSignatureMetadata != null && content.length > 0) {
+            const lastContent = content[content.length - 1];
+            lastContent.providerMetadata = thoughtSignatureMetadata;
+          }
+        } else {
+          content.push({
+            type: part.thought === true ? "reasoning" : "text",
+            text: part.text,
+            providerMetadata: thoughtSignatureMetadata
+          });
+        }
+      } else if ("functionCall" in part && part.functionCall.name != null && part.functionCall.args != null) {
+        content.push({
+          type: "tool-call",
+          toolCallId: this.config.generateId(),
+          toolName: part.functionCall.name,
+          input: JSON.stringify(part.functionCall.args),
+          providerMetadata: part.thoughtSignature ? {
+            [providerOptionsName]: {
+              thoughtSignature: part.thoughtSignature
+            }
+          } : void 0
+        });
+      } else if ("inlineData" in part) {
+        const hasThought = part.thought === true;
+        const hasThoughtSignature = !!part.thoughtSignature;
+        content.push({
+          type: "file",
+          data: part.inlineData.data,
+          mediaType: part.inlineData.mimeType,
+          providerMetadata: hasThought || hasThoughtSignature ? {
+            [providerOptionsName]: {
+              ...hasThought ? { thought: true } : {},
+              ...hasThoughtSignature ? { thoughtSignature: part.thoughtSignature } : {}
+            }
+          } : void 0
+        });
+      } else if ("toolCall" in part && part.toolCall) {
+        const toolCallId = (_e = part.toolCall.id) != null ? _e : this.config.generateId();
+        lastServerToolCallId = toolCallId;
+        content.push({
+          type: "tool-call",
+          toolCallId,
+          toolName: `server:${part.toolCall.toolType}`,
+          input: JSON.stringify((_f = part.toolCall.args) != null ? _f : {}),
+          providerExecuted: true,
+          dynamic: true,
+          providerMetadata: part.thoughtSignature ? {
+            [providerOptionsName]: {
+              thoughtSignature: part.thoughtSignature,
+              serverToolCallId: toolCallId,
+              serverToolType: part.toolCall.toolType
+            }
+          } : {
+            [providerOptionsName]: {
+              serverToolCallId: toolCallId,
+              serverToolType: part.toolCall.toolType
+            }
+          }
+        });
+      } else if ("toolResponse" in part && part.toolResponse) {
+        const responseToolCallId = (_g = lastServerToolCallId != null ? lastServerToolCallId : part.toolResponse.id) != null ? _g : this.config.generateId();
+        content.push({
+          type: "tool-result",
+          toolCallId: responseToolCallId,
+          toolName: `server:${part.toolResponse.toolType}`,
+          result: (_h = part.toolResponse.response) != null ? _h : {},
+          providerMetadata: part.thoughtSignature ? {
+            [providerOptionsName]: {
+              thoughtSignature: part.thoughtSignature,
+              serverToolCallId: responseToolCallId,
+              serverToolType: part.toolResponse.toolType
+            }
+          } : {
+            [providerOptionsName]: {
+              serverToolCallId: responseToolCallId,
+              serverToolType: part.toolResponse.toolType
+            }
+          }
+        });
+        lastServerToolCallId = void 0;
+      }
+    }
+    const sources = (_i = extractSources({
+      groundingMetadata: candidate.groundingMetadata,
+      generateId: this.config.generateId
+    })) != null ? _i : [];
+    for (const source of sources) {
+      content.push(source);
+    }
+    return {
+      content,
+      finishReason: {
+        unified: mapGoogleGenerativeAIFinishReason({
+          finishReason: candidate.finishReason,
+          // Only count client-executed tool calls for finish reason determination.
+          hasToolCalls: content.some(
+            (part) => part.type === "tool-call" && !part.providerExecuted
+          )
+        }),
+        raw: (_j = candidate.finishReason) != null ? _j : void 0
+      },
+      usage: convertGoogleGenerativeAIUsage(usageMetadata),
+      warnings,
+      providerMetadata: {
+        [providerOptionsName]: {
+          promptFeedback: (_k = response.promptFeedback) != null ? _k : null,
+          groundingMetadata: (_l = candidate.groundingMetadata) != null ? _l : null,
+          urlContextMetadata: (_m = candidate.urlContextMetadata) != null ? _m : null,
+          safetyRatings: (_n = candidate.safetyRatings) != null ? _n : null,
+          usageMetadata: usageMetadata != null ? usageMetadata : null,
+          finishMessage: (_o = candidate.finishMessage) != null ? _o : null,
+          serviceTier: (_p = response.serviceTier) != null ? _p : null
+        }
+      },
+      request: { body: args },
+      response: {
+        // TODO timestamp, model id, id
+        headers: responseHeaders,
+        body: rawResponse
+      }
+    };
+  }
+  async doStream(options) {
+    const { args, warnings, providerOptionsName } = await this.getArgs(
+      options,
+      { isStreaming: true }
+    );
+    const headers = combineHeaders(
+      await resolve(this.config.headers),
+      options.headers
+    );
+    const { responseHeaders, value: response } = await postJsonToApi({
+      url: `${this.config.baseURL}/${getModelPath(
+        this.modelId
+      )}:streamGenerateContent?alt=sse`,
+      headers,
+      body: args,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createEventSourceResponseHandler(chunkSchema),
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch
+    });
+    let finishReason = {
+      unified: "other",
+      raw: void 0
+    };
+    let usage = void 0;
+    let providerMetadata = void 0;
+    let lastGroundingMetadata = null;
+    let lastUrlContextMetadata = null;
+    let serviceTier = null;
+    const generateId3 = this.config.generateId;
+    let hasToolCalls = false;
+    let currentTextBlockId = null;
+    let currentReasoningBlockId = null;
+    let blockCounter = 0;
+    const emittedSourceUrls = /* @__PURE__ */ new Set();
+    let lastCodeExecutionToolCallId;
+    let lastServerToolCallId;
+    const activeStreamingToolCalls = [];
+    return {
+      stream: response.pipeThrough(
+        new TransformStream({
+          start(controller) {
+            controller.enqueue({ type: "stream-start", warnings });
+          },
+          transform(chunk, controller) {
+            var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
+            if (options.includeRawChunks) {
+              controller.enqueue({ type: "raw", rawValue: chunk.rawValue });
+            }
+            if (!chunk.success) {
+              controller.enqueue({ type: "error", error: chunk.error });
+              return;
+            }
+            const value = chunk.value;
+            const usageMetadata = value.usageMetadata;
+            if (usageMetadata != null) {
+              usage = usageMetadata;
+            }
+            if (value.serviceTier != null) {
+              serviceTier = value.serviceTier;
+            }
+            const candidate = (_a3 = value.candidates) == null ? void 0 : _a3[0];
+            if (candidate == null) {
+              return;
+            }
+            const content = candidate.content;
+            if (candidate.groundingMetadata != null) {
+              lastGroundingMetadata = candidate.groundingMetadata;
+            }
+            if (candidate.urlContextMetadata != null) {
+              lastUrlContextMetadata = candidate.urlContextMetadata;
+            }
+            const sources = extractSources({
+              groundingMetadata: candidate.groundingMetadata,
+              generateId: generateId3
+            });
+            if (sources != null) {
+              for (const source of sources) {
+                if (source.sourceType === "url" && !emittedSourceUrls.has(source.url)) {
+                  emittedSourceUrls.add(source.url);
+                  controller.enqueue(source);
+                }
+              }
+            }
+            if (content != null) {
+              const parts = (_b2 = content.parts) != null ? _b2 : [];
+              for (const part of parts) {
+                if ("executableCode" in part && ((_c = part.executableCode) == null ? void 0 : _c.code)) {
+                  const toolCallId = generateId3();
+                  lastCodeExecutionToolCallId = toolCallId;
+                  controller.enqueue({
+                    type: "tool-call",
+                    toolCallId,
+                    toolName: "code_execution",
+                    input: JSON.stringify(part.executableCode),
+                    providerExecuted: true
+                  });
+                } else if ("codeExecutionResult" in part && part.codeExecutionResult) {
+                  const toolCallId = lastCodeExecutionToolCallId;
+                  if (toolCallId) {
+                    controller.enqueue({
+                      type: "tool-result",
+                      toolCallId,
+                      toolName: "code_execution",
+                      result: {
+                        outcome: part.codeExecutionResult.outcome,
+                        output: (_d = part.codeExecutionResult.output) != null ? _d : ""
+                      }
+                    });
+                    lastCodeExecutionToolCallId = void 0;
+                  }
+                } else if ("text" in part && part.text != null) {
+                  const thoughtSignatureMetadata = part.thoughtSignature ? {
+                    [providerOptionsName]: {
+                      thoughtSignature: part.thoughtSignature
+                    }
+                  } : void 0;
+                  if (part.text.length === 0) {
+                    if (thoughtSignatureMetadata != null && currentTextBlockId !== null) {
+                      controller.enqueue({
+                        type: "text-delta",
+                        id: currentTextBlockId,
+                        delta: "",
+                        providerMetadata: thoughtSignatureMetadata
+                      });
+                    }
+                  } else if (part.thought === true) {
+                    if (currentTextBlockId !== null) {
+                      controller.enqueue({
+                        type: "text-end",
+                        id: currentTextBlockId
+                      });
+                      currentTextBlockId = null;
+                    }
+                    if (currentReasoningBlockId === null) {
+                      currentReasoningBlockId = String(blockCounter++);
+                      controller.enqueue({
+                        type: "reasoning-start",
+                        id: currentReasoningBlockId,
+                        providerMetadata: thoughtSignatureMetadata
+                      });
+                    }
+                    controller.enqueue({
+                      type: "reasoning-delta",
+                      id: currentReasoningBlockId,
+                      delta: part.text,
+                      providerMetadata: thoughtSignatureMetadata
+                    });
+                  } else {
+                    if (currentReasoningBlockId !== null) {
+                      controller.enqueue({
+                        type: "reasoning-end",
+                        id: currentReasoningBlockId
+                      });
+                      currentReasoningBlockId = null;
+                    }
+                    if (currentTextBlockId === null) {
+                      currentTextBlockId = String(blockCounter++);
+                      controller.enqueue({
+                        type: "text-start",
+                        id: currentTextBlockId,
+                        providerMetadata: thoughtSignatureMetadata
+                      });
+                    }
+                    controller.enqueue({
+                      type: "text-delta",
+                      id: currentTextBlockId,
+                      delta: part.text,
+                      providerMetadata: thoughtSignatureMetadata
+                    });
+                  }
+                } else if ("inlineData" in part) {
+                  if (currentTextBlockId !== null) {
+                    controller.enqueue({
+                      type: "text-end",
+                      id: currentTextBlockId
+                    });
+                    currentTextBlockId = null;
+                  }
+                  if (currentReasoningBlockId !== null) {
+                    controller.enqueue({
+                      type: "reasoning-end",
+                      id: currentReasoningBlockId
+                    });
+                    currentReasoningBlockId = null;
+                  }
+                  const hasThought = part.thought === true;
+                  const hasThoughtSignature = !!part.thoughtSignature;
+                  const fileMeta = hasThought || hasThoughtSignature ? {
+                    [providerOptionsName]: {
+                      ...hasThought ? { thought: true } : {},
+                      ...hasThoughtSignature ? { thoughtSignature: part.thoughtSignature } : {}
+                    }
+                  } : void 0;
+                  controller.enqueue({
+                    type: "file",
+                    mediaType: part.inlineData.mimeType,
+                    data: part.inlineData.data,
+                    providerMetadata: fileMeta
+                  });
+                } else if ("toolCall" in part && part.toolCall) {
+                  const toolCallId = (_e = part.toolCall.id) != null ? _e : generateId3();
+                  lastServerToolCallId = toolCallId;
+                  const serverMeta = {
+                    [providerOptionsName]: {
+                      ...part.thoughtSignature ? { thoughtSignature: part.thoughtSignature } : {},
+                      serverToolCallId: toolCallId,
+                      serverToolType: part.toolCall.toolType
+                    }
+                  };
+                  controller.enqueue({
+                    type: "tool-call",
+                    toolCallId,
+                    toolName: `server:${part.toolCall.toolType}`,
+                    input: JSON.stringify((_f = part.toolCall.args) != null ? _f : {}),
+                    providerExecuted: true,
+                    dynamic: true,
+                    providerMetadata: serverMeta
+                  });
+                } else if ("toolResponse" in part && part.toolResponse) {
+                  const responseToolCallId = (_g = lastServerToolCallId != null ? lastServerToolCallId : part.toolResponse.id) != null ? _g : generateId3();
+                  const serverMeta = {
+                    [providerOptionsName]: {
+                      ...part.thoughtSignature ? { thoughtSignature: part.thoughtSignature } : {},
+                      serverToolCallId: responseToolCallId,
+                      serverToolType: part.toolResponse.toolType
+                    }
+                  };
+                  controller.enqueue({
+                    type: "tool-result",
+                    toolCallId: responseToolCallId,
+                    toolName: `server:${part.toolResponse.toolType}`,
+                    result: (_h = part.toolResponse.response) != null ? _h : {},
+                    providerMetadata: serverMeta
+                  });
+                  lastServerToolCallId = void 0;
+                }
+              }
+              for (const part of parts) {
+                if (!("functionCall" in part)) continue;
+                const providerMeta = part.thoughtSignature ? {
+                  [providerOptionsName]: {
+                    thoughtSignature: part.thoughtSignature
+                  }
+                } : void 0;
+                const isStreamingChunk = part.functionCall.partialArgs != null || part.functionCall.name != null && part.functionCall.willContinue === true;
+                const isTerminalChunk = part.functionCall.name == null && part.functionCall.args == null && part.functionCall.partialArgs == null && part.functionCall.willContinue == null;
+                const isCompleteCall = part.functionCall.name != null && part.functionCall.args != null && part.functionCall.partialArgs == null;
+                if (isStreamingChunk) {
+                  if (part.functionCall.name != null && part.functionCall.willContinue === true) {
+                    const toolCallId = generateId3();
+                    const accumulator = new GoogleJSONAccumulator();
+                    activeStreamingToolCalls.push({
+                      toolCallId,
+                      toolName: part.functionCall.name,
+                      accumulator,
+                      providerMetadata: providerMeta
+                    });
+                    controller.enqueue({
+                      type: "tool-input-start",
+                      id: toolCallId,
+                      toolName: part.functionCall.name,
+                      providerMetadata: providerMeta
+                    });
+                    if (part.functionCall.partialArgs != null) {
+                      const { textDelta } = accumulator.processPartialArgs(
+                        part.functionCall.partialArgs
+                      );
+                      if (textDelta.length > 0) {
+                        controller.enqueue({
+                          type: "tool-input-delta",
+                          id: toolCallId,
+                          delta: textDelta,
+                          providerMetadata: providerMeta
+                        });
+                      }
+                    }
+                  } else if (part.functionCall.partialArgs != null && activeStreamingToolCalls.length > 0) {
+                    const active = activeStreamingToolCalls[activeStreamingToolCalls.length - 1];
+                    const { textDelta } = active.accumulator.processPartialArgs(
+                      part.functionCall.partialArgs
+                    );
+                    if (textDelta.length > 0) {
+                      controller.enqueue({
+                        type: "tool-input-delta",
+                        id: active.toolCallId,
+                        delta: textDelta,
+                        providerMetadata: providerMeta
+                      });
+                    }
+                  }
+                } else if (isTerminalChunk && activeStreamingToolCalls.length > 0) {
+                  const active = activeStreamingToolCalls.pop();
+                  const { finalJSON, closingDelta } = active.accumulator.finalize();
+                  if (closingDelta.length > 0) {
+                    controller.enqueue({
+                      type: "tool-input-delta",
+                      id: active.toolCallId,
+                      delta: closingDelta,
+                      providerMetadata: active.providerMetadata
+                    });
+                  }
+                  controller.enqueue({
+                    type: "tool-input-end",
+                    id: active.toolCallId,
+                    providerMetadata: active.providerMetadata
+                  });
+                  controller.enqueue({
+                    type: "tool-call",
+                    toolCallId: active.toolCallId,
+                    toolName: active.toolName,
+                    input: finalJSON,
+                    providerMetadata: active.providerMetadata
+                  });
+                  hasToolCalls = true;
+                } else if (isCompleteCall) {
+                  const toolCallId = generateId3();
+                  const toolName = part.functionCall.name;
+                  const args2 = typeof part.functionCall.args === "string" ? part.functionCall.args : JSON.stringify((_i = part.functionCall.args) != null ? _i : {});
+                  controller.enqueue({
+                    type: "tool-input-start",
+                    id: toolCallId,
+                    toolName,
+                    providerMetadata: providerMeta
+                  });
+                  controller.enqueue({
+                    type: "tool-input-delta",
+                    id: toolCallId,
+                    delta: args2,
+                    providerMetadata: providerMeta
+                  });
+                  controller.enqueue({
+                    type: "tool-input-end",
+                    id: toolCallId,
+                    providerMetadata: providerMeta
+                  });
+                  controller.enqueue({
+                    type: "tool-call",
+                    toolCallId,
+                    toolName,
+                    input: args2,
+                    providerMetadata: providerMeta
+                  });
+                  hasToolCalls = true;
+                }
+              }
+            }
+            if (candidate.finishReason != null) {
+              finishReason = {
+                unified: mapGoogleGenerativeAIFinishReason({
+                  finishReason: candidate.finishReason,
+                  hasToolCalls
+                }),
+                raw: candidate.finishReason
+              };
+              providerMetadata = {
+                [providerOptionsName]: {
+                  promptFeedback: (_j = value.promptFeedback) != null ? _j : null,
+                  groundingMetadata: lastGroundingMetadata,
+                  urlContextMetadata: lastUrlContextMetadata,
+                  safetyRatings: (_k = candidate.safetyRatings) != null ? _k : null,
+                  usageMetadata: usageMetadata != null ? usageMetadata : null,
+                  finishMessage: (_l = candidate.finishMessage) != null ? _l : null,
+                  serviceTier
+                }
+              };
+            }
+          },
+          flush(controller) {
+            if (currentTextBlockId !== null) {
+              controller.enqueue({
+                type: "text-end",
+                id: currentTextBlockId
+              });
+            }
+            if (currentReasoningBlockId !== null) {
+              controller.enqueue({
+                type: "reasoning-end",
+                id: currentReasoningBlockId
+              });
+            }
+            controller.enqueue({
+              type: "finish",
+              finishReason,
+              usage: convertGoogleGenerativeAIUsage(usage),
+              providerMetadata
+            });
+          }
+        })
+      ),
+      response: { headers: responseHeaders },
+      request: { body: args }
+    };
+  }
+};
+function extractSources({
+  groundingMetadata,
+  generateId: generateId3
+}) {
+  var _a3, _b2, _c, _d, _e, _f;
+  if (!(groundingMetadata == null ? void 0 : groundingMetadata.groundingChunks)) {
+    return void 0;
+  }
+  const sources = [];
+  for (const chunk of groundingMetadata.groundingChunks) {
+    if (chunk.web != null) {
+      sources.push({
+        type: "source",
+        sourceType: "url",
+        id: generateId3(),
+        url: chunk.web.uri,
+        title: (_a3 = chunk.web.title) != null ? _a3 : void 0
+      });
+    } else if (chunk.image != null) {
+      sources.push({
+        type: "source",
+        sourceType: "url",
+        id: generateId3(),
+        // Google requires attribution to the source URI, not the actual image URI.
+        // TODO: add another type in v7 to allow both the image and source URL to be included separately
+        url: chunk.image.sourceUri,
+        title: (_b2 = chunk.image.title) != null ? _b2 : void 0
+      });
+    } else if (chunk.retrievedContext != null) {
+      const uri = chunk.retrievedContext.uri;
+      const fileSearchStore = chunk.retrievedContext.fileSearchStore;
+      if (uri && (uri.startsWith("http://") || uri.startsWith("https://"))) {
+        sources.push({
+          type: "source",
+          sourceType: "url",
+          id: generateId3(),
+          url: uri,
+          title: (_c = chunk.retrievedContext.title) != null ? _c : void 0
+        });
+      } else if (uri) {
+        const title = (_d = chunk.retrievedContext.title) != null ? _d : "Unknown Document";
+        let mediaType = "application/octet-stream";
+        let filename = void 0;
+        if (uri.endsWith(".pdf")) {
+          mediaType = "application/pdf";
+          filename = uri.split("/").pop();
+        } else if (uri.endsWith(".txt")) {
+          mediaType = "text/plain";
+          filename = uri.split("/").pop();
+        } else if (uri.endsWith(".docx")) {
+          mediaType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+          filename = uri.split("/").pop();
+        } else if (uri.endsWith(".doc")) {
+          mediaType = "application/msword";
+          filename = uri.split("/").pop();
+        } else if (uri.match(/\.(md|markdown)$/)) {
+          mediaType = "text/markdown";
+          filename = uri.split("/").pop();
+        } else {
+          filename = uri.split("/").pop();
+        }
+        sources.push({
+          type: "source",
+          sourceType: "document",
+          id: generateId3(),
+          mediaType,
+          title,
+          filename
+        });
+      } else if (fileSearchStore) {
+        const title = (_e = chunk.retrievedContext.title) != null ? _e : "Unknown Document";
+        sources.push({
+          type: "source",
+          sourceType: "document",
+          id: generateId3(),
+          mediaType: "application/octet-stream",
+          title,
+          filename: fileSearchStore.split("/").pop()
+        });
+      }
+    } else if (chunk.maps != null) {
+      if (chunk.maps.uri) {
+        sources.push({
+          type: "source",
+          sourceType: "url",
+          id: generateId3(),
+          url: chunk.maps.uri,
+          title: (_f = chunk.maps.title) != null ? _f : void 0
+        });
+      }
+    }
+  }
+  return sources.length > 0 ? sources : void 0;
+}
+__name(extractSources, "extractSources");
+var getGroundingMetadataSchema = /* @__PURE__ */ __name(() => external_exports2.object({
+  webSearchQueries: external_exports2.array(external_exports2.string()).nullish(),
+  imageSearchQueries: external_exports2.array(external_exports2.string()).nullish(),
+  retrievalQueries: external_exports2.array(external_exports2.string()).nullish(),
+  searchEntryPoint: external_exports2.object({ renderedContent: external_exports2.string() }).nullish(),
+  groundingChunks: external_exports2.array(
+    external_exports2.object({
+      web: external_exports2.object({ uri: external_exports2.string(), title: external_exports2.string().nullish() }).nullish(),
+      image: external_exports2.object({
+        sourceUri: external_exports2.string(),
+        imageUri: external_exports2.string(),
+        title: external_exports2.string().nullish(),
+        domain: external_exports2.string().nullish()
+      }).nullish(),
+      retrievedContext: external_exports2.object({
+        uri: external_exports2.string().nullish(),
+        title: external_exports2.string().nullish(),
+        text: external_exports2.string().nullish(),
+        fileSearchStore: external_exports2.string().nullish()
+      }).nullish(),
+      maps: external_exports2.object({
+        uri: external_exports2.string().nullish(),
+        title: external_exports2.string().nullish(),
+        text: external_exports2.string().nullish(),
+        placeId: external_exports2.string().nullish()
+      }).nullish()
+    })
+  ).nullish(),
+  groundingSupports: external_exports2.array(
+    external_exports2.object({
+      segment: external_exports2.object({
+        startIndex: external_exports2.number().nullish(),
+        endIndex: external_exports2.number().nullish(),
+        text: external_exports2.string().nullish()
+      }).nullish(),
+      segment_text: external_exports2.string().nullish(),
+      groundingChunkIndices: external_exports2.array(external_exports2.number()).nullish(),
+      supportChunkIndices: external_exports2.array(external_exports2.number()).nullish(),
+      confidenceScores: external_exports2.array(external_exports2.number()).nullish(),
+      confidenceScore: external_exports2.array(external_exports2.number()).nullish()
+    })
+  ).nullish(),
+  retrievalMetadata: external_exports2.union([
+    external_exports2.object({
+      webDynamicRetrievalScore: external_exports2.number()
+    }),
+    external_exports2.object({})
+  ]).nullish()
+}), "getGroundingMetadataSchema");
+var partialArgSchema = external_exports2.object({
+  jsonPath: external_exports2.string(),
+  stringValue: external_exports2.string().nullish(),
+  numberValue: external_exports2.number().nullish(),
+  boolValue: external_exports2.boolean().nullish(),
+  nullValue: external_exports2.unknown().nullish(),
+  willContinue: external_exports2.boolean().nullish()
+});
+var getContentSchema = /* @__PURE__ */ __name(() => external_exports2.object({
+  parts: external_exports2.array(
+    external_exports2.union([
+      // note: order matters since text can be fully empty
+      external_exports2.object({
+        functionCall: external_exports2.object({
+          name: external_exports2.string().nullish(),
+          args: external_exports2.unknown().nullish(),
+          partialArgs: external_exports2.array(partialArgSchema).nullish(),
+          willContinue: external_exports2.boolean().nullish()
+        }),
+        thoughtSignature: external_exports2.string().nullish()
+      }),
+      external_exports2.object({
+        inlineData: external_exports2.object({
+          mimeType: external_exports2.string(),
+          data: external_exports2.string()
+        }),
+        thought: external_exports2.boolean().nullish(),
+        thoughtSignature: external_exports2.string().nullish()
+      }),
+      external_exports2.object({
+        toolCall: external_exports2.object({
+          toolType: external_exports2.string(),
+          args: external_exports2.unknown().nullish(),
+          id: external_exports2.string()
+        }),
+        thoughtSignature: external_exports2.string().nullish()
+      }),
+      external_exports2.object({
+        toolResponse: external_exports2.object({
+          toolType: external_exports2.string(),
+          response: external_exports2.unknown().nullish(),
+          id: external_exports2.string()
+        }),
+        thoughtSignature: external_exports2.string().nullish()
+      }),
+      external_exports2.object({
+        executableCode: external_exports2.object({
+          language: external_exports2.string(),
+          code: external_exports2.string()
+        }).nullish(),
+        codeExecutionResult: external_exports2.object({
+          outcome: external_exports2.string(),
+          output: external_exports2.string().nullish()
+        }).nullish(),
+        text: external_exports2.string().nullish(),
+        thought: external_exports2.boolean().nullish(),
+        thoughtSignature: external_exports2.string().nullish()
+      })
+    ])
+  ).nullish()
+}), "getContentSchema");
+var getSafetyRatingSchema = /* @__PURE__ */ __name(() => external_exports2.object({
+  category: external_exports2.string().nullish(),
+  probability: external_exports2.string().nullish(),
+  probabilityScore: external_exports2.number().nullish(),
+  severity: external_exports2.string().nullish(),
+  severityScore: external_exports2.number().nullish(),
+  blocked: external_exports2.boolean().nullish()
+}), "getSafetyRatingSchema");
+var tokenDetailsSchema = external_exports2.array(
+  external_exports2.object({
+    modality: external_exports2.string(),
+    tokenCount: external_exports2.number()
+  })
+).nullish();
+var usageSchema = external_exports2.object({
+  cachedContentTokenCount: external_exports2.number().nullish(),
+  thoughtsTokenCount: external_exports2.number().nullish(),
+  promptTokenCount: external_exports2.number().nullish(),
+  candidatesTokenCount: external_exports2.number().nullish(),
+  totalTokenCount: external_exports2.number().nullish(),
+  // https://cloud.google.com/vertex-ai/generative-ai/docs/reference/rest/v1/GenerateContentResponse#TrafficType
+  trafficType: external_exports2.string().nullish(),
+  // https://ai.google.dev/api/generate-content#Modality
+  promptTokensDetails: tokenDetailsSchema,
+  candidatesTokensDetails: tokenDetailsSchema
+});
+var getUrlContextMetadataSchema = /* @__PURE__ */ __name(() => external_exports2.object({
+  urlMetadata: external_exports2.array(
+    external_exports2.object({
+      retrievedUrl: external_exports2.string(),
+      urlRetrievalStatus: external_exports2.string()
+    })
+  ).nullish()
+}), "getUrlContextMetadataSchema");
+var responseSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      candidates: external_exports2.array(
+        external_exports2.object({
+          content: getContentSchema().nullish().or(external_exports2.object({}).strict()),
+          finishReason: external_exports2.string().nullish(),
+          finishMessage: external_exports2.string().nullish(),
+          safetyRatings: external_exports2.array(getSafetyRatingSchema()).nullish(),
+          groundingMetadata: getGroundingMetadataSchema().nullish(),
+          urlContextMetadata: getUrlContextMetadataSchema().nullish()
+        })
+      ),
+      usageMetadata: usageSchema.nullish(),
+      promptFeedback: external_exports2.object({
+        blockReason: external_exports2.string().nullish(),
+        safetyRatings: external_exports2.array(getSafetyRatingSchema()).nullish()
+      }).nullish(),
+      serviceTier: external_exports2.string().nullish()
+    })
+  )
+);
+var chunkSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      candidates: external_exports2.array(
+        external_exports2.object({
+          content: getContentSchema().nullish(),
+          finishReason: external_exports2.string().nullish(),
+          finishMessage: external_exports2.string().nullish(),
+          safetyRatings: external_exports2.array(getSafetyRatingSchema()).nullish(),
+          groundingMetadata: getGroundingMetadataSchema().nullish(),
+          urlContextMetadata: getUrlContextMetadataSchema().nullish()
+        })
+      ).nullish(),
+      usageMetadata: usageSchema.nullish(),
+      promptFeedback: external_exports2.object({
+        blockReason: external_exports2.string().nullish(),
+        safetyRatings: external_exports2.array(getSafetyRatingSchema()).nullish()
+      }).nullish(),
+      serviceTier: external_exports2.string().nullish()
+    })
+  )
+);
+var codeExecution = createProviderToolFactoryWithOutputSchema({
+  id: "google.code_execution",
+  inputSchema: external_exports2.object({
+    language: external_exports2.string().describe("The programming language of the code."),
+    code: external_exports2.string().describe("The code to be executed.")
+  }),
+  outputSchema: external_exports2.object({
+    outcome: external_exports2.string().describe('The outcome of the execution (e.g., "OUTCOME_OK").'),
+    output: external_exports2.string().describe("The output from the code execution.")
+  })
+});
+var enterpriseWebSearch = createProviderToolFactory({
+  id: "google.enterprise_web_search",
+  inputSchema: lazySchema(() => zodSchema(external_exports2.object({})))
+});
+var fileSearchArgsBaseSchema = external_exports2.object({
+  /** The names of the file_search_stores to retrieve from.
+   *  Example: `fileSearchStores/my-file-search-store-123`
+   */
+  fileSearchStoreNames: external_exports2.array(external_exports2.string()).describe(
+    "The names of the file_search_stores to retrieve from. Example: `fileSearchStores/my-file-search-store-123`"
+  ),
+  /** The number of file search retrieval chunks to retrieve. */
+  topK: external_exports2.number().int().positive().describe("The number of file search retrieval chunks to retrieve.").optional(),
+  /** Metadata filter to apply to the file search retrieval documents.
+   *  See https://google.aip.dev/160 for the syntax of the filter expression.
+   */
+  metadataFilter: external_exports2.string().describe(
+    "Metadata filter to apply to the file search retrieval documents. See https://google.aip.dev/160 for the syntax of the filter expression."
+  ).optional()
+}).passthrough();
+var fileSearchArgsSchema = lazySchema(
+  () => zodSchema(fileSearchArgsBaseSchema)
+);
+var fileSearch = createProviderToolFactory({
+  id: "google.file_search",
+  inputSchema: fileSearchArgsSchema
+});
+var googleMaps = createProviderToolFactory({
+  id: "google.google_maps",
+  inputSchema: lazySchema(() => zodSchema(external_exports2.object({})))
+});
+var googleSearchToolArgsBaseSchema = external_exports2.object({
+  searchTypes: external_exports2.object({
+    webSearch: external_exports2.object({}).optional(),
+    imageSearch: external_exports2.object({}).optional()
+  }).optional(),
+  timeRangeFilter: external_exports2.object({
+    startTime: external_exports2.string(),
+    endTime: external_exports2.string()
+  }).optional()
+}).passthrough();
+var googleSearchToolArgsSchema = lazySchema(
+  () => zodSchema(googleSearchToolArgsBaseSchema)
+);
+var googleSearch = createProviderToolFactory(
+  {
+    id: "google.google_search",
+    inputSchema: googleSearchToolArgsSchema
+  }
+);
+var urlContext = createProviderToolFactory({
+  id: "google.url_context",
+  inputSchema: lazySchema(() => zodSchema(external_exports2.object({})))
+});
+var vertexRagStore = createProviderToolFactory({
+  id: "google.vertex_rag_store",
+  inputSchema: external_exports2.object({
+    ragCorpus: external_exports2.string(),
+    topK: external_exports2.number().optional()
+  })
+});
+var googleTools = {
+  /**
+   * Creates a Google search tool that gives Google direct access to real-time web content.
+   * Must have name "google_search".
+   */
+  googleSearch,
+  /**
+   * Creates an Enterprise Web Search tool for grounding responses using a compliance-focused web index.
+   * Designed for highly-regulated industries (finance, healthcare, public sector).
+   * Does not log customer data and supports VPC service controls.
+   * Must have name "enterprise_web_search".
+   *
+   * @note Only available on Vertex AI. Requires Gemini 2.0 or newer.
+   *
+   * @see https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/web-grounding-enterprise
+   */
+  enterpriseWebSearch,
+  /**
+   * Creates a Google Maps grounding tool that gives the model access to Google Maps data.
+   * Must have name "google_maps".
+   *
+   * @see https://ai.google.dev/gemini-api/docs/maps-grounding
+   * @see https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/grounding-with-google-maps
+   */
+  googleMaps,
+  /**
+   * Creates a URL context tool that gives Google direct access to real-time web content.
+   * Must have name "url_context".
+   */
+  urlContext,
+  /**
+   * Enables Retrieval Augmented Generation (RAG) via the Gemini File Search tool.
+   * Must have name "file_search".
+   *
+   * @param fileSearchStoreNames - Fully-qualified File Search store resource names.
+   * @param metadataFilter - Optional filter expression to restrict the files that can be retrieved.
+   * @param topK - Optional result limit for the number of chunks returned from File Search.
+   *
+   * @see https://ai.google.dev/gemini-api/docs/file-search
+   */
+  fileSearch,
+  /**
+   * A tool that enables the model to generate and run Python code.
+   * Must have name "code_execution".
+   *
+   * @note Ensure the selected model supports Code Execution.
+   * Multi-tool usage with the code execution tool is typically compatible with Gemini >=2 models.
+   *
+   * @see https://ai.google.dev/gemini-api/docs/code-execution (Google AI)
+   * @see https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/code-execution-api (Vertex AI)
+   */
+  codeExecution,
+  /**
+   * Creates a Vertex RAG Store tool that enables the model to perform RAG searches against a Vertex RAG Store.
+   * Must have name "vertex_rag_store".
+   */
+  vertexRagStore
+};
+var GoogleGenerativeAIImageModel = class {
+  static {
+    __name(this, "GoogleGenerativeAIImageModel");
+  }
+  constructor(modelId, settings, config2) {
+    this.modelId = modelId;
+    this.settings = settings;
+    this.config = config2;
+    this.specificationVersion = "v3";
+  }
+  get maxImagesPerCall() {
+    if (this.settings.maxImagesPerCall != null) {
+      return this.settings.maxImagesPerCall;
+    }
+    if (isGeminiModel(this.modelId)) {
+      return 10;
+    }
+    return 4;
+  }
+  get provider() {
+    return this.config.provider;
+  }
+  async doGenerate(options) {
+    if (isGeminiModel(this.modelId)) {
+      return this.doGenerateGemini(options);
+    }
+    return this.doGenerateImagen(options);
+  }
+  async doGenerateImagen(options) {
+    var _a3, _b2, _c;
+    const {
+      prompt,
+      n = 1,
+      size,
+      aspectRatio = "1:1",
+      seed,
+      providerOptions,
+      headers,
+      abortSignal,
+      files,
+      mask
+    } = options;
+    const warnings = [];
+    if (files != null && files.length > 0) {
+      throw new Error(
+        "Google Generative AI does not support image editing with Imagen models. Use Google Vertex AI (@ai-sdk/google-vertex) for image editing capabilities."
+      );
+    }
+    if (mask != null) {
+      throw new Error(
+        "Google Generative AI does not support image editing with masks. Use Google Vertex AI (@ai-sdk/google-vertex) for image editing capabilities."
+      );
+    }
+    if (size != null) {
+      warnings.push({
+        type: "unsupported",
+        feature: "size",
+        details: "This model does not support the `size` option. Use `aspectRatio` instead."
+      });
+    }
+    if (seed != null) {
+      warnings.push({
+        type: "unsupported",
+        feature: "seed",
+        details: "This model does not support the `seed` option through this provider."
+      });
+    }
+    const googleOptions = await parseProviderOptions({
+      provider: "google",
+      providerOptions,
+      schema: googleImageModelOptionsSchema
+    });
+    const currentDate = (_c = (_b2 = (_a3 = this.config._internal) == null ? void 0 : _a3.currentDate) == null ? void 0 : _b2.call(_a3)) != null ? _c : /* @__PURE__ */ new Date();
+    const parameters = {
+      sampleCount: n
+    };
+    if (aspectRatio != null) {
+      parameters.aspectRatio = aspectRatio;
+    }
+    if (googleOptions) {
+      Object.assign(parameters, googleOptions);
+    }
+    const body = {
+      instances: [{ prompt }],
+      parameters
+    };
+    const { responseHeaders, value: response } = await postJsonToApi({
+      url: `${this.config.baseURL}/models/${this.modelId}:predict`,
+      headers: combineHeaders(await resolve(this.config.headers), headers),
+      body,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(
+        googleImageResponseSchema
+      ),
+      abortSignal,
+      fetch: this.config.fetch
+    });
+    return {
+      images: response.predictions.map(
+        (p) => p.bytesBase64Encoded
+      ),
+      warnings,
+      providerMetadata: {
+        google: {
+          images: response.predictions.map(() => ({
+            // Add any prediction-specific metadata here
+          }))
+        }
+      },
+      response: {
+        timestamp: currentDate,
+        modelId: this.modelId,
+        headers: responseHeaders
+      }
+    };
+  }
+  async doGenerateGemini(options) {
+    var _a3, _b2, _c, _d, _e, _f, _g, _h, _i;
+    const {
+      prompt,
+      n,
+      size,
+      aspectRatio,
+      seed,
+      providerOptions,
+      headers,
+      abortSignal,
+      files,
+      mask
+    } = options;
+    const warnings = [];
+    if (mask != null) {
+      throw new Error(
+        "Gemini image models do not support mask-based image editing."
+      );
+    }
+    if (n != null && n > 1) {
+      throw new Error(
+        "Gemini image models do not support generating a set number of images per call. Use n=1 or omit the n parameter."
+      );
+    }
+    if (size != null) {
+      warnings.push({
+        type: "unsupported",
+        feature: "size",
+        details: "This model does not support the `size` option. Use `aspectRatio` instead."
+      });
+    }
+    const userContent = [];
+    if (prompt != null) {
+      userContent.push({ type: "text", text: prompt });
+    }
+    if (files != null && files.length > 0) {
+      for (const file of files) {
+        if (file.type === "url") {
+          userContent.push({
+            type: "file",
+            data: new URL(file.url),
+            mediaType: "image/*"
+          });
+        } else {
+          userContent.push({
+            type: "file",
+            data: typeof file.data === "string" ? file.data : new Uint8Array(file.data),
+            mediaType: file.mediaType
+          });
+        }
+      }
+    }
+    const languageModelPrompt = [
+      { role: "user", content: userContent }
+    ];
+    const languageModel = new GoogleGenerativeAILanguageModel(this.modelId, {
+      provider: this.config.provider,
+      baseURL: this.config.baseURL,
+      headers: (_a3 = this.config.headers) != null ? _a3 : {},
+      fetch: this.config.fetch,
+      generateId: (_b2 = this.config.generateId) != null ? _b2 : generateId
+    });
+    const result = await languageModel.doGenerate({
+      prompt: languageModelPrompt,
+      seed,
+      providerOptions: {
+        google: {
+          responseModalities: ["IMAGE"],
+          imageConfig: aspectRatio ? {
+            aspectRatio
+          } : void 0,
+          ...(_c = providerOptions == null ? void 0 : providerOptions.google) != null ? _c : {}
+        }
+      },
+      headers,
+      abortSignal
+    });
+    const currentDate = (_f = (_e = (_d = this.config._internal) == null ? void 0 : _d.currentDate) == null ? void 0 : _e.call(_d)) != null ? _f : /* @__PURE__ */ new Date();
+    const images = [];
+    for (const part of result.content) {
+      if (part.type === "file" && part.mediaType.startsWith("image/")) {
+        images.push(convertToBase64(part.data));
+      }
+    }
+    return {
+      images,
+      warnings,
+      providerMetadata: {
+        google: {
+          images: images.map(() => ({}))
+        }
+      },
+      response: {
+        timestamp: currentDate,
+        modelId: this.modelId,
+        headers: (_g = result.response) == null ? void 0 : _g.headers
+      },
+      usage: result.usage ? {
+        inputTokens: result.usage.inputTokens.total,
+        outputTokens: result.usage.outputTokens.total,
+        totalTokens: ((_h = result.usage.inputTokens.total) != null ? _h : 0) + ((_i = result.usage.outputTokens.total) != null ? _i : 0)
+      } : void 0
+    };
+  }
+};
+function isGeminiModel(modelId) {
+  return modelId.startsWith("gemini-");
+}
+__name(isGeminiModel, "isGeminiModel");
+var googleImageResponseSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      predictions: external_exports2.array(external_exports2.object({ bytesBase64Encoded: external_exports2.string() })).default([])
+    })
+  )
+);
+var googleImageModelOptionsSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      personGeneration: external_exports2.enum(["dont_allow", "allow_adult", "allow_all"]).nullish(),
+      aspectRatio: external_exports2.enum(["1:1", "3:4", "4:3", "9:16", "16:9"]).nullish()
+    })
+  )
+);
+var GoogleGenerativeAIVideoModel = class {
+  static {
+    __name(this, "GoogleGenerativeAIVideoModel");
+  }
+  constructor(modelId, config2) {
+    this.modelId = modelId;
+    this.config = config2;
+    this.specificationVersion = "v3";
+  }
+  get provider() {
+    return this.config.provider;
+  }
+  get maxVideosPerCall() {
+    return 4;
+  }
+  async doGenerate(options) {
+    var _a3, _b2, _c, _d, _e, _f, _g, _h;
+    const currentDate = (_c = (_b2 = (_a3 = this.config._internal) == null ? void 0 : _a3.currentDate) == null ? void 0 : _b2.call(_a3)) != null ? _c : /* @__PURE__ */ new Date();
+    const warnings = [];
+    const googleOptions = await parseProviderOptions({
+      provider: "google",
+      providerOptions: options.providerOptions,
+      schema: googleVideoModelOptionsSchema
+    });
+    const instances = [{}];
+    const instance = instances[0];
+    if (options.prompt != null) {
+      instance.prompt = options.prompt;
+    }
+    if (options.image != null) {
+      if (options.image.type === "url") {
+        warnings.push({
+          type: "unsupported",
+          feature: "URL-based image input",
+          details: "Google Generative AI video models require base64-encoded images. URL will be ignored."
+        });
+      } else {
+        const base64Data = typeof options.image.data === "string" ? options.image.data : convertUint8ArrayToBase64(options.image.data);
+        instance.image = {
+          inlineData: {
+            mimeType: options.image.mediaType || "image/png",
+            data: base64Data
+          }
+        };
+      }
+    }
+    if ((googleOptions == null ? void 0 : googleOptions.referenceImages) != null) {
+      instance.referenceImages = googleOptions.referenceImages.map((refImg) => {
+        if (refImg.bytesBase64Encoded) {
+          return {
+            inlineData: {
+              mimeType: "image/png",
+              data: refImg.bytesBase64Encoded
+            }
+          };
+        } else if (refImg.gcsUri) {
+          return {
+            gcsUri: refImg.gcsUri
+          };
+        }
+        return refImg;
+      });
+    }
+    const parameters = {
+      sampleCount: options.n
+    };
+    if (options.aspectRatio) {
+      parameters.aspectRatio = options.aspectRatio;
+    }
+    if (options.resolution) {
+      const resolutionMap = {
+        "1280x720": "720p",
+        "1920x1080": "1080p",
+        "3840x2160": "4k"
+      };
+      parameters.resolution = resolutionMap[options.resolution] || options.resolution;
+    }
+    if (options.duration) {
+      parameters.durationSeconds = options.duration;
+    }
+    if (options.seed) {
+      parameters.seed = options.seed;
+    }
+    if (googleOptions != null) {
+      const opts = googleOptions;
+      if (opts.personGeneration !== void 0 && opts.personGeneration !== null) {
+        parameters.personGeneration = opts.personGeneration;
+      }
+      if (opts.negativePrompt !== void 0 && opts.negativePrompt !== null) {
+        parameters.negativePrompt = opts.negativePrompt;
+      }
+      for (const [key, value] of Object.entries(opts)) {
+        if (![
+          "pollIntervalMs",
+          "pollTimeoutMs",
+          "personGeneration",
+          "negativePrompt",
+          "referenceImages"
+        ].includes(key)) {
+          parameters[key] = value;
+        }
+      }
+    }
+    const { value: operation } = await postJsonToApi({
+      url: `${this.config.baseURL}/models/${this.modelId}:predictLongRunning`,
+      headers: combineHeaders(
+        await resolve(this.config.headers),
+        options.headers
+      ),
+      body: {
+        instances,
+        parameters
+      },
+      successfulResponseHandler: createJsonResponseHandler(
+        googleOperationSchema
+      ),
+      failedResponseHandler: googleFailedResponseHandler,
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch
+    });
+    const operationName = operation.name;
+    if (!operationName) {
+      throw new AISDKError({
+        name: "GOOGLE_VIDEO_GENERATION_ERROR",
+        message: "No operation name returned from API"
+      });
+    }
+    const pollIntervalMs = (_d = googleOptions == null ? void 0 : googleOptions.pollIntervalMs) != null ? _d : 1e4;
+    const pollTimeoutMs = (_e = googleOptions == null ? void 0 : googleOptions.pollTimeoutMs) != null ? _e : 6e5;
+    const startTime = Date.now();
+    let finalOperation = operation;
+    let responseHeaders;
+    while (!finalOperation.done) {
+      if (Date.now() - startTime > pollTimeoutMs) {
+        throw new AISDKError({
+          name: "GOOGLE_VIDEO_GENERATION_TIMEOUT",
+          message: `Video generation timed out after ${pollTimeoutMs}ms`
+        });
+      }
+      await delay(pollIntervalMs);
+      if ((_f = options.abortSignal) == null ? void 0 : _f.aborted) {
+        throw new AISDKError({
+          name: "GOOGLE_VIDEO_GENERATION_ABORTED",
+          message: "Video generation request was aborted"
+        });
+      }
+      const { value: statusOperation, responseHeaders: pollHeaders } = await getFromApi({
+        url: `${this.config.baseURL}/${operationName}`,
+        headers: combineHeaders(
+          await resolve(this.config.headers),
+          options.headers
+        ),
+        successfulResponseHandler: createJsonResponseHandler(
+          googleOperationSchema
+        ),
+        failedResponseHandler: googleFailedResponseHandler,
+        abortSignal: options.abortSignal,
+        fetch: this.config.fetch
+      });
+      finalOperation = statusOperation;
+      responseHeaders = pollHeaders;
+    }
+    if (finalOperation.error) {
+      throw new AISDKError({
+        name: "GOOGLE_VIDEO_GENERATION_FAILED",
+        message: `Video generation failed: ${finalOperation.error.message}`
+      });
+    }
+    const response = finalOperation.response;
+    if (!((_g = response == null ? void 0 : response.generateVideoResponse) == null ? void 0 : _g.generatedSamples) || response.generateVideoResponse.generatedSamples.length === 0) {
+      throw new AISDKError({
+        name: "GOOGLE_VIDEO_GENERATION_ERROR",
+        message: `No videos in response. Response: ${JSON.stringify(finalOperation)}`
+      });
+    }
+    const videos = [];
+    const videoMetadata = [];
+    const resolvedHeaders = await resolve(this.config.headers);
+    const apiKey = resolvedHeaders == null ? void 0 : resolvedHeaders["x-goog-api-key"];
+    for (const generatedSample of response.generateVideoResponse.generatedSamples) {
+      if ((_h = generatedSample.video) == null ? void 0 : _h.uri) {
+        const urlWithAuth = apiKey ? `${generatedSample.video.uri}${generatedSample.video.uri.includes("?") ? "&" : "?"}key=${apiKey}` : generatedSample.video.uri;
+        videos.push({
+          type: "url",
+          url: urlWithAuth,
+          mediaType: "video/mp4"
+        });
+        videoMetadata.push({
+          uri: generatedSample.video.uri
+        });
+      }
+    }
+    if (videos.length === 0) {
+      throw new AISDKError({
+        name: "GOOGLE_VIDEO_GENERATION_ERROR",
+        message: "No valid videos in response"
+      });
+    }
+    return {
+      videos,
+      warnings,
+      response: {
+        timestamp: currentDate,
+        modelId: this.modelId,
+        headers: responseHeaders
+      },
+      providerMetadata: {
+        google: {
+          videos: videoMetadata
+        }
+      }
+    };
+  }
+};
+var googleOperationSchema = external_exports2.object({
+  name: external_exports2.string().nullish(),
+  done: external_exports2.boolean().nullish(),
+  error: external_exports2.object({
+    code: external_exports2.number().nullish(),
+    message: external_exports2.string(),
+    status: external_exports2.string().nullish()
+  }).nullish(),
+  response: external_exports2.object({
+    generateVideoResponse: external_exports2.object({
+      generatedSamples: external_exports2.array(
+        external_exports2.object({
+          video: external_exports2.object({
+            uri: external_exports2.string().nullish()
+          }).nullish()
+        })
+      ).nullish()
+    }).nullish()
+  }).nullish()
+});
+var googleVideoModelOptionsSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      pollIntervalMs: external_exports2.number().positive().nullish(),
+      pollTimeoutMs: external_exports2.number().positive().nullish(),
+      personGeneration: external_exports2.enum(["dont_allow", "allow_adult", "allow_all"]).nullish(),
+      negativePrompt: external_exports2.string().nullish(),
+      referenceImages: external_exports2.array(
+        external_exports2.object({
+          bytesBase64Encoded: external_exports2.string().nullish(),
+          gcsUri: external_exports2.string().nullish()
+        })
+      ).nullish()
+    }).passthrough()
+  )
+);
+function convertGoogleInteractionsUsage(usage) {
+  var _a3, _b2, _c, _d, _e, _f, _g, _h;
+  if (usage == null) {
+    return {
+      inputTokens: {
+        total: void 0,
+        noCache: void 0,
+        cacheRead: void 0,
+        cacheWrite: void 0
+      },
+      outputTokens: {
+        total: void 0,
+        text: void 0,
+        reasoning: void 0
+      },
+      raw: void 0
+    };
+  }
+  const totalInput = (_a3 = usage.total_input_tokens) != null ? _a3 : 0;
+  const totalOutput = (_b2 = usage.total_output_tokens) != null ? _b2 : 0;
+  const totalThought = (_c = usage.total_thought_tokens) != null ? _c : 0;
+  const totalCached = (_d = usage.total_cached_tokens) != null ? _d : 0;
+  return {
+    inputTokens: {
+      total: (_e = usage.total_input_tokens) != null ? _e : void 0,
+      noCache: usage.total_input_tokens == null ? void 0 : totalInput - totalCached,
+      cacheRead: (_f = usage.total_cached_tokens) != null ? _f : void 0,
+      cacheWrite: void 0
+    },
+    outputTokens: {
+      total: usage.total_output_tokens == null && usage.total_thought_tokens == null ? void 0 : totalOutput + totalThought,
+      text: (_g = usage.total_output_tokens) != null ? _g : void 0,
+      reasoning: (_h = usage.total_thought_tokens) != null ? _h : void 0
+    },
+    raw: usage
+  };
+}
+__name(convertGoogleInteractionsUsage, "convertGoogleInteractionsUsage");
+var KNOWN_DOC_EXTENSIONS = {
+  pdf: "application/pdf",
+  txt: "text/plain",
+  md: "text/markdown",
+  markdown: "text/markdown",
+  doc: "application/msword",
+  docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+};
+function inferDocMediaType(uriOrName) {
+  const lower = uriOrName.toLowerCase();
+  for (const [ext, media] of Object.entries(KNOWN_DOC_EXTENSIONS)) {
+    if (lower.endsWith(`.${ext}`)) return media;
+  }
+  return "application/octet-stream";
+}
+__name(inferDocMediaType, "inferDocMediaType");
+function basename(uriOrName) {
+  const parts = uriOrName.split("/");
+  const last = parts[parts.length - 1];
+  return last && last.length > 0 ? last : void 0;
+}
+__name(basename, "basename");
+function annotationToSource({
+  annotation,
+  generateId: generateId3
+}) {
+  var _a3, _b2, _c, _d, _e;
+  switch (annotation.type) {
+    case "url_citation": {
+      const a = annotation;
+      if (a.url == null || a.url.length === 0) return void 0;
+      return {
+        type: "source",
+        sourceType: "url",
+        id: generateId3(),
+        url: a.url,
+        ...a.title != null ? { title: a.title } : {}
+      };
+    }
+    case "file_citation": {
+      const a = annotation;
+      const uri = (_b2 = (_a3 = a.document_uri) != null ? _a3 : a.source) != null ? _b2 : a.file_name;
+      if (uri == null || uri.length === 0) return void 0;
+      if (uri.startsWith("http://") || uri.startsWith("https://")) {
+        return {
+          type: "source",
+          sourceType: "url",
+          id: generateId3(),
+          url: uri,
+          ...a.file_name != null ? { title: a.file_name } : {}
+        };
+      }
+      const filename = (_c = a.file_name) != null ? _c : basename(uri);
+      const mediaType = inferDocMediaType(uri);
+      return {
+        type: "source",
+        sourceType: "document",
+        id: generateId3(),
+        mediaType,
+        title: (_e = (_d = a.file_name) != null ? _d : filename) != null ? _e : uri,
+        ...filename != null ? { filename } : {}
+      };
+    }
+    case "place_citation": {
+      const a = annotation;
+      if (a.url == null || a.url.length === 0) return void 0;
+      return {
+        type: "source",
+        sourceType: "url",
+        id: generateId3(),
+        url: a.url,
+        ...a.name != null ? { title: a.name } : {}
+      };
+    }
+    default:
+      return void 0;
+  }
+}
+__name(annotationToSource, "annotationToSource");
+function builtinToolResultToSources({
+  block,
+  generateId: generateId3
+}) {
+  var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j, _k;
+  const sources = [];
+  switch (block.type) {
+    case "url_context_result": {
+      const result = (_a3 = block.result) != null ? _a3 : [];
+      for (const entry of result) {
+        if ((entry == null ? void 0 : entry.url) == null || entry.url.length === 0) continue;
+        if (entry.status != null && entry.status !== "success") continue;
+        sources.push({
+          type: "source",
+          sourceType: "url",
+          id: generateId3(),
+          url: entry.url
+        });
+      }
+      break;
+    }
+    case "google_search_result": {
+      const result = (_b2 = block.result) != null ? _b2 : [];
+      for (const entry of result) {
+        const url = entry == null ? void 0 : entry.url;
+        if (url == null || url.length === 0) continue;
+        sources.push({
+          type: "source",
+          sourceType: "url",
+          id: generateId3(),
+          url,
+          ...entry.title != null ? { title: entry.title } : {}
+        });
+      }
+      break;
+    }
+    case "google_maps_result": {
+      const result = (_c = block.result) != null ? _c : [];
+      for (const entry of result) {
+        for (const place of (_d = entry.places) != null ? _d : []) {
+          if (place.url == null || place.url.length === 0) continue;
+          sources.push({
+            type: "source",
+            sourceType: "url",
+            id: generateId3(),
+            url: place.url,
+            ...place.name != null ? { title: place.name } : {}
+          });
+        }
+      }
+      break;
+    }
+    case "file_search_result": {
+      const result = (_e = block.result) != null ? _e : [];
+      for (const raw3 of result) {
+        if (raw3 == null || typeof raw3 !== "object") continue;
+        const entry = raw3;
+        const uri = (_g = (_f = entry.document_uri) != null ? _f : entry.source) != null ? _g : entry.file_name;
+        if (uri == null || uri.length === 0) continue;
+        if (uri.startsWith("http://") || uri.startsWith("https://")) {
+          sources.push({
+            type: "source",
+            sourceType: "url",
+            id: generateId3(),
+            url: uri,
+            ...entry.title != null ? { title: entry.title } : {}
+          });
+          continue;
+        }
+        const filename = (_h = entry.file_name) != null ? _h : basename(uri);
+        const mediaType = inferDocMediaType(uri);
+        sources.push({
+          type: "source",
+          sourceType: "document",
+          id: generateId3(),
+          mediaType,
+          title: (_k = (_j = (_i = entry.title) != null ? _i : entry.file_name) != null ? _j : filename) != null ? _k : uri,
+          ...filename != null ? { filename } : {}
+        });
+      }
+      break;
+    }
+    default:
+      break;
+  }
+  return sources;
+}
+__name(builtinToolResultToSources, "builtinToolResultToSources");
+function annotationsToSources({
+  annotations,
+  generateId: generateId3
+}) {
+  var _a3;
+  if (annotations == null) return [];
+  const seen = /* @__PURE__ */ new Set();
+  const sources = [];
+  for (const annotation of annotations) {
+    const source = annotationToSource({ annotation, generateId: generateId3 });
+    if (source == null) continue;
+    const key = source.sourceType === "url" ? `url:${source.url}` : `doc:${(_a3 = source.filename) != null ? _a3 : source.title}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    sources.push(source);
+  }
+  return sources;
+}
+__name(annotationsToSources, "annotationsToSources");
+function mapGoogleInteractionsFinishReason({
+  status,
+  hasFunctionCall
+}) {
+  switch (status) {
+    case "completed":
+      return hasFunctionCall ? "tool-calls" : "stop";
+    case "requires_action":
+      return "tool-calls";
+    case "failed":
+      return "error";
+    case "incomplete":
+      return "length";
+    case "cancelled":
+      return "other";
+    case "in_progress":
+    default:
+      return "other";
+  }
+}
+__name(mapGoogleInteractionsFinishReason, "mapGoogleInteractionsFinishReason");
+var BUILTIN_TOOL_CALL_TYPES = /* @__PURE__ */ new Set([
+  "google_search_call",
+  "code_execution_call",
+  "url_context_call",
+  "file_search_call",
+  "google_maps_call",
+  "mcp_server_tool_call"
+]);
+var BUILTIN_TOOL_RESULT_TYPES = /* @__PURE__ */ new Set([
+  "google_search_result",
+  "code_execution_result",
+  "url_context_result",
+  "file_search_result",
+  "google_maps_result",
+  "mcp_server_tool_result"
+]);
+function builtinToolNameFromCallType(type) {
+  return type.replace(/_call$/, "");
+}
+__name(builtinToolNameFromCallType, "builtinToolNameFromCallType");
+function builtinToolNameFromResultType(type) {
+  return type.replace(/_result$/, "");
+}
+__name(builtinToolNameFromResultType, "builtinToolNameFromResultType");
+function buildGoogleInteractionsStreamTransform({
+  warnings,
+  generateId: generateId3,
+  includeRawChunks,
+  serviceTier: headerServiceTier
+}) {
+  let interactionId;
+  let usage;
+  let serviceTier = headerServiceTier;
+  let finishStatus;
+  let hasFunctionCall = false;
+  const openBlocks = /* @__PURE__ */ new Map();
+  const emittedSourceKeys = /* @__PURE__ */ new Set();
+  function sourceKey(source) {
+    var _a3;
+    return source.sourceType === "url" ? `url:${source.url}` : `doc:${(_a3 = source.filename) != null ? _a3 : source.title}`;
+  }
+  __name(sourceKey, "sourceKey");
+  return new TransformStream({
+    start(controller) {
+      controller.enqueue({ type: "stream-start", warnings });
+    },
+    transform(chunk, controller) {
+      var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
+      if (includeRawChunks) {
+        controller.enqueue({ type: "raw", rawValue: chunk.rawValue });
+      }
+      if (!chunk.success) {
+        finishStatus = "failed";
+        controller.enqueue({ type: "error", error: chunk.error });
+        return;
+      }
+      const value = chunk.value;
+      const eventType = value.event_type;
+      switch (eventType) {
+        case "interaction.start": {
+          const event = value;
+          const interaction = event.interaction;
+          interactionId = (interaction == null ? void 0 : interaction.id) != null && interaction.id.length > 0 ? interaction.id : void 0;
+          const created = interaction == null ? void 0 : interaction.created;
+          let timestamp;
+          if (typeof created === "string") {
+            const parsed = new Date(created);
+            if (!Number.isNaN(parsed.getTime())) {
+              timestamp = parsed;
+            }
+          }
+          controller.enqueue({
+            type: "response-metadata",
+            ...interactionId != null ? { id: interactionId } : {},
+            modelId: interaction == null ? void 0 : interaction.model,
+            ...timestamp ? { timestamp } : {}
+          });
+          break;
+        }
+        case "content.start": {
+          const event = value;
+          const block = event.content;
+          const index = event.index;
+          const blockId = `${interactionId != null ? interactionId : "interaction"}:${index}`;
+          if ((block == null ? void 0 : block.type) === "text") {
+            openBlocks.set(index, {
+              kind: "text",
+              id: blockId,
+              emittedSourceKeys: /* @__PURE__ */ new Set()
+            });
+            controller.enqueue({ type: "text-start", id: blockId });
+            const initialSources = annotationsToSources({
+              annotations: block.annotations,
+              generateId: generateId3
+            });
+            for (const source of initialSources) {
+              const key = sourceKey(source);
+              if (emittedSourceKeys.has(key)) continue;
+              emittedSourceKeys.add(key);
+              controller.enqueue(source);
+            }
+          } else if ((block == null ? void 0 : block.type) === "image") {
+            const img = block;
+            openBlocks.set(index, {
+              kind: "image",
+              id: blockId,
+              ...img.data != null ? { data: img.data } : {},
+              ...img.mime_type != null ? { mimeType: img.mime_type } : {},
+              ...img.uri != null ? { uri: img.uri } : {}
+            });
+          } else if ((block == null ? void 0 : block.type) === "thought") {
+            const signature = block.signature;
+            openBlocks.set(index, {
+              kind: "reasoning",
+              id: blockId,
+              ...signature != null ? { signature } : {}
+            });
+            controller.enqueue({ type: "reasoning-start", id: blockId });
+          } else if ((block == null ? void 0 : block.type) === "function_call") {
+            const fc = block;
+            const toolCallId = (_a3 = fc.id) != null ? _a3 : blockId;
+            hasFunctionCall = true;
+            const state = {
+              kind: "function_call",
+              id: blockId,
+              toolCallId,
+              toolName: fc.name,
+              arguments: (_b2 = fc.arguments) != null ? _b2 : {},
+              ...fc.signature != null ? { signature: fc.signature } : {},
+              startEmitted: false
+            };
+            openBlocks.set(index, state);
+            if (state.toolName != null) {
+              controller.enqueue({
+                type: "tool-input-start",
+                id: toolCallId,
+                toolName: state.toolName
+              });
+              state.startEmitted = true;
+            }
+          } else if ((block == null ? void 0 : block.type) != null && BUILTIN_TOOL_CALL_TYPES.has(block.type)) {
+            const toolName = block.type === "mcp_server_tool_call" ? (_c = block.name) != null ? _c : "mcp_server_tool" : builtinToolNameFromCallType(block.type);
+            const toolCallId = (_d = block.id) != null ? _d : blockId;
+            const state = {
+              kind: "builtin_tool_call",
+              id: blockId,
+              blockType: block.type,
+              toolCallId,
+              toolName,
+              arguments: (_e = block.arguments) != null ? _e : {},
+              callEmitted: false
+            };
+            openBlocks.set(index, state);
+          } else if ((block == null ? void 0 : block.type) != null && BUILTIN_TOOL_RESULT_TYPES.has(block.type)) {
+            const toolName = block.type === "mcp_server_tool_result" ? (_f = block.name) != null ? _f : "mcp_server_tool" : builtinToolNameFromResultType(block.type);
+            const callId = (_g = block.call_id) != null ? _g : blockId;
+            const state = {
+              kind: "builtin_tool_result",
+              id: blockId,
+              blockType: block.type,
+              callId,
+              toolName,
+              result: (_h = block.result) != null ? _h : null,
+              ...block.is_error != null ? { isError: block.is_error } : {},
+              resultEmitted: false
+            };
+            openBlocks.set(index, state);
+          } else {
+            openBlocks.set(index, { kind: "unknown", id: blockId });
+          }
+          break;
+        }
+        case "content.delta": {
+          const event = value;
+          const open = openBlocks.get(event.index);
+          if (open == null) break;
+          const delta = event.delta;
+          if (open.kind === "text" && (delta == null ? void 0 : delta.type) === "text") {
+            const text = (_i = delta.text) != null ? _i : "";
+            if (text.length > 0) {
+              controller.enqueue({
+                type: "text-delta",
+                id: open.id,
+                delta: text
+              });
+            }
+          } else if (open.kind === "text" && (delta == null ? void 0 : delta.type) === "text_annotation") {
+            const sources = annotationsToSources({
+              annotations: delta.annotations,
+              generateId: generateId3
+            });
+            for (const source of sources) {
+              const key = sourceKey(source);
+              if (emittedSourceKeys.has(key)) continue;
+              emittedSourceKeys.add(key);
+              open.emittedSourceKeys.add(key);
+              controller.enqueue(source);
+            }
+          } else if (open.kind === "image" && (delta == null ? void 0 : delta.type) === "image") {
+            if (delta.data != null) open.data = delta.data;
+            if (delta.mime_type != null) open.mimeType = delta.mime_type;
+            if (delta.uri != null) open.uri = delta.uri;
+          } else if (open.kind === "reasoning") {
+            if ((delta == null ? void 0 : delta.type) === "thought_summary") {
+              const item = delta.content;
+              if ((item == null ? void 0 : item.type) === "text" && typeof item.text === "string") {
+                controller.enqueue({
+                  type: "reasoning-delta",
+                  id: open.id,
+                  delta: item.text
+                });
+              }
+            } else if ((delta == null ? void 0 : delta.type) === "thought_signature") {
+              const signature = delta.signature;
+              if (signature != null) {
+                open.signature = signature;
+              }
+            }
+          } else if (open.kind === "function_call" && (delta == null ? void 0 : delta.type) === "function_call") {
+            if (delta.id != null) {
+              open.toolCallId = delta.id;
+            }
+            if (delta.name != null) {
+              open.toolName = delta.name;
+            }
+            if (delta.arguments != null) {
+              open.arguments = delta.arguments;
+            }
+            if (delta.signature != null) {
+              open.signature = delta.signature;
+            }
+            if (!open.startEmitted && open.toolName != null) {
+              controller.enqueue({
+                type: "tool-input-start",
+                id: open.toolCallId,
+                toolName: open.toolName
+              });
+              open.startEmitted = true;
+            }
+            hasFunctionCall = true;
+          } else if (open.kind === "builtin_tool_call" && (delta == null ? void 0 : delta.type) === open.blockType) {
+            if (delta.id != null) open.toolCallId = delta.id;
+            if (delta.arguments != null) open.arguments = delta.arguments;
+            if (delta.name != null && open.blockType === "mcp_server_tool_call") {
+              open.toolName = delta.name;
+            }
+          } else if (open.kind === "builtin_tool_result" && (delta == null ? void 0 : delta.type) === open.blockType) {
+            if (delta.call_id != null) open.callId = delta.call_id;
+            if (delta.result !== void 0) open.result = delta.result;
+            if (delta.is_error != null) open.isError = delta.is_error;
+            if (delta.name != null && open.blockType === "mcp_server_tool_result") {
+              open.toolName = delta.name;
+            }
+          }
+          break;
+        }
+        case "content.stop": {
+          const event = value;
+          const open = openBlocks.get(event.index);
+          if (open == null) break;
+          if (open.kind === "text") {
+            const textProviderMetadata = interactionId != null ? { google: { interactionId } } : void 0;
+            controller.enqueue({
+              type: "text-end",
+              id: open.id,
+              ...textProviderMetadata ? { providerMetadata: textProviderMetadata } : {}
+            });
+          } else if (open.kind === "reasoning") {
+            const google2 = {};
+            if (open.signature != null) google2.signature = open.signature;
+            if (interactionId != null) google2.interactionId = interactionId;
+            const providerMetadata = Object.keys(google2).length > 0 ? { google: google2 } : void 0;
+            controller.enqueue({
+              type: "reasoning-end",
+              id: open.id,
+              ...providerMetadata ? { providerMetadata } : {}
+            });
+          } else if (open.kind === "image") {
+            const google2 = {};
+            if (interactionId != null) google2.interactionId = interactionId;
+            const providerMetadata = Object.keys(google2).length > 0 ? { google: google2 } : void 0;
+            if (open.data != null && open.data.length > 0) {
+              controller.enqueue({
+                type: "file",
+                mediaType: (_j = open.mimeType) != null ? _j : "image/png",
+                data: open.data,
+                ...providerMetadata ? { providerMetadata } : {}
+              });
+            } else if (open.uri != null && open.uri.length > 0) {
+              const uriProviderMetadata = {
+                google: {
+                  ...interactionId != null ? { interactionId } : {},
+                  imageUri: open.uri
+                }
+              };
+              controller.enqueue({
+                type: "file",
+                mediaType: (_k = open.mimeType) != null ? _k : "image/png",
+                data: "",
+                providerMetadata: uriProviderMetadata
+              });
+            }
+          } else if (open.kind === "function_call") {
+            const toolName = (_l = open.toolName) != null ? _l : "unknown";
+            const argsJson = JSON.stringify((_m = open.arguments) != null ? _m : {});
+            if (!open.startEmitted) {
+              controller.enqueue({
+                type: "tool-input-start",
+                id: open.toolCallId,
+                toolName
+              });
+            }
+            controller.enqueue({
+              type: "tool-input-delta",
+              id: open.toolCallId,
+              delta: argsJson
+            });
+            controller.enqueue({
+              type: "tool-input-end",
+              id: open.toolCallId
+            });
+            const google2 = {};
+            if (open.signature != null) google2.signature = open.signature;
+            if (interactionId != null) google2.interactionId = interactionId;
+            const providerMetadata = Object.keys(google2).length > 0 ? { google: google2 } : void 0;
+            controller.enqueue({
+              type: "tool-call",
+              toolCallId: open.toolCallId,
+              toolName,
+              input: argsJson,
+              ...providerMetadata ? { providerMetadata } : {}
+            });
+          } else if (open.kind === "builtin_tool_call" && !open.callEmitted) {
+            controller.enqueue({
+              type: "tool-call",
+              toolCallId: open.toolCallId,
+              toolName: open.toolName,
+              input: JSON.stringify((_n = open.arguments) != null ? _n : {}),
+              providerExecuted: true
+            });
+            open.callEmitted = true;
+          } else if (open.kind === "builtin_tool_result" && !open.resultEmitted) {
+            controller.enqueue({
+              type: "tool-result",
+              toolCallId: open.callId,
+              toolName: open.toolName,
+              result: (_o = open.result) != null ? _o : null
+            });
+            open.resultEmitted = true;
+            const sources = builtinToolResultToSources({
+              block: {
+                type: open.blockType,
+                call_id: open.callId,
+                result: open.result
+              },
+              generateId: generateId3
+            });
+            for (const source of sources) {
+              const key = sourceKey(source);
+              if (emittedSourceKeys.has(key)) continue;
+              emittedSourceKeys.add(key);
+              controller.enqueue(source);
+            }
+          }
+          openBlocks.delete(event.index);
+          break;
+        }
+        case "interaction.status_update": {
+          const event = value;
+          finishStatus = event.status;
+          break;
+        }
+        case "interaction.complete": {
+          const event = value;
+          const interaction = event.interaction;
+          if ((interaction == null ? void 0 : interaction.id) != null && interaction.id.length > 0) {
+            interactionId = interaction.id;
+          }
+          if ((interaction == null ? void 0 : interaction.status) != null) {
+            finishStatus = interaction.status;
+          }
+          if ((interaction == null ? void 0 : interaction.usage) != null) {
+            usage = interaction.usage;
+          }
+          if ((interaction == null ? void 0 : interaction.service_tier) != null) {
+            serviceTier = interaction.service_tier;
+          }
+          break;
+        }
+        case "error": {
+          const event = value;
+          finishStatus = "failed";
+          const errorPayload = (_p = event.error) != null ? _p : {
+            message: "Unknown interaction error"
+          };
+          controller.enqueue({ type: "error", error: errorPayload });
+          break;
+        }
+        default:
+          break;
+      }
+    },
+    flush(controller) {
+      const finishReason = {
+        unified: mapGoogleInteractionsFinishReason({
+          status: finishStatus,
+          hasFunctionCall
+        }),
+        raw: finishStatus
+      };
+      const providerMetadata = {
+        google: {
+          ...interactionId != null ? { interactionId } : {},
+          ...serviceTier != null ? { serviceTier } : {}
+        }
+      };
+      controller.enqueue({
+        type: "finish",
+        finishReason,
+        usage: convertGoogleInteractionsUsage(usage),
+        providerMetadata
+      });
+    }
+  });
+}
+__name(buildGoogleInteractionsStreamTransform, "buildGoogleInteractionsStreamTransform");
+function getTopLevelMediaType(mediaType) {
+  const slashIndex = mediaType.indexOf("/");
+  return slashIndex === -1 ? mediaType : mediaType.substring(0, slashIndex);
+}
+__name(getTopLevelMediaType, "getTopLevelMediaType");
+function isFullMediaType(mediaType) {
+  const slashIndex = mediaType.indexOf("/");
+  if (slashIndex === -1) {
+    return false;
+  }
+  const subtype = mediaType.substring(slashIndex + 1);
+  return subtype.length > 0 && subtype !== "*";
+}
+__name(isFullMediaType, "isFullMediaType");
+function convertToGoogleInteractionsInput({
+  prompt,
+  previousInteractionId,
+  store,
+  mediaResolution
+}) {
+  var _a3, _b2, _c, _d, _e, _f, _g;
+  const warnings = [];
+  const incoherentCombo = previousInteractionId != null && store === false;
+  const shouldCompact = previousInteractionId != null && store !== false;
+  if (incoherentCombo) {
+    warnings.push({
+      type: "other",
+      message: "google.interactions: providerOptions.google.previousInteractionId was set together with store: false. These are incoherent (the prior interaction cannot be referenced when nothing was stored on the server); the full history will be sent and previous_interaction_id will still be emitted."
+    });
+  }
+  const compactedPrompt = shouldCompact ? compactPromptForPreviousInteraction({
+    prompt,
+    previousInteractionId
+  }) : prompt;
+  const systemTexts = [];
+  const turns = [];
+  for (const message of compactedPrompt) {
+    switch (message.role) {
+      case "system": {
+        systemTexts.push(message.content);
+        break;
+      }
+      case "user": {
+        const content = [];
+        for (const part of message.content) {
+          if (part.type === "text") {
+            const block = {
+              type: "text",
+              text: part.text
+            };
+            content.push(block);
+          } else if (part.type === "file") {
+            const fileBlock = convertFilePartToContent({
+              part,
+              warnings,
+              mediaResolution
+            });
+            if (fileBlock != null) {
+              content.push(fileBlock);
+            }
+          }
+        }
+        const merged = mergeAdjacentTextContent(content);
+        if (merged.length > 0) {
+          turns.push({ role: "user", content: merged });
+        }
+        break;
+      }
+      case "assistant": {
+        const content = [];
+        for (const part of message.content) {
+          if (part.type === "text") {
+            content.push({ type: "text", text: part.text });
+          } else if (part.type === "reasoning") {
+            const signature = (_b2 = (_a3 = part.providerOptions) == null ? void 0 : _a3.google) == null ? void 0 : _b2.signature;
+            content.push({
+              type: "thought",
+              ...signature != null ? { signature } : {},
+              summary: part.text.length > 0 ? [{ type: "text", text: part.text }] : void 0
+            });
+          } else if (part.type === "tool-call") {
+            const signature = (_d = (_c = part.providerOptions) == null ? void 0 : _c.google) == null ? void 0 : _d.signature;
+            const args = typeof part.input === "string" ? safeParseToolArgs(part.input) : (_e = part.input) != null ? _e : {};
+            content.push({
+              type: "function_call",
+              id: part.toolCallId,
+              name: part.toolName,
+              arguments: args,
+              ...signature != null ? { signature } : {}
+            });
+          } else {
+            warnings.push({
+              type: "other",
+              message: `google.interactions: unsupported assistant content part type "${part.type}"; part dropped.`
+            });
+          }
+        }
+        if (content.length > 0) {
+          turns.push({ role: "model", content });
+        }
+        break;
+      }
+      case "tool": {
+        const content = [];
+        for (const part of message.content) {
+          if (part.type !== "tool-result") {
+            warnings.push({
+              type: "other",
+              message: `google.interactions: unsupported tool message part type "${part.type}"; part dropped.`
+            });
+            continue;
+          }
+          const block = convertToolResultPart({
+            toolCallId: part.toolCallId,
+            toolName: part.toolName,
+            output: part.output,
+            signature: (_g = (_f = part.providerOptions) == null ? void 0 : _f.google) == null ? void 0 : _g.signature,
+            warnings
+          });
+          content.push(block);
+        }
+        if (content.length > 0) {
+          turns.push({ role: "user", content });
+        }
+        break;
+      }
+    }
+  }
+  const systemInstruction = systemTexts.length > 0 ? systemTexts.join("\n\n") : void 0;
+  let input;
+  if (turns.length === 0) {
+    input = "";
+  } else if (turns.length === 1 && turns[0].role === "user" && Array.isArray(turns[0].content)) {
+    input = turns[0].content;
+  } else {
+    input = turns;
+  }
+  return { input, systemInstruction, warnings };
+}
+__name(convertToGoogleInteractionsInput, "convertToGoogleInteractionsInput");
+function convertFilePartToContent({
+  part,
+  warnings,
+  mediaResolution
+}) {
+  const topLevel = getTopLevelMediaType(part.mediaType);
+  let kind;
+  switch (topLevel) {
+    case "image":
+      kind = "image";
+      break;
+    case "audio":
+      kind = "audio";
+      break;
+    case "video":
+      kind = "video";
+      break;
+    case "application":
+      kind = "document";
+      break;
+    default:
+      kind = void 0;
+  }
+  if (kind == null) {
+    warnings.push({
+      type: "other",
+      message: `google.interactions: unsupported file media type "${part.mediaType}"; part dropped.`
+    });
+    return void 0;
+  }
+  const resolutionField = mediaResolution != null && (kind === "image" || kind === "video") ? { resolution: mediaResolution } : {};
+  if (part.data instanceof URL) {
+    return {
+      type: kind,
+      uri: part.data.toString(),
+      ...isFullMediaType(part.mediaType) ? { mime_type: part.mediaType } : {},
+      ...resolutionField
+    };
+  }
+  if (!isFullMediaType(part.mediaType)) {
+    warnings.push({
+      type: "other",
+      message: `google.interactions: inline file data requires a full IANA media type (e.g. "image/png"), got "${part.mediaType}"; part dropped.`
+    });
+    return void 0;
+  }
+  return {
+    type: kind,
+    data: convertToBase64(part.data),
+    mime_type: part.mediaType,
+    ...resolutionField
+  };
+}
+__name(convertFilePartToContent, "convertFilePartToContent");
+function compactPromptForPreviousInteraction({
+  prompt,
+  previousInteractionId
+}) {
+  const out = [];
+  const droppedToolCallIds = /* @__PURE__ */ new Set();
+  for (const message of prompt) {
+    if (message.role === "assistant") {
+      const matchesLinkedInteraction = message.content.some((part) => {
+        var _a3, _b2;
+        const partInteractionId = (_b2 = (_a3 = part.providerOptions) == null ? void 0 : _a3.google) == null ? void 0 : _b2.interactionId;
+        return partInteractionId === previousInteractionId;
+      });
+      if (matchesLinkedInteraction) {
+        for (const part of message.content) {
+          if (part.type === "tool-call") {
+            droppedToolCallIds.add(part.toolCallId);
+          }
+        }
+        continue;
+      }
+      out.push(message);
+      continue;
+    }
+    if (message.role === "tool") {
+      const remaining = message.content.filter((part) => {
+        if (part.type !== "tool-result") {
+          return true;
+        }
+        return !droppedToolCallIds.has(part.toolCallId);
+      });
+      if (remaining.length === 0) {
+        continue;
+      }
+      out.push({
+        ...message,
+        content: remaining
+      });
+      continue;
+    }
+    out.push(message);
+  }
+  return out;
+}
+__name(compactPromptForPreviousInteraction, "compactPromptForPreviousInteraction");
+function safeParseToolArgs(input) {
+  try {
+    const parsed = JSON.parse(input);
+    if (parsed != null && typeof parsed === "object" && !Array.isArray(parsed)) {
+      return parsed;
+    }
+    return { value: parsed };
+  } catch (e) {
+    return { value: input };
+  }
+}
+__name(safeParseToolArgs, "safeParseToolArgs");
+function convertToolResultPart({
+  toolCallId,
+  toolName,
+  output,
+  signature,
+  warnings
+}) {
+  var _a3;
+  const base = {
+    type: "function_result",
+    call_id: toolCallId,
+    name: toolName,
+    ...signature != null ? { signature } : {}
+  };
+  switch (output.type) {
+    case "text":
+      return { ...base, result: output.value };
+    case "json":
+      return { ...base, result: JSON.stringify(output.value) };
+    case "error-text":
+      return { ...base, is_error: true, result: output.value };
+    case "error-json":
+      return { ...base, is_error: true, result: JSON.stringify(output.value) };
+    case "execution-denied":
+      return {
+        ...base,
+        is_error: true,
+        result: (_a3 = output.reason) != null ? _a3 : "Tool execution denied by user."
+      };
+    case "content": {
+      const blocks = [];
+      for (const item of output.value) {
+        if (item.type === "text") {
+          blocks.push({ type: "text", text: item.text });
+        } else if (item.type === "image-data") {
+          const imageBlock = filePartToImageBlock({
+            part: {
+              type: "file",
+              mediaType: item.mediaType,
+              data: item.data
+            },
+            warnings
+          });
+          if (imageBlock != null) {
+            blocks.push(imageBlock);
+          }
+        } else if (item.type === "image-url") {
+          const imageBlock = filePartToImageBlock({
+            part: {
+              type: "file",
+              mediaType: "image/*",
+              data: new URL(item.url)
+            },
+            warnings
+          });
+          if (imageBlock != null) {
+            blocks.push(imageBlock);
+          }
+        } else if (item.type === "file-data" || item.type === "file-url") {
+          const mediaType = item.type === "file-data" ? item.mediaType : "application/*";
+          const topLevel = getTopLevelMediaType(mediaType);
+          if (topLevel !== "image") {
+            warnings.push({
+              type: "other",
+              message: `google.interactions: tool-result file with mediaType "${mediaType}" is not supported (Interactions \`function_result.result\` accepts only text and image content); part dropped.`
+            });
+            continue;
+          }
+          const imageBlock = filePartToImageBlock({
+            part: item.type === "file-data" ? {
+              type: "file",
+              mediaType: item.mediaType,
+              data: item.data
+            } : {
+              type: "file",
+              mediaType,
+              data: new URL(item.url)
+            },
+            warnings
+          });
+          if (imageBlock != null) {
+            blocks.push(imageBlock);
+          }
+        } else {
+          warnings.push({
+            type: "other",
+            message: `google.interactions: tool-result content part type "${item.type}" is not supported; part dropped.`
+          });
+        }
+      }
+      return { ...base, result: blocks };
+    }
+  }
+}
+__name(convertToolResultPart, "convertToolResultPart");
+function filePartToImageBlock({
+  part,
+  warnings
+}) {
+  if (part.data instanceof URL) {
+    return {
+      type: "image",
+      uri: part.data.toString(),
+      ...isFullMediaType(part.mediaType) ? { mime_type: part.mediaType } : {}
+    };
+  }
+  if (!isFullMediaType(part.mediaType)) {
+    warnings.push({
+      type: "other",
+      message: `google.interactions: tool-result image part requires a full IANA media type (e.g. "image/png"), got "${part.mediaType}"; part dropped.`
+    });
+    return void 0;
+  }
+  return {
+    type: "image",
+    data: convertToBase64(part.data),
+    mime_type: part.mediaType
+  };
+}
+__name(filePartToImageBlock, "filePartToImageBlock");
+function mergeAdjacentTextContent(content) {
+  if (content.length < 2) {
+    return content;
+  }
+  const result = [];
+  for (const block of content) {
+    const last = result[result.length - 1];
+    if (block.type === "text" && last != null && last.type === "text" && last.annotations == null && block.annotations == null) {
+      const merged = {
+        type: "text",
+        text: `${last.text}
+
+${block.text}`
+      };
+      result[result.length - 1] = merged;
+      continue;
+    }
+    result.push(block);
+  }
+  return result;
+}
+__name(mergeAdjacentTextContent, "mergeAdjacentTextContent");
+var tokenByModalitySchema = /* @__PURE__ */ __name(() => external_exports2.object({
+  modality: external_exports2.string().nullish(),
+  tokens: external_exports2.number().nullish()
+}).loose(), "tokenByModalitySchema");
+var usageSchema2 = /* @__PURE__ */ __name(() => external_exports2.object({
+  total_input_tokens: external_exports2.number().nullish(),
+  total_output_tokens: external_exports2.number().nullish(),
+  total_thought_tokens: external_exports2.number().nullish(),
+  total_cached_tokens: external_exports2.number().nullish(),
+  total_tool_use_tokens: external_exports2.number().nullish(),
+  total_tokens: external_exports2.number().nullish(),
+  input_tokens_by_modality: external_exports2.array(tokenByModalitySchema()).nullish(),
+  output_tokens_by_modality: external_exports2.array(tokenByModalitySchema()).nullish(),
+  cached_tokens_by_modality: external_exports2.array(tokenByModalitySchema()).nullish(),
+  tool_use_tokens_by_modality: external_exports2.array(tokenByModalitySchema()).nullish(),
+  grounding_tool_count: external_exports2.array(
+    external_exports2.object({
+      type: external_exports2.string().nullish(),
+      count: external_exports2.number().nullish()
+    }).loose()
+  ).nullish()
+}).loose(), "usageSchema2");
+var interactionStatusSchema = /* @__PURE__ */ __name(() => external_exports2.enum([
+  "in_progress",
+  "requires_action",
+  "completed",
+  "failed",
+  "cancelled",
+  "incomplete"
+]), "interactionStatusSchema");
+var annotationSchema = /* @__PURE__ */ __name(() => {
+  const urlCitation = external_exports2.object({
+    type: external_exports2.literal("url_citation"),
+    url: external_exports2.string().nullish(),
+    title: external_exports2.string().nullish(),
+    start_index: external_exports2.number().nullish(),
+    end_index: external_exports2.number().nullish()
+  }).loose();
+  const fileCitation = external_exports2.object({
+    type: external_exports2.literal("file_citation"),
+    file_name: external_exports2.string().nullish(),
+    document_uri: external_exports2.string().nullish(),
+    source: external_exports2.string().nullish(),
+    page_number: external_exports2.number().nullish(),
+    media_id: external_exports2.string().nullish(),
+    start_index: external_exports2.number().nullish(),
+    end_index: external_exports2.number().nullish(),
+    custom_metadata: external_exports2.record(external_exports2.string(), external_exports2.unknown()).nullish()
+  }).loose();
+  const placeCitation = external_exports2.object({
+    type: external_exports2.literal("place_citation"),
+    name: external_exports2.string().nullish(),
+    url: external_exports2.string().nullish(),
+    place_id: external_exports2.string().nullish(),
+    start_index: external_exports2.number().nullish(),
+    end_index: external_exports2.number().nullish()
+  }).loose();
+  return external_exports2.union([
+    urlCitation,
+    fileCitation,
+    placeCitation,
+    external_exports2.object({ type: external_exports2.string() }).loose()
+  ]);
+}, "annotationSchema");
+var thoughtSummaryItemSchema = /* @__PURE__ */ __name(() => external_exports2.object({
+  type: external_exports2.string(),
+  text: external_exports2.string().nullish(),
+  data: external_exports2.string().nullish(),
+  mime_type: external_exports2.string().nullish()
+}).loose(), "thoughtSummaryItemSchema");
+var contentBlockSchema = /* @__PURE__ */ __name(() => {
+  const textContent = external_exports2.object({
+    type: external_exports2.literal("text"),
+    text: external_exports2.string(),
+    annotations: external_exports2.array(annotationSchema()).nullish()
+  }).loose();
+  const thoughtContent = external_exports2.object({
+    type: external_exports2.literal("thought"),
+    signature: external_exports2.string().nullish(),
+    summary: external_exports2.array(thoughtSummaryItemSchema()).nullish()
+  }).loose();
+  const functionCallContent = external_exports2.object({
+    type: external_exports2.literal("function_call"),
+    id: external_exports2.string(),
+    name: external_exports2.string(),
+    arguments: external_exports2.record(external_exports2.string(), external_exports2.unknown()).nullish(),
+    signature: external_exports2.string().nullish()
+  }).loose();
+  const imageContent = external_exports2.object({
+    type: external_exports2.literal("image"),
+    data: external_exports2.string().nullish(),
+    mime_type: external_exports2.string().nullish(),
+    resolution: external_exports2.enum(["low", "medium", "high", "ultra_high"]).nullish(),
+    uri: external_exports2.string().nullish()
+  }).loose();
+  const builtinToolCall = external_exports2.object({
+    type: external_exports2.enum([
+      "google_search_call",
+      "code_execution_call",
+      "url_context_call",
+      "file_search_call",
+      "google_maps_call",
+      "mcp_server_tool_call"
+    ]),
+    id: external_exports2.string(),
+    arguments: external_exports2.record(external_exports2.string(), external_exports2.unknown()).nullish(),
+    name: external_exports2.string().nullish(),
+    server_name: external_exports2.string().nullish(),
+    search_type: external_exports2.string().nullish(),
+    signature: external_exports2.string().nullish()
+  }).loose();
+  const builtinToolResult = external_exports2.object({
+    type: external_exports2.enum([
+      "google_search_result",
+      "code_execution_result",
+      "url_context_result",
+      "file_search_result",
+      "google_maps_result",
+      "mcp_server_tool_result"
+    ]),
+    call_id: external_exports2.string(),
+    result: external_exports2.unknown().nullish(),
+    is_error: external_exports2.boolean().nullish(),
+    name: external_exports2.string().nullish(),
+    server_name: external_exports2.string().nullish(),
+    signature: external_exports2.string().nullish()
+  }).loose();
+  return external_exports2.union([
+    textContent,
+    imageContent,
+    thoughtContent,
+    functionCallContent,
+    builtinToolCall,
+    builtinToolResult,
+    external_exports2.object({ type: external_exports2.string() }).loose()
+  ]);
+}, "contentBlockSchema");
+var googleInteractionsResponseSchema = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      /*
+       * `id` is omitted from the response body when `store: false` (fully
+       * stateless mode) — there is no server-side interaction record for the
+       * client to reference. `nullish` lets the schema accept that shape.
+       */
+      id: external_exports2.string().nullish(),
+      created: external_exports2.string().nullish(),
+      updated: external_exports2.string().nullish(),
+      status: interactionStatusSchema(),
+      model: external_exports2.string().nullish(),
+      agent: external_exports2.string().nullish(),
+      outputs: external_exports2.array(contentBlockSchema()).nullish(),
+      usage: usageSchema2().nullish(),
+      service_tier: external_exports2.string().nullish(),
+      previous_interaction_id: external_exports2.string().nullish(),
+      response_modalities: external_exports2.array(external_exports2.string()).nullish()
+    }).loose()
+  )
+);
+var googleInteractionsEventSchema = lazySchema(
+  () => zodSchema(
+    (() => {
+      const status = interactionStatusSchema();
+      const annotation = annotationSchema();
+      const thoughtSummaryItem = thoughtSummaryItemSchema();
+      const interactionStartEvent = external_exports2.object({
+        event_type: external_exports2.literal("interaction.start"),
+        event_id: external_exports2.string().nullish(),
+        interaction: external_exports2.object({
+          /*
+           * `id` is omitted when `store: false` (fully stateless mode);
+           * see the matching note on `googleInteractionsResponseSchema.id`.
+           */
+          id: external_exports2.string().nullish(),
+          created: external_exports2.string().nullish(),
+          model: external_exports2.string().nullish(),
+          agent: external_exports2.string().nullish(),
+          status: status.nullish()
+        }).loose()
+      }).loose();
+      const contentStartEvent = external_exports2.object({
+        event_type: external_exports2.literal("content.start"),
+        event_id: external_exports2.string().nullish(),
+        index: external_exports2.number(),
+        content: contentBlockSchema()
+      }).loose();
+      const contentDeltaText = external_exports2.object({
+        type: external_exports2.literal("text"),
+        text: external_exports2.string()
+      }).loose();
+      const contentDeltaThoughtSummary = external_exports2.object({
+        type: external_exports2.literal("thought_summary"),
+        content: thoughtSummaryItem.nullish()
+      }).loose();
+      const contentDeltaThoughtSignature = external_exports2.object({
+        type: external_exports2.literal("thought_signature"),
+        signature: external_exports2.string().nullish()
+      }).loose();
+      const contentDeltaFunctionCall = external_exports2.object({
+        type: external_exports2.literal("function_call"),
+        id: external_exports2.string(),
+        name: external_exports2.string(),
+        arguments: external_exports2.record(external_exports2.string(), external_exports2.unknown()).nullish(),
+        signature: external_exports2.string().nullish()
+      }).loose();
+      const contentDeltaTextAnnotation = external_exports2.object({
+        type: external_exports2.literal("text_annotation"),
+        annotations: external_exports2.array(annotation).nullish()
+      }).loose();
+      const contentDeltaImage = external_exports2.object({
+        type: external_exports2.literal("image"),
+        data: external_exports2.string().nullish(),
+        mime_type: external_exports2.string().nullish(),
+        resolution: external_exports2.enum(["low", "medium", "high", "ultra_high"]).nullish(),
+        uri: external_exports2.string().nullish()
+      }).loose();
+      const contentDeltaBuiltinToolCall = external_exports2.object({
+        type: external_exports2.enum([
+          "google_search_call",
+          "code_execution_call",
+          "url_context_call",
+          "file_search_call",
+          "google_maps_call",
+          "mcp_server_tool_call"
+        ]),
+        id: external_exports2.string(),
+        arguments: external_exports2.record(external_exports2.string(), external_exports2.unknown()).nullish(),
+        name: external_exports2.string().nullish(),
+        server_name: external_exports2.string().nullish(),
+        search_type: external_exports2.string().nullish(),
+        signature: external_exports2.string().nullish()
+      }).loose();
+      const contentDeltaBuiltinToolResult = external_exports2.object({
+        type: external_exports2.enum([
+          "google_search_result",
+          "code_execution_result",
+          "url_context_result",
+          "file_search_result",
+          "google_maps_result",
+          "mcp_server_tool_result"
+        ]),
+        call_id: external_exports2.string(),
+        result: external_exports2.unknown().nullish(),
+        is_error: external_exports2.boolean().nullish(),
+        name: external_exports2.string().nullish(),
+        server_name: external_exports2.string().nullish(),
+        signature: external_exports2.string().nullish()
+      }).loose();
+      const contentDeltaUnknown = external_exports2.object({ type: external_exports2.string() }).loose();
+      const contentDeltaUnion = external_exports2.union([
+        contentDeltaText,
+        contentDeltaImage,
+        contentDeltaThoughtSummary,
+        contentDeltaThoughtSignature,
+        contentDeltaFunctionCall,
+        contentDeltaTextAnnotation,
+        contentDeltaBuiltinToolCall,
+        contentDeltaBuiltinToolResult,
+        contentDeltaUnknown
+      ]);
+      const contentDeltaEvent = external_exports2.object({
+        event_type: external_exports2.literal("content.delta"),
+        event_id: external_exports2.string().nullish(),
+        index: external_exports2.number(),
+        delta: contentDeltaUnion
+      }).loose();
+      const contentStopEvent = external_exports2.object({
+        event_type: external_exports2.literal("content.stop"),
+        event_id: external_exports2.string().nullish(),
+        index: external_exports2.number()
+      }).loose();
+      const interactionStatusUpdateEvent = external_exports2.object({
+        event_type: external_exports2.literal("interaction.status_update"),
+        event_id: external_exports2.string().nullish(),
+        interaction_id: external_exports2.string().nullish(),
+        status
+      }).loose();
+      const interactionCompleteEvent = external_exports2.object({
+        event_type: external_exports2.literal("interaction.complete"),
+        event_id: external_exports2.string().nullish(),
+        interaction: external_exports2.object({
+          id: external_exports2.string().nullish(),
+          status: status.nullish(),
+          usage: usageSchema2().nullish(),
+          service_tier: external_exports2.string().nullish()
+        }).loose()
+      }).loose();
+      const errorEvent = external_exports2.object({
+        event_type: external_exports2.literal("error"),
+        event_id: external_exports2.string().nullish(),
+        error: external_exports2.object({
+          code: external_exports2.string().nullish(),
+          message: external_exports2.string().nullish()
+        }).loose().nullish()
+      }).loose();
+      const unknownEvent = external_exports2.object({ event_type: external_exports2.string() }).loose();
+      return external_exports2.union([
+        interactionStartEvent,
+        contentStartEvent,
+        contentDeltaEvent,
+        contentStopEvent,
+        interactionStatusUpdateEvent,
+        interactionCompleteEvent,
+        errorEvent,
+        unknownEvent
+      ]);
+    })()
+  )
+);
+var googleInteractionsLanguageModelOptions = lazySchema(
+  () => zodSchema(
+    external_exports2.object({
+      previousInteractionId: external_exports2.string().nullish(),
+      store: external_exports2.boolean().nullish(),
+      agent: external_exports2.string().nullish(),
+      agentConfig: external_exports2.union([
+        external_exports2.object({
+          type: external_exports2.literal("dynamic")
+        }).loose(),
+        external_exports2.object({
+          type: external_exports2.literal("deep-research"),
+          thinkingSummaries: external_exports2.enum(["auto", "none"]).nullish(),
+          visualization: external_exports2.enum(["off", "auto"]).nullish(),
+          collaborativePlanning: external_exports2.boolean().nullish()
+        })
+      ]).nullish(),
+      thinkingLevel: external_exports2.enum(["minimal", "low", "medium", "high"]).nullish(),
+      thinkingSummaries: external_exports2.enum(["auto", "none"]).nullish(),
+      imageConfig: external_exports2.object({
+        aspectRatio: external_exports2.enum([
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9",
+          "21:9",
+          "1:8",
+          "8:1",
+          "1:4",
+          "4:1"
+        ]).nullish(),
+        imageSize: external_exports2.enum(["1K", "2K", "4K", "512"]).nullish()
+      }).nullish(),
+      mediaResolution: external_exports2.enum(["low", "medium", "high", "ultra_high"]).nullish(),
+      responseModalities: external_exports2.array(external_exports2.enum(["text", "image", "audio", "video", "document"])).nullish(),
+      serviceTier: external_exports2.enum(["flex", "standard", "priority"]).nullish(),
+      /**
+       * Alternative to AI SDK `system` message. If both are set, the AI SDK
+       * `system` message wins and a warning is emitted.
+       */
+      systemInstruction: external_exports2.string().nullish(),
+      /**
+       * Per-block signature for round-tripping `thought.signature` and
+       * `function_call.signature` blocks. Set by the SDK on output reasoning /
+       * tool-call parts; passed back unchanged on input parts so the API
+       * accepts the prior turn.
+       */
+      signature: external_exports2.string().nullish(),
+      /**
+       * Set by the SDK on output assistant messages. The converter uses it to
+       * decide which messages to drop when compacting under
+       * `previousInteractionId`.
+       */
+      interactionId: external_exports2.string().nullish(),
+      /**
+       * Maximum time, in milliseconds, to poll a background interaction (agent
+       * call) before giving up. Defaults to 30 minutes. Long-running agents
+       * such as deep research can take tens of minutes — increase if needed.
+       */
+      pollingTimeoutMs: external_exports2.number().int().positive().nullish()
+    })
+  )
+);
+function googleProviderMetadata({
+  signature,
+  interactionId
+}) {
+  const google2 = {};
+  if (signature != null) {
+    google2.signature = signature;
+  }
+  if (interactionId != null) {
+    google2.interactionId = interactionId;
+  }
+  return Object.keys(google2).length > 0 ? { providerMetadata: { google: google2 } } : {};
+}
+__name(googleProviderMetadata, "googleProviderMetadata");
+var BUILTIN_TOOL_CALL_TYPES2 = /* @__PURE__ */ new Set([
+  "google_search_call",
+  "code_execution_call",
+  "url_context_call",
+  "file_search_call",
+  "google_maps_call",
+  "mcp_server_tool_call"
+]);
+var BUILTIN_TOOL_RESULT_TYPES2 = /* @__PURE__ */ new Set([
+  "google_search_result",
+  "code_execution_result",
+  "url_context_result",
+  "file_search_result",
+  "google_maps_result",
+  "mcp_server_tool_result"
+]);
+function builtinToolNameFromCallType2(type) {
+  return type.replace(/_call$/, "");
+}
+__name(builtinToolNameFromCallType2, "builtinToolNameFromCallType2");
+function builtinToolNameFromResultType2(type) {
+  return type.replace(/_result$/, "");
+}
+__name(builtinToolNameFromResultType2, "builtinToolNameFromResultType2");
+function parseGoogleInteractionsOutputs({
+  outputs,
+  generateId: generateId3,
+  interactionId
+}) {
+  var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j;
+  const content = [];
+  let hasFunctionCall = false;
+  if (outputs == null) {
+    return { content, hasFunctionCall };
+  }
+  for (const block of outputs) {
+    if (block == null || typeof block !== "object") continue;
+    const type = block.type;
+    if (typeof type !== "string") continue;
+    switch (type) {
+      case "text": {
+        const text = (_a3 = block.text) != null ? _a3 : "";
+        const annotations = block.annotations;
+        content.push({
+          type: "text",
+          text,
+          ...googleProviderMetadata({ interactionId })
+        });
+        const sources = annotationsToSources({ annotations, generateId: generateId3 });
+        for (const source of sources) {
+          content.push(source);
+        }
+        break;
+      }
+      case "thought": {
+        const thought = block;
+        const summary = Array.isArray(thought.summary) ? thought.summary : [];
+        const text = summary.filter(
+          (item) => (item == null ? void 0 : item.type) === "text" && typeof item.text === "string"
+        ).map((item) => item.text).join("\n");
+        content.push({
+          type: "reasoning",
+          text,
+          ...googleProviderMetadata({
+            signature: thought.signature,
+            interactionId
+          })
+        });
+        break;
+      }
+      case "image": {
+        const image = block;
+        if (image.data != null && image.data.length > 0) {
+          content.push({
+            type: "file",
+            mediaType: (_b2 = image.mime_type) != null ? _b2 : "image/png",
+            data: image.data,
+            ...googleProviderMetadata({ interactionId })
+          });
+        } else if (image.uri != null && image.uri.length > 0) {
+          content.push({
+            type: "file",
+            mediaType: (_c = image.mime_type) != null ? _c : "image/png",
+            data: "",
+            providerMetadata: {
+              google: {
+                ...interactionId != null ? { interactionId } : {},
+                imageUri: image.uri
+              }
+            }
+          });
+        }
+        break;
+      }
+      case "function_call": {
+        hasFunctionCall = true;
+        const call = block;
+        content.push({
+          type: "tool-call",
+          toolCallId: call.id,
+          toolName: call.name,
+          input: JSON.stringify((_d = call.arguments) != null ? _d : {}),
+          ...googleProviderMetadata({
+            signature: call.signature,
+            interactionId
+          })
+        });
+        break;
+      }
+      default: {
+        if (BUILTIN_TOOL_CALL_TYPES2.has(type)) {
+          const call = block;
+          const toolName = type === "mcp_server_tool_call" ? (_e = call.name) != null ? _e : "mcp_server_tool" : builtinToolNameFromCallType2(type);
+          const input = JSON.stringify((_f = call.arguments) != null ? _f : {});
+          content.push({
+            type: "tool-call",
+            toolCallId: (_g = call.id) != null ? _g : generateId3(),
+            toolName,
+            input,
+            providerExecuted: true
+          });
+        } else if (BUILTIN_TOOL_RESULT_TYPES2.has(type)) {
+          const result = block;
+          const toolName = type === "mcp_server_tool_result" ? (_h = result.name) != null ? _h : "mcp_server_tool" : builtinToolNameFromResultType2(type);
+          content.push({
+            type: "tool-result",
+            toolCallId: (_i = result.call_id) != null ? _i : generateId3(),
+            toolName,
+            result: (_j = result.result) != null ? _j : null
+          });
+          const sources = builtinToolResultToSources({
+            block,
+            generateId: generateId3
+          });
+          for (const source of sources) {
+            content.push(source);
+          }
+        }
+        break;
+      }
+    }
+  }
+  return { content, hasFunctionCall };
+}
+__name(parseGoogleInteractionsOutputs, "parseGoogleInteractionsOutputs");
+var TERMINAL_STATUSES = /* @__PURE__ */ new Set(["completed", "failed", "cancelled", "incomplete"]);
+function isTerminalStatus(status) {
+  return status != null && TERMINAL_STATUSES.has(status);
+}
+__name(isTerminalStatus, "isTerminalStatus");
+var DEFAULT_INITIAL_DELAY_MS = 1e3;
+var DEFAULT_MAX_DELAY_MS = 1e4;
+var DEFAULT_TIMEOUT_MS = 30 * 60 * 1e3;
+async function pollGoogleInteractionUntilTerminal({
+  baseURL,
+  interactionId,
+  headers,
+  fetch: fetch3,
+  abortSignal,
+  initialDelayMs = DEFAULT_INITIAL_DELAY_MS,
+  maxDelayMs = DEFAULT_MAX_DELAY_MS,
+  timeoutMs = DEFAULT_TIMEOUT_MS
+}) {
+  if (interactionId == null || interactionId.length === 0) {
+    throw new Error(
+      "google.interactions: cannot poll a background interaction without an id. The POST response did not include an interaction id."
+    );
+  }
+  const startedAt = Date.now();
+  let nextDelayMs = initialDelayMs;
+  const url = `${baseURL}/interactions/${encodeURIComponent(interactionId)}`;
+  while (true) {
+    if (abortSignal == null ? void 0 : abortSignal.aborted) {
+      throw new DOMException("Polling was aborted", "AbortError");
+    }
+    if (Date.now() - startedAt > timeoutMs) {
+      throw new Error(
+        `google.interactions: timed out polling interaction ${interactionId} after ${timeoutMs}ms.`
+      );
+    }
+    await delay(nextDelayMs, { abortSignal });
+    const {
+      value: response,
+      rawValue: rawResponse,
+      responseHeaders
+    } = await getFromApi({
+      url,
+      headers,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(
+        googleInteractionsResponseSchema
+      ),
+      abortSignal,
+      fetch: fetch3
+    });
+    if (isTerminalStatus(response.status)) {
+      return { response, rawResponse, responseHeaders };
+    }
+    nextDelayMs = Math.min(nextDelayMs * 2, maxDelayMs);
+  }
+}
+__name(pollGoogleInteractionUntilTerminal, "pollGoogleInteractionUntilTerminal");
+function prepareGoogleInteractionsTools({
+  tools,
+  toolChoice
+}) {
+  var _a3, _b2, _c, _d;
+  const toolWarnings = [];
+  const normalized = (tools == null ? void 0 : tools.length) ? tools : void 0;
+  if (normalized == null) {
+    return { tools: void 0, toolChoice: void 0, toolWarnings };
+  }
+  const interactionsTools = [];
+  for (const tool of normalized) {
+    if (tool.type === "function") {
+      interactionsTools.push({
+        type: "function",
+        name: tool.name,
+        description: (_a3 = tool.description) != null ? _a3 : "",
+        parameters: tool.inputSchema
+      });
+      continue;
+    }
+    if (tool.type === "provider") {
+      const args = (_b2 = tool.args) != null ? _b2 : {};
+      switch (tool.id) {
+        case "google.google_search": {
+          const searchTypesArg = args.searchTypes;
+          let search_types;
+          if (searchTypesArg != null && typeof searchTypesArg === "object") {
+            const list = [];
+            if (searchTypesArg.webSearch != null) list.push("web_search");
+            if (searchTypesArg.imageSearch != null) list.push("image_search");
+            if (list.length > 0) {
+              search_types = list;
+            }
+          }
+          interactionsTools.push({
+            type: "google_search",
+            ...search_types != null ? { search_types } : {}
+          });
+          break;
+        }
+        case "google.code_execution": {
+          interactionsTools.push({ type: "code_execution" });
+          break;
+        }
+        case "google.url_context": {
+          interactionsTools.push({ type: "url_context" });
+          break;
+        }
+        case "google.file_search": {
+          interactionsTools.push({
+            type: "file_search",
+            ...args.fileSearchStoreNames != null ? {
+              file_search_store_names: args.fileSearchStoreNames
+            } : {},
+            ...args.topK != null ? { top_k: args.topK } : {},
+            ...args.metadataFilter != null ? { metadata_filter: args.metadataFilter } : {}
+          });
+          break;
+        }
+        case "google.google_maps": {
+          interactionsTools.push({
+            type: "google_maps",
+            ...args.latitude != null ? { latitude: args.latitude } : {},
+            ...args.longitude != null ? { longitude: args.longitude } : {},
+            ...args.enableWidget != null ? { enable_widget: args.enableWidget } : {}
+          });
+          break;
+        }
+        case "google.computer_use": {
+          interactionsTools.push({
+            type: "computer_use",
+            environment: (_c = args.environment) != null ? _c : "browser",
+            ...args.excludedPredefinedFunctions != null ? {
+              excludedPredefinedFunctions: args.excludedPredefinedFunctions
+            } : {}
+          });
+          break;
+        }
+        case "google.mcp_server": {
+          interactionsTools.push({
+            type: "mcp_server",
+            ...args.name != null ? { name: args.name } : {},
+            ...args.url != null ? { url: args.url } : {},
+            ...args.headers != null ? { headers: args.headers } : {},
+            ...args.allowedTools != null ? { allowed_tools: args.allowedTools } : {}
+          });
+          break;
+        }
+        case "google.retrieval": {
+          const vertexAiSearchConfig = (_d = args.vertexAiSearchConfig) != null ? _d : void 0;
+          interactionsTools.push({
+            type: "retrieval",
+            ...args.retrievalTypes != null ? {
+              retrieval_types: args.retrievalTypes
+            } : { retrieval_types: ["vertex_ai_search"] },
+            ...vertexAiSearchConfig != null ? { vertex_ai_search_config: vertexAiSearchConfig } : {}
+          });
+          break;
+        }
+        default: {
+          toolWarnings.push({
+            type: "unsupported",
+            feature: `provider-defined tool ${tool.id}`,
+            details: `provider-defined tool ${tool.id} is not supported by google.interactions; tool dropped.`
+          });
+          break;
+        }
+      }
+      continue;
+    }
+    toolWarnings.push({
+      type: "unsupported",
+      feature: `tool of type ${tool.type}`,
+      details: "Only function tools and google.* provider-defined tools are supported by google.interactions; tool dropped."
+    });
+  }
+  const hasFunctionTool = interactionsTools.some((t) => t.type === "function");
+  let mappedToolChoice;
+  if (toolChoice != null && hasFunctionTool) {
+    switch (toolChoice.type) {
+      case "auto":
+        mappedToolChoice = "auto";
+        break;
+      case "required":
+        mappedToolChoice = "any";
+        break;
+      case "none":
+        mappedToolChoice = "none";
+        break;
+      case "tool":
+        mappedToolChoice = {
+          allowed_tools: {
+            mode: "validated",
+            tools: [toolChoice.toolName]
+          }
+        };
+        break;
+    }
+  }
+  return {
+    tools: interactionsTools.length > 0 ? interactionsTools : void 0,
+    toolChoice: mappedToolChoice,
+    toolWarnings
+  };
+}
+__name(prepareGoogleInteractionsTools, "prepareGoogleInteractionsTools");
+function synthesizeGoogleInteractionsAgentStream({
+  response,
+  warnings,
+  generateId: generateId3,
+  includeRawChunks,
+  headerServiceTier
+}) {
+  return new ReadableStream({
+    start(controller) {
+      var _a3, _b2, _c;
+      controller.enqueue({ type: "stream-start", warnings });
+      const interactionId = typeof response.id === "string" && response.id.length > 0 ? response.id : void 0;
+      let timestamp;
+      const created = response.created;
+      if (typeof created === "string") {
+        const parsed = new Date(created);
+        if (!Number.isNaN(parsed.getTime())) {
+          timestamp = parsed;
+        }
+      }
+      controller.enqueue({
+        type: "response-metadata",
+        ...interactionId != null ? { id: interactionId } : {},
+        modelId: (_a3 = response.model) != null ? _a3 : void 0,
+        ...timestamp ? { timestamp } : {}
+      });
+      if (includeRawChunks) {
+        controller.enqueue({ type: "raw", rawValue: response });
+      }
+      const { content, hasFunctionCall } = parseGoogleInteractionsOutputs({
+        outputs: (_b2 = response.outputs) != null ? _b2 : null,
+        generateId: generateId3,
+        interactionId
+      });
+      let blockCounter = 0;
+      const nextBlockId = /* @__PURE__ */ __name(() => `${interactionId != null ? interactionId : "agent"}:${blockCounter++}`, "nextBlockId");
+      for (const part of content) {
+        switch (part.type) {
+          case "text": {
+            const id = nextBlockId();
+            const providerMetadata2 = part.providerMetadata;
+            controller.enqueue({ type: "text-start", id });
+            if (part.text.length > 0) {
+              controller.enqueue({ type: "text-delta", id, delta: part.text });
+            }
+            controller.enqueue({
+              type: "text-end",
+              id,
+              ...providerMetadata2 ? { providerMetadata: providerMetadata2 } : {}
+            });
+            break;
+          }
+          case "reasoning": {
+            const id = nextBlockId();
+            const providerMetadata2 = part.providerMetadata;
+            controller.enqueue({ type: "reasoning-start", id });
+            if (part.text.length > 0) {
+              controller.enqueue({
+                type: "reasoning-delta",
+                id,
+                delta: part.text
+              });
+            }
+            controller.enqueue({
+              type: "reasoning-end",
+              id,
+              ...providerMetadata2 ? { providerMetadata: providerMetadata2 } : {}
+            });
+            break;
+          }
+          case "tool-call": {
+            const providerMetadata2 = part.providerMetadata;
+            controller.enqueue({
+              type: "tool-input-start",
+              id: part.toolCallId,
+              toolName: part.toolName,
+              ...part.providerExecuted ? { providerExecuted: part.providerExecuted } : {}
+            });
+            controller.enqueue({
+              type: "tool-input-delta",
+              id: part.toolCallId,
+              delta: part.input
+            });
+            controller.enqueue({
+              type: "tool-input-end",
+              id: part.toolCallId
+            });
+            controller.enqueue({
+              type: "tool-call",
+              toolCallId: part.toolCallId,
+              toolName: part.toolName,
+              input: part.input,
+              ...part.providerExecuted ? { providerExecuted: part.providerExecuted } : {},
+              ...providerMetadata2 ? { providerMetadata: providerMetadata2 } : {}
+            });
+            break;
+          }
+          case "tool-result": {
+            controller.enqueue({
+              type: "tool-result",
+              toolCallId: part.toolCallId,
+              toolName: part.toolName,
+              result: part.result
+            });
+            break;
+          }
+          case "source":
+          case "file": {
+            controller.enqueue(part);
+            break;
+          }
+          default:
+            break;
+        }
+      }
+      const serviceTier = (_c = response.service_tier) != null ? _c : headerServiceTier;
+      const finishReason = {
+        unified: mapGoogleInteractionsFinishReason({
+          status: response.status,
+          hasFunctionCall
+        }),
+        raw: response.status
+      };
+      const providerMetadata = {
+        google: {
+          ...interactionId != null ? { interactionId } : {},
+          ...serviceTier != null ? { serviceTier } : {}
+        }
+      };
+      controller.enqueue({
+        type: "finish",
+        finishReason,
+        usage: convertGoogleInteractionsUsage(response.usage),
+        providerMetadata
+      });
+      controller.close();
+    }
+  });
+}
+__name(synthesizeGoogleInteractionsAgentStream, "synthesizeGoogleInteractionsAgentStream");
+var GoogleInteractionsLanguageModel = class {
+  static {
+    __name(this, "GoogleInteractionsLanguageModel");
+  }
+  constructor(modelOrAgent, config2) {
+    this.specificationVersion = "v3";
+    if (typeof modelOrAgent === "string") {
+      this.modelId = modelOrAgent;
+      this.agent = void 0;
+    } else {
+      this.modelId = modelOrAgent.agent;
+      this.agent = modelOrAgent.agent;
+    }
+    this.config = config2;
+  }
+  get provider() {
+    return this.config.provider;
+  }
+  get supportedUrls() {
+    if (this.config.supportedUrls) {
+      return this.config.supportedUrls();
+    }
+    return {
+      "image/*": [/^https?:\/\/.+/],
+      "application/pdf": [/^https?:\/\/.+/],
+      "audio/*": [/^https?:\/\/.+/],
+      "video/*": [
+        /^https?:\/\/(www\.)?youtube\.com\/watch\?v=.+/,
+        /^https?:\/\/youtu\.be\/.+/,
+        /^gs:\/\/.+/
+      ]
+    };
+  }
+  async getArgs(options) {
+    var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t;
+    const warnings = [];
+    const opts = await parseProviderOptions({
+      provider: "google",
+      providerOptions: options.providerOptions,
+      schema: googleInteractionsLanguageModelOptions
+    });
+    const isAgent = this.agent != null;
+    const hasTools = options.tools != null && options.tools.length > 0;
+    let toolsForBody;
+    let toolChoiceForBody;
+    if (hasTools && isAgent) {
+      warnings.push({
+        type: "other",
+        message: "google.interactions: tools are not supported when an agent is set; tools will be omitted from the request body."
+      });
+    } else if (hasTools) {
+      const prepared = prepareGoogleInteractionsTools({
+        tools: options.tools,
+        toolChoice: options.toolChoice
+      });
+      toolsForBody = prepared.tools;
+      toolChoiceForBody = prepared.toolChoice;
+      warnings.push(...prepared.toolWarnings);
+    }
+    let responseMimeType;
+    let responseFormat;
+    if (((_a3 = options.responseFormat) == null ? void 0 : _a3.type) === "json") {
+      if (isAgent) {
+        warnings.push({
+          type: "other",
+          message: "google.interactions: structured output (responseFormat) is not supported when an agent is set; responseFormat will be ignored."
+        });
+      } else {
+        responseMimeType = "application/json";
+        if (options.responseFormat.schema != null) {
+          responseFormat = options.responseFormat.schema;
+        }
+      }
+    }
+    const {
+      input,
+      systemInstruction: convertedSystemInstruction,
+      warnings: convWarnings
+    } = convertToGoogleInteractionsInput({
+      prompt: options.prompt,
+      previousInteractionId: (_b2 = opts == null ? void 0 : opts.previousInteractionId) != null ? _b2 : void 0,
+      store: (_c = opts == null ? void 0 : opts.store) != null ? _c : void 0,
+      mediaResolution: (_d = opts == null ? void 0 : opts.mediaResolution) != null ? _d : void 0
+    });
+    warnings.push(...convWarnings);
+    let systemInstruction = convertedSystemInstruction;
+    const optionSystemInstruction = (_e = opts == null ? void 0 : opts.systemInstruction) != null ? _e : void 0;
+    if (systemInstruction != null && optionSystemInstruction != null) {
+      warnings.push({
+        type: "other",
+        message: "google.interactions: both AI SDK system message and providerOptions.google.systemInstruction were set; using the AI SDK system message."
+      });
+    } else if (systemInstruction == null && optionSystemInstruction != null) {
+      systemInstruction = optionSystemInstruction;
+    }
+    let generationConfig;
+    if (isAgent) {
+      const droppedFields = [];
+      if (options.temperature != null) droppedFields.push("temperature");
+      if (options.topP != null) droppedFields.push("topP");
+      if (options.seed != null) droppedFields.push("seed");
+      if (options.stopSequences != null && options.stopSequences.length > 0) {
+        droppedFields.push("stopSequences");
+      }
+      if (options.maxOutputTokens != null)
+        droppedFields.push("maxOutputTokens");
+      if ((opts == null ? void 0 : opts.thinkingLevel) != null) droppedFields.push("thinkingLevel");
+      if ((opts == null ? void 0 : opts.thinkingSummaries) != null) {
+        droppedFields.push("thinkingSummaries");
+      }
+      if ((opts == null ? void 0 : opts.imageConfig) != null) droppedFields.push("imageConfig");
+      if (droppedFields.length > 0) {
+        warnings.push({
+          type: "other",
+          message: `google.interactions: ${droppedFields.join(", ")} ${droppedFields.length === 1 ? "is" : "are"} not supported when an agent is set; use providerOptions.google.agentConfig instead. Dropped from the request body.`
+        });
+      }
+      generationConfig = void 0;
+    } else {
+      generationConfig = pruneUndefined({
+        temperature: (_f = options.temperature) != null ? _f : void 0,
+        top_p: (_g = options.topP) != null ? _g : void 0,
+        seed: (_h = options.seed) != null ? _h : void 0,
+        stop_sequences: options.stopSequences != null && options.stopSequences.length > 0 ? options.stopSequences : void 0,
+        max_output_tokens: (_i = options.maxOutputTokens) != null ? _i : void 0,
+        thinking_level: (_j = opts == null ? void 0 : opts.thinkingLevel) != null ? _j : void 0,
+        thinking_summaries: (_k = opts == null ? void 0 : opts.thinkingSummaries) != null ? _k : void 0,
+        image_config: (opts == null ? void 0 : opts.imageConfig) != null ? pruneUndefined({
+          aspect_ratio: (_l = opts.imageConfig.aspectRatio) != null ? _l : void 0,
+          image_size: (_m = opts.imageConfig.imageSize) != null ? _m : void 0
+        }) : void 0,
+        tool_choice: toolChoiceForBody
+      });
+    }
+    let agentConfig;
+    if (isAgent && (opts == null ? void 0 : opts.agentConfig) != null) {
+      const ac = opts.agentConfig;
+      if (ac.type === "deep-research") {
+        agentConfig = pruneUndefined({
+          type: "deep-research",
+          thinking_summaries: (_n = ac.thinkingSummaries) != null ? _n : void 0,
+          visualization: (_o = ac.visualization) != null ? _o : void 0,
+          collaborative_planning: (_p = ac.collaborativePlanning) != null ? _p : void 0
+        });
+      } else if (ac.type === "dynamic") {
+        agentConfig = { type: "dynamic" };
+      }
+    }
+    const args = pruneUndefined({
+      ...isAgent ? { agent: this.agent } : { model: this.modelId },
+      input,
+      system_instruction: systemInstruction,
+      tools: toolsForBody,
+      response_format: responseFormat,
+      response_mime_type: responseMimeType,
+      response_modalities: (opts == null ? void 0 : opts.responseModalities) != null ? opts.responseModalities : void 0,
+      previous_interaction_id: (_q = opts == null ? void 0 : opts.previousInteractionId) != null ? _q : void 0,
+      service_tier: (_r = opts == null ? void 0 : opts.serviceTier) != null ? _r : void 0,
+      store: (_s = opts == null ? void 0 : opts.store) != null ? _s : void 0,
+      generation_config: generationConfig != null && Object.keys(generationConfig).length > 0 ? generationConfig : void 0,
+      agent_config: agentConfig,
+      ...isAgent ? { background: true } : {}
+    });
+    return {
+      args,
+      warnings,
+      isAgent,
+      pollingTimeoutMs: (_t = opts == null ? void 0 : opts.pollingTimeoutMs) != null ? _t : void 0
+    };
+  }
+  async doGenerate(options) {
+    var _a3, _b2, _c, _d, _e, _f;
+    const { args, warnings, isAgent, pollingTimeoutMs } = await this.getArgs(options);
+    const url = `${this.config.baseURL}/interactions`;
+    const mergedHeaders = combineHeaders(
+      this.config.headers ? await resolve(this.config.headers) : void 0,
+      options.headers
+    );
+    const postResult = await postJsonToApi({
+      url,
+      headers: mergedHeaders,
+      body: args,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(
+        googleInteractionsResponseSchema
+      ),
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch
+    });
+    let {
+      responseHeaders,
+      value: response,
+      rawValue: rawResponse
+    } = postResult;
+    if (isAgent && !isTerminalStatus(response.status)) {
+      const polled = await pollGoogleInteractionUntilTerminal({
+        baseURL: this.config.baseURL,
+        interactionId: response.id,
+        headers: mergedHeaders,
+        fetch: this.config.fetch,
+        abortSignal: options.abortSignal,
+        timeoutMs: pollingTimeoutMs
+      });
+      response = polled.response;
+      rawResponse = polled.rawResponse;
+      responseHeaders = (_a3 = polled.responseHeaders) != null ? _a3 : responseHeaders;
+    }
+    const interactionId = typeof response.id === "string" && response.id.length > 0 ? response.id : void 0;
+    const { content, hasFunctionCall } = parseGoogleInteractionsOutputs({
+      outputs: (_b2 = response.outputs) != null ? _b2 : null,
+      generateId: (_c = this.config.generateId) != null ? _c : generateId,
+      interactionId
+    });
+    const finishReason = {
+      unified: mapGoogleInteractionsFinishReason({
+        status: response.status,
+        hasFunctionCall
+      }),
+      raw: response.status
+    };
+    const serviceTier = (_e = (_d = response.service_tier) != null ? _d : responseHeaders == null ? void 0 : responseHeaders["x-gemini-service-tier"]) != null ? _e : void 0;
+    const providerMetadata = {
+      google: {
+        ...interactionId != null ? { interactionId } : {},
+        ...serviceTier != null ? { serviceTier } : {}
+      }
+    };
+    let timestamp;
+    if (typeof response.created === "string") {
+      const parsed = new Date(response.created);
+      if (!Number.isNaN(parsed.getTime())) {
+        timestamp = parsed;
+      }
+    }
+    return {
+      content,
+      finishReason,
+      usage: convertGoogleInteractionsUsage(response.usage),
+      warnings,
+      providerMetadata,
+      request: { body: args },
+      response: {
+        headers: responseHeaders,
+        body: rawResponse,
+        ...interactionId != null ? { id: interactionId } : {},
+        ...timestamp ? { timestamp } : {},
+        modelId: (_f = response.model) != null ? _f : void 0
+      }
+    };
+  }
+  async doStream(options) {
+    var _a3;
+    const { args, warnings, isAgent, pollingTimeoutMs } = await this.getArgs(options);
+    const url = `${this.config.baseURL}/interactions`;
+    const mergedHeaders = combineHeaders(
+      this.config.headers ? await resolve(this.config.headers) : void 0,
+      options.headers
+    );
+    if (isAgent) {
+      return this.doStreamAgent({
+        args,
+        warnings,
+        url,
+        mergedHeaders,
+        options,
+        pollingTimeoutMs
+      });
+    }
+    const body = { ...args, stream: true };
+    const { responseHeaders, value: response } = await postJsonToApi({
+      url,
+      headers: mergedHeaders,
+      body,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createEventSourceResponseHandler(
+        googleInteractionsEventSchema
+      ),
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch
+    });
+    const headerServiceTier = responseHeaders == null ? void 0 : responseHeaders["x-gemini-service-tier"];
+    const transform = buildGoogleInteractionsStreamTransform({
+      warnings,
+      generateId: (_a3 = this.config.generateId) != null ? _a3 : generateId,
+      includeRawChunks: options.includeRawChunks,
+      serviceTier: headerServiceTier
+    });
+    return {
+      stream: response.pipeThrough(transform),
+      request: { body },
+      response: { headers: responseHeaders }
+    };
+  }
+  /*
+   * Drive the streaming surface for agent calls. Agent calls require
+   * `background: true`, which is incompatible with `stream: true` on POST.
+   *
+   * In principle the API also exposes `GET /interactions/{id}?stream=true`
+   * to replay events as the agent runs. In practice the connection is
+   * idle for long stretches while the agent thinks (deep-research can run
+   * for a minute or more between SSE events), and undici's default body
+   * timeout terminates the request mid-flight with `UND_ERR_BODY_TIMEOUT`.
+   * Tuning the timeout per-call would require the caller to thread an
+   * `undici.Agent` through `fetch`, which contradicts the AI SDK's
+   * pluggable-fetch contract.
+   *
+   * We therefore drive `doStream` exactly like `doGenerate` for agents:
+   * POST with `background: true`, poll `GET /interactions/{id}` until
+   * terminal, then synthesize the stream from the final outputs. The
+   * user-facing surface stays identical -- text-start / text-delta /
+   * text-end / finish parts arrive in the same order as a true SSE
+   * response, just buffered until the agent completes.
+   */
+  async doStreamAgent({
+    args,
+    warnings,
+    url,
+    mergedHeaders,
+    options,
+    pollingTimeoutMs
+  }) {
+    var _a3, _b2;
+    const postResult = await postJsonToApi({
+      url,
+      headers: mergedHeaders,
+      body: args,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(
+        googleInteractionsResponseSchema
+      ),
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch
+    });
+    let { responseHeaders: postHeaders, value: postResponse } = postResult;
+    const interactionId = postResponse.id;
+    if (interactionId == null || interactionId.length === 0) {
+      throw new Error(
+        "google.interactions: agent POST response did not include an interaction id; cannot poll for the agent result."
+      );
+    }
+    if (!isTerminalStatus(postResponse.status)) {
+      const polled = await pollGoogleInteractionUntilTerminal({
+        baseURL: this.config.baseURL,
+        interactionId,
+        headers: mergedHeaders,
+        fetch: this.config.fetch,
+        abortSignal: options.abortSignal,
+        timeoutMs: pollingTimeoutMs
+      });
+      postResponse = polled.response;
+      postHeaders = (_a3 = polled.responseHeaders) != null ? _a3 : postHeaders;
+    }
+    const stream = synthesizeGoogleInteractionsAgentStream({
+      response: postResponse,
+      warnings,
+      generateId: (_b2 = this.config.generateId) != null ? _b2 : generateId,
+      includeRawChunks: options.includeRawChunks,
+      headerServiceTier: postHeaders == null ? void 0 : postHeaders["x-gemini-service-tier"]
+    });
+    return {
+      stream,
+      request: { body: args },
+      response: { headers: postHeaders }
+    };
+  }
+};
+function pruneUndefined(obj) {
+  const result = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value === void 0) continue;
+    result[key] = value;
+  }
+  return result;
+}
+__name(pruneUndefined, "pruneUndefined");
+function createGoogleGenerativeAI(options = {}) {
+  var _a3, _b2;
+  const baseURL = (_a3 = withoutTrailingSlash(options.baseURL)) != null ? _a3 : "https://generativelanguage.googleapis.com/v1beta";
+  const providerName = (_b2 = options.name) != null ? _b2 : "google.generative-ai";
+  const getHeaders = /* @__PURE__ */ __name(() => withUserAgentSuffix(
+    {
+      "x-goog-api-key": loadApiKey({
+        apiKey: options.apiKey,
+        environmentVariableName: "GOOGLE_GENERATIVE_AI_API_KEY",
+        description: "Google Generative AI"
+      }),
+      ...options.headers
+    },
+    `ai-sdk/google/${VERSION}`
+  ), "getHeaders");
+  const createChatModel = /* @__PURE__ */ __name((modelId) => {
+    var _a22;
+    return new GoogleGenerativeAILanguageModel(modelId, {
+      provider: providerName,
+      baseURL,
+      headers: getHeaders,
+      generateId: (_a22 = options.generateId) != null ? _a22 : generateId,
+      supportedUrls: /* @__PURE__ */ __name(() => ({
+        "*": [
+          // Google Generative Language "files" endpoint
+          // e.g. https://generativelanguage.googleapis.com/v1beta/files/...
+          new RegExp(`^${baseURL}/files/.*$`),
+          // YouTube URLs (public or unlisted videos)
+          new RegExp(
+            `^https://(?:www\\.)?youtube\\.com/watch\\?v=[\\w-]+(?:&[\\w=&.-]*)?$`
+          ),
+          new RegExp(`^https://youtu\\.be/[\\w-]+(?:\\?[\\w=&.-]*)?$`)
+        ]
+      }), "supportedUrls"),
+      fetch: options.fetch
+    });
+  }, "createChatModel");
+  const createEmbeddingModel = /* @__PURE__ */ __name((modelId) => new GoogleGenerativeAIEmbeddingModel(modelId, {
+    provider: providerName,
+    baseURL,
+    headers: getHeaders,
+    fetch: options.fetch
+  }), "createEmbeddingModel");
+  const createImageModel = /* @__PURE__ */ __name((modelId, settings = {}) => new GoogleGenerativeAIImageModel(modelId, settings, {
+    provider: providerName,
+    baseURL,
+    headers: getHeaders,
+    fetch: options.fetch
+  }), "createImageModel");
+  const createVideoModel = /* @__PURE__ */ __name((modelId) => {
+    var _a22;
+    return new GoogleGenerativeAIVideoModel(modelId, {
+      provider: providerName,
+      baseURL,
+      headers: getHeaders,
+      fetch: options.fetch,
+      generateId: (_a22 = options.generateId) != null ? _a22 : generateId
+    });
+  }, "createVideoModel");
+  const createInteractionsModel = /* @__PURE__ */ __name((modelIdOrAgent) => {
+    var _a22;
+    return new GoogleInteractionsLanguageModel(
+      modelIdOrAgent,
+      {
+        provider: `${providerName}.interactions`,
+        baseURL,
+        headers: getHeaders,
+        generateId: (_a22 = options.generateId) != null ? _a22 : generateId,
+        fetch: options.fetch
+      }
+    );
+  }, "createInteractionsModel");
+  const provider = /* @__PURE__ */ __name(function(modelId) {
+    if (new.target) {
+      throw new Error(
+        "The Google Generative AI model function cannot be called with the new keyword."
+      );
+    }
+    return createChatModel(modelId);
+  }, "provider");
+  provider.specificationVersion = "v3";
+  provider.languageModel = createChatModel;
+  provider.chat = createChatModel;
+  provider.generativeAI = createChatModel;
+  provider.embedding = createEmbeddingModel;
+  provider.embeddingModel = createEmbeddingModel;
+  provider.textEmbedding = createEmbeddingModel;
+  provider.textEmbeddingModel = createEmbeddingModel;
+  provider.image = createImageModel;
+  provider.imageModel = createImageModel;
+  provider.video = createVideoModel;
+  provider.videoModel = createVideoModel;
+  provider.interactions = createInteractionsModel;
+  provider.tools = googleTools;
+  return provider;
+}
+__name(createGoogleGenerativeAI, "createGoogleGenerativeAI");
+var google = createGoogleGenerativeAI();
+
 // node_modules/@vercel/blob/dist/index.js
 init_esm();
 
@@ -34108,17 +39457,17 @@ var import_undici = __toESM(require_undici(), 1);
 var import_throttleit = __toESM(require_throttleit(), 1);
 var import_throttleit2 = __toESM(require_throttleit(), 1);
 import { Readable } from "stream";
-var supportsNewBlobFromArrayBuffer = new Promise((resolve) => {
+var supportsNewBlobFromArrayBuffer = new Promise((resolve2) => {
   try {
     const helloAsArrayBuffer = new Uint8Array([104, 101, 108, 108, 111]);
     const blob = new Blob([helloAsArrayBuffer]);
     blob.text().then((text) => {
-      resolve(text === "hello");
+      resolve2(text === "hello");
     }).catch(() => {
-      resolve(false);
+      resolve2(false);
     });
   } catch {
-    resolve(false);
+    resolve2(false);
   }
 });
 async function toReadableStream(value) {
@@ -34424,7 +39773,7 @@ var blobXhr = /* @__PURE__ */ __name(async ({
       body = init2.body;
     }
   }
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve2, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(init2.method || "GET", input.toString(), true);
     if (onUploadProgress) {
@@ -34453,7 +39802,7 @@ var blobXhr = /* @__PURE__ */ __name(async ({
         statusText: xhr.statusText,
         headers
       });
-      resolve(response);
+      resolve2(response);
     };
     xhr.onerror = () => {
       reject(new TypeError("Network request failed"));
@@ -35101,7 +40450,7 @@ function uploadAllParts({
 }) {
   debug("mpu: upload init", "key:", key);
   const internalAbortController = new AbortController();
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve2, reject) => {
     const partsToUpload = [];
     const completedParts = [];
     const reader = stream.getReader();
@@ -35158,7 +40507,7 @@ function uploadAllParts({
               sendParts();
             } else if (activeUploads === 0) {
               reader.releaseLock();
-              resolve(completedParts);
+              resolve2(completedParts);
             }
             reading = false;
             return;
@@ -35264,7 +40613,7 @@ function uploadAllParts({
         if (doneReading) {
           if (activeUploads === 0) {
             reader.releaseLock();
-            resolve(completedParts);
+            resolve2(completedParts);
           }
           return;
         }
@@ -36730,7 +42079,7 @@ var generateSpec = schemaTask({
   schema: payloadSchema,
   retry: { maxAttempts: 2, minTimeoutInMs: 1e3, maxTimeoutInMs: 1e4, factor: 2 },
   run: /* @__PURE__ */ __name(async (payload) => {
-    const google = createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY });
+    const google2 = createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY });
     metadata.set("status", "starting");
     logger.info("Generating spec", {
       projectId: payload.projectId,
@@ -36740,7 +42089,7 @@ var generateSpec = schemaTask({
     metadata.set("status", "generating");
     const context = buildContext(payload.nodes, payload.edges, payload.chatHistory);
     const result = await generateText({
-      model: google("gemini-1.5-flash"),
+      model: google2("gemini-1.5-flash"),
       system: SYSTEM_PROMPT,
       prompt: context
     });

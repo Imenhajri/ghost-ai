@@ -1,8 +1,7 @@
 import {
-  createGoogleGenerativeAI,
   generateText,
   tool
-} from "./chunk-ZZLFI2SE.mjs";
+} from "./chunk-2RVLJDZO.mjs";
 import "./chunk-KSN6VZDK.mjs";
 import {
   external_exports,
