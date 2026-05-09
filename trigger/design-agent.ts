@@ -193,7 +193,7 @@ export const designAgent = task({
       }
 
       const result = await generateText({
-        model: groq("llama-3.3-70b-versatile"),
+        model: groq("llama3-groq-70b-8192-tool-use-preview"),
         system: buildSystemPrompt(),
         prompt: `User request: ${payload.prompt}\n\n${canvasContext}`,
         tools: canvasTools,
