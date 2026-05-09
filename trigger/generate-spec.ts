@@ -1,3 +1,4 @@
+import { createGroq } from "@ai-sdk/groq"
 import { schemaTask, metadata, logger } from "@trigger.dev/sdk/v3"
 import { createGoogleGenerativeAI } from "@ai-sdk/google"
 import { generateText } from "ai"
@@ -98,8 +99,7 @@ export const generateSpec = schemaTask({
   schema: payloadSchema,
   retry: { maxAttempts: 2, minTimeoutInMs: 1000, maxTimeoutInMs: 10000, factor: 2 },
   run: async (payload) => {
-    const google = createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY })
-
+    const groq = createGroq({ apiKey: process.env.GROQ_API_KEY })
     metadata.set("status", "starting")
     logger.info("Generating spec", {
       projectId: payload.projectId,
@@ -112,7 +112,7 @@ export const generateSpec = schemaTask({
     const context = buildContext(payload.nodes, payload.edges, payload.chatHistory)
 
     const result = await generateText({
-      model: google("gemini-1.5-flash"),
+      model: groq("llama-3.3-70b-versatile"),
       system: SYSTEM_PROMPT,
       prompt: context,
     })
